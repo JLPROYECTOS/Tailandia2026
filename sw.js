@@ -1,5 +1,5 @@
 // Service worker: la página se pide primero a la red (para recibir cambios) y, sin conexión, se usa la copia guardada.
-const VERSION = 'th26-202611211620';
+const VERSION = 'th26-202611211621';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
@@ -17,7 +17,7 @@ self.addEventListener('fetch', e => {
   }
   if (url.origin !== self.location.origin) return;
   e.respondWith(
-    fetch(req).then(r => { if (r.ok) { const cp = r.clone(); caches.open(VERSION).then(c => c.put(req, cp)); } return r; })
+    fetch(req, {cache: 'no-cache'}).then(r => { if (r.ok) { const cp = r.clone(); caches.open(VERSION).then(c => c.put(req, cp)); } return r; })
       .catch(() => caches.match(req).then(hit => hit || caches.match('./index.html')))
   );
 });
