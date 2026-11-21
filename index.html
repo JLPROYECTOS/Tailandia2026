@@ -3,6 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* Si el móvil abre la página en modo "sitio de escritorio" (o un visor la pinta a 980 px), la escalamos para que se vea como en móvil. */
+(function(){
+  function fit(){
+    try {
+      var de = document.documentElement, sw = Math.min(screen.width, screen.height > screen.width ? screen.width : screen.width);
+      var coarse = window.matchMedia && matchMedia('(pointer:coarse)').matches;
+      de.style.zoom = '';
+      var w = window.innerWidth;
+      if (coarse && sw && sw <= 820 && w > sw * 1.3) de.style.zoom = (w / sw).toFixed(3);
+    } catch(e){}
+  }
+  fit(); window.addEventListener('resize', fit); window.addEventListener('orientationchange', function(){ setTimeout(fit, 300); });
+})();
+</script>
 <title>Tailandia 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Figtree:wght@400;500;600;700&display=swap">
