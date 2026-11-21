@@ -1,0 +1,1767 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tailandia 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#EDF4F5; --surface:#FFFFFF; --surface2:#E2EDEF; --ink:#12203A; --muted:#4D5F78; --line:#D0DEE2;
+  --gold:#E39A12; --goldsoft:#FFF1CF; --goldink:#6B4200; --jade:#13776F; --jadesoft:#D8F0EC;
+  --lotus:#B93463; --lotussoft:#FBE3EC; --blue:#2D4A9A; --bluesoft:#E0E7FA; --violet:#6B4FB0; --violetsoft:#ECE6FA;
+  --greysoft:#E8ECF1; --shadow:0 1px 2px rgba(18,32,58,.08),0 10px 26px -14px rgba(18,32,58,.32);
+  --ring:#13776F;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B1325; --surface:#142039; --surface2:#1C2B4B; --ink:#E8EEF8; --muted:#9DB0CC; --line:#27395E;
+    --gold:#F4B13E; --goldsoft:#3A2E12; --goldink:#FFD98A; --jade:#4CC9BC; --jadesoft:#10342F;
+    --lotus:#F47FA5; --lotussoft:#3D1A2A; --blue:#8FA8F0; --bluesoft:#1B2750; --violet:#B7A0F2; --violetsoft:#2A2250;
+    --greysoft:#222F4A; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 26px -14px rgba(0,0,0,.7); --ring:#4CC9BC;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1325; --surface:#142039; --surface2:#1C2B4B; --ink:#E8EEF8; --muted:#9DB0CC; --line:#27395E;
+  --gold:#F4B13E; --goldsoft:#3A2E12; --goldink:#FFD98A; --jade:#4CC9BC; --jadesoft:#10342F;
+  --lotus:#F47FA5; --lotussoft:#3D1A2A; --blue:#8FA8F0; --bluesoft:#1B2750; --violet:#B7A0F2; --violetsoft:#2A2250;
+  --greysoft:#222F4A; --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 26px -14px rgba(0,0,0,.7); --ring:#4CC9BC;
+  color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 118px);-webkit-text-size-adjust:100%}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+button,input{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ring);outline-offset:2px;border-radius:8px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+/* Cabecera */
+.top{padding:22px 0 10px}
+.toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+h1{font:600 clamp(2.2rem,9vw,3.3rem)/1.02 "Fraunces",Georgia,"Iowan Old Style",serif;margin:0;letter-spacing:-.02em;font-variation-settings:"SOFT" 100,"WONK" 1}
+.sub{margin:6px 0 0;color:var(--muted);font-size:.95rem}
+.iconbtn{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:1.2rem}
+.widgets{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.w{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:9px 12px;min-width:0}
+.w small{display:block;color:var(--muted);font-size:.76rem;line-height:1.2}
+.w b{display:block;font-size:1.15rem;line-height:1.25;white-space:nowrap}
+.w.hl{background:var(--goldsoft);border-color:transparent}
+
+/* Navegación fija */
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);padding:8px 0 8px;border-bottom:1px solid var(--line)}
+.seg{display:flex;overflow-x:auto;scrollbar-width:none;gap:3px;background:var(--surface2);padding:4px;border-radius:14px}
+.seg::-webkit-scrollbar{display:none}
+.seg button{flex:none;white-space:nowrap;border:0;background:transparent;border-radius:10px;padding:9px 12px;font-weight:600;font-size:.82rem;cursor:pointer;color:var(--muted);line-height:1.15}
+.seg button[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.days{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding:10px 2px 4px;margin-top:2px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.days[hidden]{display:none}
+.day{flex:none;scroll-snap-align:center;min-width:62px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:6px 8px 7px;text-align:center;cursor:pointer;position:relative}
+.day small{display:block;font-size:.72rem;color:var(--muted);line-height:1.1}
+.day b{display:block;font-size:1.25rem;line-height:1.15}
+.day i{display:block;width:100%;height:4px;border-radius:2px;margin-top:5px;background:var(--c)}
+.day[aria-current="true"]{background:var(--ink);border-color:var(--ink)}
+.day[aria-current="true"] small{color:color-mix(in srgb,var(--bg) 75%,transparent)}
+.day[aria-current="true"] b{color:var(--bg)}
+.day .hoy{position:absolute;top:-6px;right:-4px;background:var(--lotus);color:#fff;border-radius:8px;font-size:.62rem;font-weight:700;padding:1px 5px}
+.day .cnt{font-size:.66rem;color:var(--jade);font-weight:700;line-height:1}
+
+/* Héroe ilustrado */
+.hero{position:relative;border-radius:22px;overflow:hidden;margin:14px 0 12px;box-shadow:var(--shadow);background:#1B1F4B}
+.hero svg{display:block;width:100%;height:250px}
+.hero .shade{position:absolute;inset:auto 0 0 0;height:62%;background:linear-gradient(to top,rgba(8,12,30,.86),rgba(8,12,30,0))}
+.hero .txt{position:absolute;left:16px;right:16px;bottom:14px;color:#fff}
+.hero h2{font:500 clamp(1.5rem,5.8vw,2.2rem)/1.08 "Fraunces",Georgia,serif;margin:0}
+.hero p{margin:4px 0 0;font-size:.93rem;color:#E8EEF8;max-width:56ch}
+.hero .date{position:absolute;top:12px;left:14px;background:rgba(10,14,36,.55);backdrop-filter:blur(6px);color:#fff;border-radius:999px;padding:4px 12px;font-weight:600;font-size:.85rem}
+.sleep{display:flex;gap:10px;align-items:center;background:var(--violetsoft);border-radius:14px;padding:10px 14px;margin-bottom:12px;font-size:.93rem}
+.sleep span{font-size:1.3rem}
+.twinkle circle{animation:tw 3.2s ease-in-out infinite}
+.twinkle circle:nth-child(3n){animation-delay:.9s}.twinkle circle:nth-child(3n+1){animation-delay:1.8s}
+@keyframes tw{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* Controles */
+.ctrl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 14px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.84rem;font-weight:600;cursor:pointer;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sw{margin-left:auto;display:flex;gap:8px}
+.sw .chip{font-weight:500}
+
+/* Línea de tiempo */
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.item{display:grid;grid-template-columns:58px 34px 1fr;column-gap:6px;position:relative;padding-bottom:12px}
+.item::before{content:"";position:absolute;left:calc(58px + 6px + 16px);top:34px;bottom:-2px;width:2px;background:repeating-linear-gradient(to bottom,var(--line) 0 6px,transparent 6px 11px)}
+.item:last-child::before{display:none}
+.tcol{padding-top:7px;text-align:right}
+.time{font-weight:700;font-size:.98rem;letter-spacing:-.01em}
+.node{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:1.05rem;background:var(--greysoft);z-index:1;margin-top:2px;border:2px solid var(--bg)}
+.c-vuelo{background:var(--bluesoft)}.c-trayecto{background:var(--jadesoft)}.c-comida{background:var(--lotussoft)}
+.c-visita{background:var(--goldsoft)}.c-hotel{background:var(--violetsoft)}.c-dinero{background:var(--jadesoft)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);min-width:0;margin-left:4px}
+.item.opt .card{border-style:dashed;background:color-mix(in srgb,var(--surface) 70%,var(--bg))}
+.item.done .title{text-decoration:line-through;color:var(--muted)}
+.item.next .card{outline:2px solid var(--gold)}
+.head{display:flex;width:100%;gap:10px;align-items:flex-start;text-align:left;background:none;border:0;padding:11px 12px 11px 14px;cursor:pointer;border-radius:16px}
+.htxt{flex:1;min-width:0}
+.title{display:block;font-weight:700;line-height:1.28}
+.sum{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+.tag{display:inline-block;margin:2px 0 0;background:var(--goldsoft);color:var(--goldink);border-radius:8px;font-size:.72rem;font-weight:700;padding:1px 8px}
+.item.opt .tag{margin-bottom:3px}
+.chev{flex:none;width:22px;height:22px;margin-top:3px;position:relative;color:var(--muted)}
+.chev::before{content:"";position:absolute;left:5px;top:4px;width:8px;height:8px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(45deg);transition:transform .2s}
+.open .chev::before{transform:rotate(-135deg);top:8px}
+.panel{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .26s ease,visibility 0s .26s}
+.open>.panel{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .26s ease,visibility 0s}
+.panel>div{overflow:hidden;min-height:0}
+.pin{padding:2px 14px 14px;border-top:1px dashed var(--line);margin:0 0}
+.pin ul{margin:10px 0 0;padding-left:1.1em}
+.pin li{margin:4px 0}
+.pin p{margin:10px 0 0}
+.warn{margin-top:12px;background:var(--goldsoft);color:var(--ink);border-left:4px solid var(--gold);border-radius:10px;padding:9px 12px;font-size:.92rem}
+.routes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.route{display:inline-flex;gap:8px;align-items:center;text-decoration:none;background:var(--jadesoft);color:var(--ink);border:1px solid color-mix(in srgb,var(--jade) 35%,transparent);border-radius:12px;padding:8px 11px;font-size:.88rem;font-weight:600;line-height:1.2}
+.route:hover{border-color:var(--jade)}
+.route em{font-style:normal;font-size:1.05rem}
+.route.place{background:var(--bluesoft);border-color:color-mix(in srgb,var(--blue) 35%,transparent)}
+.refs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.ref{border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:5px 10px;font-size:.84rem;cursor:pointer}
+.ref b{font-weight:600;color:var(--muted);margin-right:4px}
+.ref span{margin-left:6px;color:var(--jade);font-weight:700}
+.foot{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 12px;font-weight:600;font-size:.88rem;cursor:pointer}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:22px;text-align:center;color:var(--muted)}
+.pager{display:flex;justify-content:space-between;gap:10px;margin:18px 0 40px}
+.pager .btn{flex:1;padding:12px}
+
+/* Otras vistas */
+.chmap{margin-top:8px}.chtop small{display:block;color:var(--muted);font-size:.82rem;margin:2px 0 8px}.chgrid{display:grid;grid-template-columns:repeat(9,1fr);gap:4px}.chs{border:1px solid var(--line);background:var(--surface2,var(--surface));border-radius:8px;padding:3px 2px;text-align:center;min-height:42px;display:flex;flex-direction:column;justify-content:space-between;align-items:center}.chs b{font-size:.8rem}.chs span{display:flex;flex-wrap:wrap;gap:2px;justify-content:center}.chs i,.chleg i{display:inline-block;width:8px;height:8px;border-radius:50%}.chleg{list-style:none;padding:0;margin:10px 0;display:grid;gap:5px;font-size:.84rem}.chleg li{display:flex;gap:8px;align-items:flex-start}.chleg i{margin-top:6px;flex:none;width:11px;height:11px}.cmp{width:100%;border-collapse:collapse;font-size:.86rem}.cmp td,.cmp th{border-top:1px solid var(--line);padding:6px 4px;text-align:left;vertical-align:top}@media(max-width:420px){.chgrid{grid-template-columns:repeat(6,1fr)}}
+.sec{margin:20px 0 8px;font:500 1.55rem/1.15 "Fraunces",Georgia,serif}
+.lead{color:var(--muted);margin:0 0 14px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+.box .head{padding:12px 14px}
+.box .meta{font-size:.8rem;color:var(--muted)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:10px 0 0;font-size:.92rem}
+.kv dt{color:var(--muted)}.kv dd{margin:0}
+.bar{height:10px;background:var(--surface2);border-radius:6px;overflow:hidden;margin:6px 0 14px}
+.bar i{display:block;height:100%;background:var(--jade);width:0;transition:width .3s}
+.check{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:8px;cursor:pointer}
+.check .bx{flex:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--muted);display:grid;place-items:center;font-weight:800;color:transparent;margin-top:1px}
+.check[aria-checked="true"] .bx{background:var(--jade);border-color:var(--jade);color:#fff}
+.check[aria-checked="true"] .t{text-decoration:line-through;color:var(--muted)}
+.check .t b{display:block}.check .t span{color:var(--muted);font-size:.9rem}
+.big{font:400 2.6rem/1 "Fraunces",Georgia,serif}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.field{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.field input{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 11px;width:130px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:10px 0 0}
+.steps li{counter-increment:s;position:relative;padding-left:38px;margin:10px 0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85rem;color:var(--muted);margin:6px 0 20px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.airport svg{width:100%;height:auto;display:block}
+footer{padding:10px 0 50px;color:var(--muted);font-size:.85rem}
+.wxrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:2px 0 4px}
+.wxb{background:var(--surface2);border-radius:12px;padding:8px 10px;font-size:.88rem;line-height:1.3}
+.wxb small{display:block;color:var(--muted);font-size:.74rem}
+.wxb b{font-size:1rem}
+.tide{margin-top:10px}
+.tide svg{width:100%;height:auto;display:block}
+.tlist{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0 0;font-size:.8rem;text-align:center}
+.tlist div{background:var(--surface2);border-radius:10px;padding:6px 3px;line-height:1.25}
+.tlist small{display:block;color:var(--muted)}
+.tlist b{display:block;font-size:.95rem}
+.tlist .hi b{color:var(--blue)}.tlist .lo b{color:var(--lotus)}
+.meta{font-size:.82rem;color:var(--muted)}
+.pin ul.inc{padding-left:0;list-style:none}
+.pin ul.inc li{margin:5px 0}
+.src{font-size:.8rem;color:var(--muted);margin-top:8px}
+/* Sincronización, salud y maleta */
+.sync{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:.82rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+.sync i{width:9px;height:9px;border-radius:50%;background:var(--muted);display:inline-block;flex:none}
+.sync.ok i{background:var(--jade)}.sync.warn i{background:var(--gold)}.sync.off i{background:var(--lotus)}
+.sos{background:var(--lotussoft);border:1px solid color-mix(in srgb,var(--lotus) 35%,transparent);border-radius:16px;padding:12px 14px;margin:6px 0 12px}
+.sosgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.sosgrid a{display:block;text-decoration:none;background:var(--surface);border-radius:12px;padding:8px 10px;font-size:.82rem;line-height:1.25}
+.sosgrid b{display:block;font:400 1.5rem/1.1 "Fraunces",Georgia,serif;color:var(--lotus)}
+.num{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.82rem;flex:none;margin-top:1px}
+.ilx{padding:0 14px 12px 54px;font-size:.9rem}
+.tx{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.txc{background:var(--jadesoft);border-radius:9px;padding:3px 9px;font-size:.86rem;font-weight:600}
+.txc.r{background:var(--goldsoft)}.txc.d{background:var(--lotussoft);color:var(--lotus)}
+.rx{display:inline-block;background:var(--gold);color:#2A1700;border-radius:6px;font-size:.66rem;font-weight:800;padding:0 6px;margin-left:6px}
+.srch{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 12px;margin:6px 0 10px}
+.kit{display:flex;gap:10px;align-items:flex-start;padding:12px 14px}
+.kit .t{flex:1;min-width:0}.kit .t b{display:block}.kit .t span{display:block;color:var(--muted);font-size:.88rem;margin-top:2px}
+.kit .for{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.kit .for em{font-style:normal;background:var(--surface2);border-radius:8px;padding:1px 8px;font-size:.78rem}
+.lhead{display:flex;align-items:center;gap:4px;padding:8px 8px 8px 8px}
+.lhead h3{margin:0;font-size:1.05rem;flex:1;min-width:0;word-break:break-word}
+.lcount{font-size:.8rem;color:var(--muted);font-weight:700;margin-right:2px}
+.pi{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 14px;border-top:1px solid var(--line)}
+.pchk{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--muted);background:transparent;display:grid;place-items:center;cursor:pointer;color:transparent;font-weight:800;padding:0}
+.pchk[aria-checked="true"]{background:var(--jade);border-color:var(--jade);color:#fff}
+.ptxt{flex:1;min-width:0;word-break:break-word}
+.pi.done .ptxt{text-decoration:line-through;color:var(--muted)}
+.pbtn{flex:none;min-width:36px;height:36px;border-radius:10px;border:0;background:transparent;cursor:pointer;font-size:1rem}
+.pbtn:hover{background:var(--surface2)}
+.pbtn.dng{background:var(--lotus);color:#fff;font-weight:700;font-size:.8rem;padding:0 10px}
+.pinp{flex:1;min-width:0;border:1px solid var(--jade);border-radius:10px;background:var(--surface);padding:8px 10px}
+.padd{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}
+.padd input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--surface)}
+.toast button{margin-left:12px;border:0;background:transparent;color:inherit;font-weight:800;text-decoration:underline;cursor:pointer}
+.toast.on{pointer-events:auto}
+@media (max-width:420px){.item{grid-template-columns:50px 32px 1fr}.item::before{left:calc(50px + 6px + 15px)}.widgets{gap:6px}.w{padding:8px}.w b{font-size:1rem}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.rs .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.rs .d{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:10px 12px}
+.rs .d h2{font-size:1rem;margin:0 0 4px}.rs .d h2 small{font-weight:400;color:var(--muted)}
+.rs .d ul{margin:0;padding:0;list-style:none}.rs .d li{margin:2px 0;font-size:.9rem}
+.rs .d b{display:inline-block;min-width:52px;color:var(--muted);font-weight:600}
+.rs .z{color:var(--muted);font-size:.8rem;margin-top:5px}.rs .o{color:var(--muted)}
+.rs .n{margin-top:12px;font-size:.88rem;border:1px solid #e4c36a;background:rgba(255,224,130,.18);border-radius:12px;padding:10px 12px}
+.rs .n b{min-width:0;color:inherit}
+</style>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#13788C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tailandia 2026">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('sw.js').then(function(reg){
+      reg.addEventListener('updatefound', function(){
+        var nw = reg.installing; if (!nw) return;
+        nw.addEventListener('statechange', function(){
+          if (nw.state === 'activated' && navigator.serviceWorker.controller && !sessionStorage.getItem('th26-reloaded')){ sessionStorage.setItem('th26-reloaded','1'); location.reload(); }
+        });
+      });
+    }).catch(function(){});
+  });
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="toprow">
+      <div>
+        <h1>Tailandia 2026</h1>
+        <p class="sub">Del 26 de noviembre al 8 de diciembre. Toca cada actividad para ver los detalles.</p>
+      </div>
+      <button class="iconbtn" id="themeBtn" aria-label="Cambiar entre modo claro y oscuro">🌓</button>
+    </div>
+    <div class="widgets" id="widgets"></div>
+    <div class="sync" id="sync" role="button" tabindex="0" style="cursor:pointer"><i></i><span>Conectando…</span></div>
+  </header>
+</div>
+<div class="sticky">
+  <div class="wrap">
+    <nav class="seg" id="seg" aria-label="Secciones"></nav>
+    <div class="days" id="days" role="tablist" aria-label="Días del viaje"></div>
+  </div>
+</div>
+<main class="wrap" id="app"></main>
+<footer class="wrap">Los horarios con “~” son estimaciones. Confirmad siempre las recogidas y los horarios con cada proveedor.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ============ Utilidades ============ */
+const $ = (s, r=document) => r.querySelector(s);
+const gdir = (from, to, m='transit') => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(from) + '&destination=' + encodeURIComponent(to) + '&travelmode=' + m;
+const gplace = q => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
+const R = (l, from, to, m='transit') => ({l, from, to, m});
+const G = (l, q) => ({l, q});
+const MODE_ICON = {walking:'🚶', transit:'🚇', driving:'🚕'};
+
+const store = {
+  get(k, d){ try { const v = localStorage.getItem('th26:' + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem('th26:' + k, JSON.stringify(v)); } catch(e){} }
+};
+
+/* Lugares frecuentes para Google Maps */
+const L = {
+  VICTORA:'Victora Hostel, 365/6 Phra Sumen Road, Phra Nakhon, Bangkok',
+  AMARA:'Amara Bangkok Hotel, 180/1 Surawong Road, Bang Rak, Bangkok',
+  BKK:'Suvarnabhumi Airport, Bangkok',
+  ARTHIT:'Phra Arthit Pier, Bangkok',
+  RAJINEE:'Rajinee Pier, Bangkok',
+  TIEN:'Tha Tien Pier, Bangkok',
+  ATSADANG:'Atsadang Pier, Bangkok',
+  KALAYA:'Wat Kalayanamit Woramahawihan, Bangkok',
+  YAOWARAT:'Yaowarat Road, Bangkok',
+  MBK:'MBK Center, Phaya Thai Road, Bangkok',
+  CHATU:'Chatuchak Weekend Market, Bangkok',
+  CNCP:'Chong Nonsi Canal Park, Bangkok',
+  CPARK:'Dusit Central Park, 946 Rama IV Road, Bangkok',
+  GRAND:'Grand Palace, Bangkok',
+  PHO:'Wat Pho, Bangkok',
+  ARUN:'Wat Arun, Bangkok',
+  KBV:'Krabi International Airport',
+  TIPA:'Krabi Tipa Resort, Ao Nang, Krabi',
+  HKR:'Krabi Resort, Ao Nang, Krabi',
+  ICON:'ICONSIAM, Bangkok',
+  SATHORN:'Sathorn Pier, Bangkok',
+  KHAO:'Khao San Road, Bangkok',
+  KHAOTHONG:'Khaothong Hill Restaurant, Krabi',
+  BLUEMASS:'Blue Beach Massage Krabi',
+  KUAN:'Kuan Nom Saow, Krabi',
+  FOREST:'Into the Forest restaurant, Ao Nang, Krabi',
+  NIGHTM:'Night Market Place Krabi',
+  MONKEY:'Ao Nang Monkey Trail, Krabi',
+  TONSAI:'Tonsai Beach, Krabi',
+  RAILAY:'Railay Beach, Krabi',
+  AONANG:'Ao Nang Beach, Krabi',
+  MUCH:'Much & Mellow Bread and Brunch, Ao Nang, Krabi',
+  WALK:'Ao Nang Walking Street, Krabi',
+  THALANE:'Ao Thalane, Krabi',
+  TIGER:'Tiger Cave Temple, Krabi',
+  C898:'Cafe 8.98, Ao Nang, Krabi',
+  GIANTS:'Following Giants, 305 mu 2, Khao Khram, Tha Pom Klong Song Nam, Krabi 81000, Thailand',
+  ANDALAY:'Andalay Beach Bar & Cafe, Nong Thale, Krabi',
+  DRAGON:'Dragon View Bar & Restaurant, Krabi'
+};
+
+/* Plano por tipo de mercancía de Chatuchak (esquema, no a escala) */
+const CH_CATS = [
+ {k:'ropa', n:'Ropa y accesorios', c:'#E4572E', s:[2,3,4,5,6,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26]},
+ {k:'usada', n:'Ropa de segunda mano y varios', c:'#8E6BBF', s:[2,3,4,5,6,22,25,26]},
+ {k:'hogar', n:'Muebles y decoración del hogar', c:'#C98A1B', s:[1,3,4,7,8]},
+ {k:'comida', n:'Comida y bebida', c:'#2E9E5B', s:[2,3,4,23,24,26,27]},
+ {k:'plantas', n:'Plantas y jardinería', c:'#5BAA2A', s:[3,4]},
+ {k:'artesania', n:'Artesanía', c:'#D1568A', s:[8,9,10,11]},
+ {k:'mascotas', n:'Mascotas y accesorios', c:'#2F8FC9', s:[8,9,11,13]},
+ {k:'ceramica', n:'Cerámica', c:'#A0693D', s:[11,13,15,17,19,25]},
+ {k:'arte', n:'Arte y galerías', c:'#1F7A8C', s:[7]},
+ {k:'libros', n:'Libros', c:'#6B7A8F', s:[1,27]},
+ {k:'antig', n:'Antigüedades y coleccionismo', c:'#B5485D', s:[1,26]}
+];
+function chatuMap(){
+  let t = '';
+  for (let n = 1; n <= 27; n++){
+    const dots = CH_CATS.filter(c => c.s.includes(n)).map(c => '<i style="background:' + c.c + '" title="' + c.n + '"></i>').join('');
+    t += '<div class="chs"><b>' + n + '</b><span>' + dots + '</span></div>';
+  }
+  const leg = CH_CATS.map(c => '<li><i style="background:' + c.c + '"></i><span><b>' + c.n + '</b>: secciones ' + c.s.join(', ') + '</span></li>').join('');
+  return '<div class="chmap"><div class="chtop"><b>Plano por tipo de mercancía</b><small>Esquema, no a escala. Cada cuadro es una sección y los puntos de color son lo que se vende en ella.</small></div><div class="chgrid">' + t + '</div>' +
+    '<ul class="chleg">' + leg + '</ul>' +
+    '<p class="meta"><b>Dónde están los accesos:</b> salida 2 del MRT Kamphaeng Phet, junto a las secciones de libros (1 y 27); el BTS Mo Chit (salidas 2 y 3) da al mercado de plantas, en el círculo exterior; y la torre del reloj está en el centro del mercado, útil como punto de referencia. Hay que ir con la torre como referencia porque este esquema no dibuja la forma real del mercado.</p>' +
+    '<p class="meta">Las guías no coinciden del todo: una pone antigüedades también en las secciones 7, 8 y 11, y otra no especifica la 9. Usadlo como orientación y mirad los planos en cada acceso. Fuentes: <a target="_blank" rel="noopener noreferrer" href="https://chatuchakmarket.org/?p=1317">chatuchakmarket.org</a> y <a target="_blank" rel="noopener noreferrer" href="https://www.expique.com/chatuchak-market-jj-market/">Expique</a>.</p></div>';
+}
+
+const INC = (inc, exc, extra) => '<p><b>Incluye</b></p><ul class="inc">' + inc.map(x => '<li>✅ ' + x + '</li>').join('') + '</ul>' + (exc && exc.length ? '<p><b>No incluye</b></p><ul class="inc">' + exc.map(x => '<li>❌ ' + x + '</li>').join('') + '</ul>' : '') + (extra ? '<p class="src">' + extra + '</p>' : '');
+/* ============ Datos del viaje ============ */
+const DAYS = [
+ { key:'2026-11-26', short:'Jue', num:'26', date:'Jueves 26 de noviembre', title:'Madrid hacia Bangkok', city:'viaje', scene:'plane',
+   sleep:'En el avión', sum:'Vuelo nocturno de 11 h 45 min. Aterrizáis mañana a las 15:30.',
+   items:[
+    {t:'Antes', icon:'📝', cat:'otros', title:'Pendientes antes de salir', sum:'TDAC, formulario de seguro, euros en efectivo',
+     det:['<ul><li>Rellenar la <b>TDAC</b> (tarjeta digital de llegada): se abre 3 días antes, es gratuita y hay una por persona.</li><li>Rellenar el <b>formulario de seguro</b> del tour de Ayutthaya (obligatorio).</li><li>Llevar <b>euros en efectivo</b> para cambiar en Superrich.</li><li>Comprobar el límite diario de las tarjetas para el cajero.</li></ul>'],
+     link:{label:'Ver lista completa', view:'antes-de-volar'}},
+    {t:'21:45', icon:'✈️', cat:'vuelo', title:'Vuelo Iberojet E9845, Madrid a Bangkok', sum:'Directo, 11 h 45 min. Llegada el vie 27 a las 15:30 (hora de Tailandia).',
+     det:['<ul><li>Equipaje: 1 accesorio personal y 1 bulto de mano (25 × 45 × 56 cm, máx. 8 kg). <b>No incluye maleta facturada.</b></li><li>Asiento: se asigna en el check-in.</li><li>Hay 6 horas de diferencia con Madrid (Tailandia va por delante).</li></ul>'],
+     maps:[G('Ver Madrid-Barajas','Aeropuerto Adolfo Suárez Madrid-Barajas')],
+     refs:[['Reserva','1FN52O'],['Billete Nuria','7835462120437'],['Billete Jose Luis','7835462120438']]}
+   ]},
+ { key:'2026-11-27', short:'Vie', num:'27', date:'Viernes 27 de noviembre', title:'Llegada, barco, drones y Chinatown', city:'bkk', scene:'river', wx:'bkk',
+   sleep:'Victora Hostel, Banglamphu (noche 1 de 2)', sum:'El único día del viaje con espectáculo de drones. Hay una parte opcional si vais bien de tiempo.',
+   items:[
+    {t:'15:30', icon:'🛬', cat:'vuelo', title:'Aterrizaje en Suvarnabhumi (BKK)', sum:'Después, inmigración con la TDAC lista',
+     det:['<ul><li>Solo lleváis equipaje de mano, así que no hay que esperar maletas.</li><li>Tened a mano el código QR de la TDAC, el pasaporte, la reserva del hostel (conf. 6902252527) y el billete de salida del 7 dic.</li><li>La inmigración puede llevar entre 30 y 60 min (estimación).</li></ul>']},
+    {t:'~16:45', icon:'💱', cat:'dinero', title:'Cambio en Superrich y cajero, planta B', sum:'Mostrador naranja, a la izquierda de las máquinas del Airport Rail Link. CN Money está un poco más adelante: comparad.',
+     det:['<ol class="steps"><li>Tras inmigración, id a la sala de llegadas (planta 2) y seguid los carteles de <b>Airport Rail Link</b> o <b>Train</b>.</li><li>Bajad en escalera o ascensor a la <b>planta B</b> (sótano, dos plantas por debajo).</li><li>Superrich es el <b>mostrador naranja</b>, a la izquierda de las máquinas de billetes del tren. Hay unos pocos mostradores seguidos; compara con los de al lado.</li></ol><ul><li>Horario: de 6:00 a 23:00. Hay que llevar el <b>pasaporte</b>.</li><li>Los mostradores de la sala de llegadas pagan bastante peor.</li><li>El cajero cobra unos 220 THB fijos por retirada, así que conviene sacar el máximo de una vez. Rechazad siempre la conversión a euros que ofrece el cajero.</li><li>Ya tenéis comprometidos <b>21.650 THB</b> en efectivo (tours, Following Giants y depósito del hotel de Krabi).</li></ul>'],
+     maps:[G('Ver Superrich del aeropuerto','SuperRich Suvarnabhumi Airport Bangkok')], link:{label:'Ver el mapa del aeropuerto', view:'antes-de-volar'}},
+    {t:'~17:15', icon:'🚕', cat:'trayecto', title:'Taxi o Grab desde la planta 1 hasta el hostel', sum:'45 a 90 min con el tráfico del viernes (estimación)',
+     det:['<ul><li>El taxi y el Grab se cogen en la <b>planta 1</b> del aeropuerto.</li><li>Con taxi, que pongan el taxímetro. Se pagan aparte los peajes.</li><li>Para usar Grab necesitáis datos: comprad una SIM o eSIM antes.</li></ul>'],
+     routes:[R('Aeropuerto al Victora Hostel',L.BKK,L.VICTORA,'driving')]},
+    {t:'~18:15', icon:'🏨', cat:'hotel', title:'Check-in en Victora Hostel', sum:'Dejad las mochilas y salid ligeros',
+     det:['<ul><li>Phra Sumen Road 365/6, Banglamphu. Check-in desde las 15:00 y recepción hasta las 00:00.</li><li>Habitación doble con balcón. 2 noches (27 al 29 nov), sin comidas.</li><li>Piden un documento de identidad y una tarjeta de crédito al registrarse.</li><li>Teléfono: +66 64 883 6465.</li></ul>'],
+     maps:[G('Ver el hostel','Victora Hostel Phra Sumen Road Bangkok')], refs:[['Conf.','6902252527']]},
+    {t:'18:30', icon:'⛴️', cat:'trayecto', title:'Barco azul de Phra Arthit a Rajinee', sum:'El último barco sale a las 19:00. 40 THB por trayecto.',
+     det:['<ul><li>Muelle <b>Phra Arthit (N13)</b>, a unos 10 min a pie del hostel (estimación).</li><li>Sale un barco cada 30 min. El último desde Phra Arthit sale a las <b>19:00</b>.</li><li>Billete suelto: 40 THB. El pase de día cuesta 150 THB y no compensa para un solo trayecto.</li><li>Bajad en <b>Rajinee (N7)</b>, en la orilla de Bangkok, frente a Wat Arun.</li><li>Si no llegáis al muelle a tiempo, haced el trayecto en Grab hasta Tha Tien.</li></ul>'],
+     routes:[R('Hostel al muelle Phra Arthit',L.VICTORA,L.ARTHIT,'walking'), R('Muelle Phra Arthit a Rajinee',L.ARTHIT,L.RAJINEE,'transit')],
+     warn:'ICONSIAM queda río abajo, mientras que los drones son en Wat Arun, río arriba. Solo se pueden combinar si cogéis un barco a las 18:00 o antes.'},
+    {t:'19:00', icon:'📱', cat:'otros', title:'Mirar la app de GetYourGuide', sum:'Aparece la recogida del tour de mañana (de 19:00 a 21:00)',
+     det:['<ul><li>Confirmad el punto de encuentro exacto en el MBK (planta baja o primera planta).</li><li>Confirmad el idioma del guía: la reserva dice español, pero una pregunta frecuente menciona un guía de habla inglesa.</li><li>Hace falta tener datos en el móvil.</li></ul>'],
+     refs:[['Reserva','GYGBLG9X36F5']]},
+    {t:'19:50', icon:'🎇', cat:'visita', title:'Drones sobre Wat Arun', sum:'Mirad desde la orilla de Bangkok, cerca de Tha Tien',
+     det:['<ul><li>Es parte del festival <b>Vijit Chao Phraya</b> (13 nov al 13 dic), gratuito. El viernes 27 es la única noche con drones durante vuestra estancia en Bangkok.</li><li>Los recintos del templo están restringidos durante el show, así que mirad desde la orilla este: <b>Tha Tien</b> es el punto clásico.</li><li>Las zonas de visión abren a las 18:00 y los muelles se llenan: llegad con tiempo.</li><li>De Rajinee a Tha Tien hay unos 10 min a pie (estimación).</li></ul>'],
+     routes:[R('Rajinee a Tha Tien',L.RAJINEE,L.TIEN,'walking')], maps:[G('Ver Tha Tien','Tha Tien Pier Bangkok')],
+     warn:'Una fuente sitúa los drones del viernes en el puente Krungthep. La mayoría los pone en Wat Arun. Confirmadlo en la página de Facebook “Vijit Chao Phraya” ese mismo día.'},
+    {t:'20:20', icon:'💃', cat:'visita', opt:true, title:'Luz, sonido y baile tradicional en Wat Kalayanamit', sum:'Funciones a las 19:20 y a las 20:20 de viernes a domingo. Solo si vais bien de tiempo.',
+     det:['<ul><li>Espectáculo cultural “The Wonders of Thai Artistry”, en la orilla de Thonburi, a poco más de 1 km al sur de Wat Arun.</li><li>Los espectáculos públicos del festival son gratuitos.</li><li><b>Cómo ir:</b> andad de Tha Tien hacia el sur hasta el muelle <b>Atsadang</b> (junto a Pak Khlong Talat) y cruzad en el ferry (6 THB) hasta el muelle de Wat Kalayanamit. Comprobad que el ferry siga operando de noche. Alternativa: Grab.</li><li>Lo realista es llegar sobre las 20:30 o 20:45. Si ya empezó la función, la proyección de luz sobre el templo tiene pases cada 30 min hasta las 21:30.</li></ul>'],
+     routes:[R('Tha Tien al muelle Atsadang',L.TIEN,L.ATSADANG,'walking'), R('Tha Tien a Wat Kalayanamit',L.TIEN,L.KALAYA,'driving')], maps:[G('Ver Wat Kalayanamit','Wat Kalayanamit Woramahawihan Bangkok')]},
+    {t:'~21:15', icon:'🍜', cat:'comida', title:'Cena en Yaowarat, el Chinatown de Bangkok', sum:'Los puestos funcionan de 18:00 a 23:00',
+     det:['<ul><li>Probad <b>Nai Ek Roll Noodle</b> (reconocimiento Bib Gourmand) o el marisco de <b>T&amp;K Seafood</b>.</li><li>Cuenta con efectivo: muchos puestos no aceptan tarjeta.</li><li>Desde Atsadang, el MRT Sanam Chai va a Wat Mangkon en unas 2 paradas. En Grab son unos 20 a 30 min (estimación).</li><li>Si os saltáis Wat Kalayanamit, podéis cenar antes y con más calma.</li></ul>'],
+     routes:[R('Wat Kalayanamit a Yaowarat',L.KALAYA,L.YAOWARAT,'transit')], maps:[G('Ver Nai Ek Roll Noodle','Nai Ek Roll Noodles Yaowarat Bangkok'),G('Ver T&K Seafood','T&K Seafood Yaowarat Bangkok')]},
+    {t:'~22:45', icon:'🚕', cat:'trayecto', title:'Vuelta al hostel en Grab', sum:'Mañana hay que madrugar: salida a las 6:00',
+     routes:[R('Yaowarat al Victora Hostel',L.YAOWARAT,L.VICTORA,'driving')]}
+   ]},
+ { key:'2026-11-28', short:'Sáb', num:'28', date:'Sábado 28 de noviembre', title:'Ayutthaya, el tren y el mercado flotante', city:'bkk', scene:'ruins', wx:'bkk',
+   sleep:'Victora Hostel, Banglamphu (noche 2 de 2)', sum:'Excursión de 7:00 a unas 18:00, compras en el MBK, ICONSIAM si da tiempo y cena en Khao San Road.',
+   items:[
+    {t:'06:00', icon:'🚕', cat:'trayecto', title:'Grab del hostel al MBK Center', sum:'25 a 35 min a esa hora (estimación)',
+     det:['<ul><li>No hay metro cerca del hostel, así que Grab o taxi es lo más fiable.</li><li>Pedidlo directamente al MBK Center, entrada de Phaya Thai Rd.</li></ul>'],
+     routes:[R('Victora Hostel al MBK Center',L.VICTORA,L.MBK,'driving')]},
+    {t:'06:50', icon:'📍', cat:'otros', title:'Llegar al punto de encuentro', sum:'Entrada del MBK junto a The Beef Master. El guía lleva un cartel de “TripGuru”.',
+     det:['<ul><li>Hay que llegar 10 min antes para no perder el turno.</li><li>La reserva indica la entrada de la planta baja. Una nota del mismo correo dice que desde abril de 2026 es la primera planta. <b>Confirmadlo en la app</b>.</li></ul>'],
+     maps:[G('Ver el MBK Center','MBK Center Bangkok')]},
+    {t:'07:00', icon:'🚂', cat:'visita', title:'Tour: Ayutthaya, tren de Maeklong y mercado flotante', sum:'11 horas, grupo reducido. El almuerzo no está incluido.',
+     det:['<ul><li>Visitas: el mercado del tren de Maeklong, el mercado flotante de Damnoen Saduak (con paseo en barca de cola larga) y las ruinas de Ayutthaya, patrimonio de la UNESCO, con la famosa cabeza de Buda entre las raíces de un árbol.</li><li>El tren pasa varias veces al día con horario fijo, pero la hora exacta durante la visita no está garantizada.</li><li>El paseo en barca es solo de ida: se vuelve andando por el mercado.</li><li>El vehículo no admite maletas: dejad el equipaje en el hostel.</li><li>Cancelación gratuita hasta las 7:00 del 27 nov. Cargo de 153,32 € el 25 nov.</li></ul>',
+          INC(['Guía local (audio guía en español disponible)','Vehículo con aire acondicionado y traslados entre las visitas','Agua potable','Seguro','Paseo de ida en barca de cola larga en el mercado flotante','Entradas: Wat Yai Chai Mongkhon (20 THB), Wat Phra Sri Sanphet (80 THB) y Wat Mahathat (80 THB)'],
+              ['Almuerzo','Recogida y vuelta al hotel (el grupo se reúne y acaba en el MBK)','Gastos personales'],
+              'Fuente: ficha del tour en TripGuru. Llevad ropa que cubra brazos y piernas para los templos, cámara, gorra, crema solar, gafas de sol, calzado cómodo, repelente y efectivo.')],
+     warn:'Antes del tour hay que rellenar el formulario de seguro con los datos de pasaporte de los dos. Está en “Antes de volar”.',
+     refs:[['Reserva','GYGBLG9X36F5']], link:{label:'Ver cómo rellenar el formulario', view:'antes-de-volar'},
+     links:[{l:'Ficha del tour en TripGuru',url:'https://thetripguru.com/tour/ayutthaya-railway-market-and-damnoen-saduak-floating-market/',icon:'📄'},{l:'WhatsApp de TripGuru (solo chat)',url:'https://api.whatsapp.com/send?phone=12544544878',icon:'💬'}]},
+    {t:'~18:00', icon:'🏁', cat:'otros', title:'Fin del tour en el MBK', sum:'Estimado a partir de las 11 h de duración',
+     maps:[G('Ver el punto final','444 Phaya Thai Rd, Bangkok')]},
+    {t:'~18:15', icon:'🛍️', cat:'visita', title:'Compras en el MBK Center', sum:'Un rato por la tarde, justo donde termina el tour',
+     det:['<ul><li>El tour os deja en el propio MBK, así que no hace falta moverse.</li><li>Según lo que he encontrado, el MBK abre hasta las 22:00. Comprobadlo en Google Maps ese día.</li><li>Poned una hora límite (sobre las 19:30) si queréis llegar al ICONSIAM con tiempo.</li></ul>'],
+     maps:[G('Ver el MBK Center','MBK Center Bangkok')]},
+    {t:'~19:30', icon:'🌉', cat:'visita', opt:true, title:'ICONSIAM, si vais bien de tiempo', sum:'BTS a Saphan Taksin y barco al otro lado del río',
+     det:['<ul><li>BTS desde National Stadium (junto al MBK) hasta <b>Saphan Taksin</b>, línea Silom directa.</li><li>Desde Saphan Taksin se va andando al Sathorn Pier. El barco lanzadera del ICONSIAM <b>no es gratuito</b>: según las fuentes más recientes cuesta unos 8 THB desde mayo de 2023 y funciona de 9:00 a 23:00; el billete se compra en el ICONSIAM Pier 1. <b>Corrijo lo que puse antes:</b> pensaba que era gratis.</li><li>Alternativa: autobús lanzadera gratuito del ICONSIAM desde la salida 1 del BTS Krung Thonburi. Comprobad el horario en el sitio.</li><li>La fuente musical tiene 6 pases entre las 18:30 y las 21:00. Los sábados y domingos hay fuegos artificiales sobre el Puente Memorial hacia las 20:45.</li><li>Si el MBK os lleva más de lo previsto, saltaos el ICONSIAM y cenad directamente.</li></ul>'],
+     routes:[R('MBK a Sathorn Pier',L.MBK,L.SATHORN,'transit'), R('MBK al ICONSIAM',L.MBK,L.ICON,'transit')], maps:[G('Ver ICONSIAM','ICONSIAM Bangkok')]},
+    {t:'~21:00', icon:'🍜', cat:'comida', title:'Cena en Khao San Road', sum:'En vuestro barrio, el Victora está en Banglamphu',
+     det:['<ul><li>Ideas de dónde cenar, todas sugerencias mías que no he podido confirmar: los puestos de pad thai del extremo de Tanao Road, la Soi Rambuttri, Phra Athit Road, Thip Samai y Roti Mataba.</li><li>Comprobad los horarios en Google Maps esa noche, porque algunos locales cierran pronto.</li><li>Desde Khao San volvéis al hostel andando, dentro del mismo barrio. Mirad la ruta a pie.</li></ul>'],
+     routes:[R('ICONSIAM a Khao San Road',L.ICON,L.KHAO,'driving'), R('Khao San Road al Victora Hostel',L.KHAO,L.VICTORA,'walking')], maps:[G('Ver Khao San Road','Khao San Road Bangkok')]}
+   ]},
+ { key:'2026-11-29', short:'Dom', num:'29', date:'Domingo 29 de noviembre', title:'Chatuchak, atardecer y paseo urbano', city:'bkk', scene:'city', wx:'bkk',
+   sleep:'Amara Bangkok Hotel, Surawong (1 noche)', sum:'Mercado de Chatuchak, llegada al Amara a última hora de la tarde y atardecer desde la azotea.',
+   items:[
+    {t:'~08:00', icon:'🧳', cat:'hotel', title:'Salida del Victora y Grab al Amara', sum:'Preguntad si guardan las mochilas antes del check-in',
+     det:['<ul><li>Check-out del hostel hasta las 12:00.</li><li>El Amara tiene el check-in a las 15:00. El correo no dice nada sobre guardar equipaje: preguntadlo al llegar.</li></ul>'],
+     routes:[R('Victora Hostel al Amara',L.VICTORA,L.AMARA,'driving')]},
+    {t:'~09:15', icon:'🚇', cat:'trayecto', title:'MRT desde Silom hasta Chatuchak Park', sum:'Línea azul directa, unos 25 a 30 min (estimación)',
+     det:['<ul><li>Desde el Amara hasta la estación MRT Silom (junto al BTS Sala Daeng) hay unos 10 min a pie.</li><li>Salid por la <b>salida 1</b> de Chatuchak Park.</li></ul>'],
+     routes:[R('Amara a Chatuchak',L.AMARA,L.CHATU,'transit')]},
+    {t:'~09:45', icon:'🛍️', cat:'visita', title:'Chatuchak Weekend Market', sum:'Abre sábados y domingos de 9:00 a 18:00. Plano por secciones dentro.',
+     det:['<ul><li>Más de 15.000 puestos repartidos en 27 secciones.</li><li>Id pronto, llevad efectivo y una mochila pequeña, y regatead.</li><li>Se puede comer allí mismo. Aquí podéis comprar el protector solar y el aftersun, en vez de llevarlos de casa.</li></ul>', chatuMap()],
+     maps:[G('Ver Chatuchak','Chatuchak Weekend Market Bangkok')]},
+    {t:'~14:30', icon:'🍽️', cat:'comida', title:'Comer en el mercado y volver al centro', sum:'MRT de Chatuchak Park a Silom. Podéis alargar la visita: el check-in es tarde.',
+     routes:[R('Chatuchak al Amara',L.CHATU,L.AMARA,'transit')]},
+    {t:'~16:30', icon:'🏨', cat:'hotel', title:'Llegada al Amara: check-in rápido y bañador', sum:'Con tiempo justo para el check-in y ponerse el bañador. El check-in oficial es desde las 15:00.',
+     det:['<ul><li>Surawong Road 180/1, Bang Rak. Teléfono: +66 2 021 8888.</li><li>Llegar más tarde de las 15:00 no es problema para el check-in, que es desde esa hora. Si preferís avisar, llamad al hotel.</li><li>1 noche, 29 al 30 nov. Check-out el lunes hasta las 12:00.</li><li>Al llegar piden un documento de identidad y una tarjeta de crédito.</li><li>Cargo de 4.163,68 THB el 22 nov. Cancelación gratuita hasta el 23 nov a las 23:59.</li></ul>'],
+     maps:[G('Ver el hotel','Amara Bangkok Hotel Surawong')], refs:[['Conf.','5098794014']]},
+    {t:'~17:15', icon:'🌇', cat:'visita', title:'Atardecer en la azotea del Amara (17:48)', sum:'Bar AkaAza en la planta 26 y piscina infinita. Con el bañador ya puesto.',
+     det:['<ul><li>El sol se pone hacia las <b>17:48</b> (cálculo astronómico).</li><li>Subid unos 25 min antes para pillar sitio.</li><li>Según lo que encontré, la piscina es solo para huéspedes y abre de 6:00 a 20:00. Confirmadlo en recepción.</li></ul>']},
+    {t:'~18:30', icon:'🌳', cat:'visita', title:'Paseo por el Chong Nonsi Canal Park', sum:'A 5 min a pie al sur del BTS Chong Nonsi',
+     det:['<ul><li>Desde el Amara hay unos 15 a 20 min andando (estimación).</li><li>No he encontrado un horario actual del parque: mirad el cartel de la entrada.</li></ul>'],
+     routes:[R('Amara al Chong Nonsi Canal Park',L.AMARA,L.CNCP,'walking')]},
+    {t:'~19:30', icon:'🍽️', cat:'comida', title:'Cena en Central Park, planta -1', sum:'Dusit Central Park, abierto de 10:00 a 22:00. La cena es en la planta -1.',
+     det:['<ul><li>Cogeed el BTS de Chong Nonsi a Sala Daeng (una parada). La estación conecta directamente con el centro.</li><li>Dirección: Rama IV Road 946.</li><li>El jardín de la azotea (Dusit Arun) abre de 6:00 a 22:00 y se entra por la planta 6.</li></ul>'],
+     routes:[R('Canal Park a Central Park',L.CNCP,L.CPARK,'transit')], maps:[G('Ver Central Park','Dusit Central Park Bangkok')]},
+    {t:'~21:30', icon:'🚶', cat:'trayecto', title:'Vuelta al Amara', sum:'Unos 10 min andando desde Sala Daeng',
+     routes:[R('Central Park al Amara',L.CPARK,L.AMARA,'walking')]}
+   ]},
+ { key:'2026-11-30', short:'Lun', num:'30', date:'Lunes 30 de noviembre', title:'Templos y vuelo a Krabi', city:'bkk', scene:'temple', wx:'bkk',
+   sleep:'Krabi Tipa Resort, Ao Nang (noche 1 de 7)', sum:'Templos por la mañana, regreso en metro y despegue a las 18:40.',
+   items:[
+    {t:'06:45', icon:'🧳', cat:'hotel', title:'Check-out rápido en el Amara y dejar el equipaje', sum:'Pedid que os lo guarden en la consigna (luggage storage)',
+     det:['<ul><li>Bajad a recepción con las mochilas, haced el check-out formal y pedid el ticket de equipaje.</li><li>El check-out oficial es hasta las 12:00, pero así quedáis libres para los templos.</li></ul>']},
+    {t:'07:00', icon:'🥐', cat:'comida', title:'Desayuno bufé en el hotel', sum:'45 minutos con calma: vais a caminar mucho bajo el sol',
+     det:['<ul><li>El desayuno está incluido en la reserva.</li></ul>']},
+    {t:'07:45', icon:'🚇', cat:'trayecto', title:'Metro MRT hasta Sanam Chai', sum:'Esquivando el tráfico de la mañana',
+     det:['<ul><li>Caminad o coged un taxi muy corto hasta la estación <b>Sam Yan</b>.</li><li>Línea azul del MRT y bajad en <b>Sanam Chai</b> (unas 4 paradas).</li><li>Desde allí, unos 10 min a pie o un tuk-tuk corto hasta la entrada del Gran Palacio.</li><li>La estación Silom, de la misma línea azul y una parada antes de Sam Yan, también sirve y queda más cerca del hotel.</li></ul>'],
+     routes:[R('Amara a MRT Sam Yan',L.AMARA,'Sam Yan MRT Station, Bangkok','walking'),R('MRT Sam Yan a Sanam Chai','Sam Yan MRT Station, Bangkok','Sanam Chai MRT Station, Bangkok','transit'),R('Sanam Chai al Gran Palacio','Sanam Chai MRT Station, Bangkok',L.GRAND,'walking')]},
+    {t:'08:30', icon:'🛕', cat:'visita', title:'Gran Palacio y Wat Phra Kaew (Buda de Esmeralda)', sum:'Sois de los primeros en entrar. Duración: 2 horas.',
+     det:['<ul><li>500 THB por persona. La venta de entradas es de 8:30 a 15:30.</li><li>Evitáis las masas y aprovecháis las dos horas más frescas del día.</li><li>Código de vestimenta estricto: hombros y rodillas cubiertos, sin camisetas de tirantes ni pantalón corto.</li></ul>'],
+     maps:[G('Ver el Gran Palacio','Grand Palace Bangkok')]},
+    {t:'10:30', icon:'🚶', cat:'trayecto', title:'Caminata hacia Wat Pho', sum:'Unos 10 minutos hacia el sur',
+     routes:[R('Gran Palacio a Wat Pho',L.GRAND,L.PHO,'walking')]},
+    {t:'10:45', icon:'🛕', cat:'visita', title:'Wat Pho, el Buda gigante reclinado', sum:'Y los patios de estupas. Duración: 1 hora.',
+     det:['<ul><li>Unos 300 THB. Abre de 8:00 a 18:30.</li></ul>'], maps:[G('Ver Wat Pho','Wat Pho Bangkok')]},
+    {t:'11:45', icon:'⛴️', cat:'trayecto', title:'Cruce en barco a Wat Arun', sum:'Transbordador público desde Tha Tien, menos de 5 THB',
+     routes:[R('Wat Pho a Tha Tien',L.PHO,L.TIEN,'walking')]},
+    {t:'12:00', icon:'🛕', cat:'visita', title:'Wat Arun, el Templo del Amanecer', sum:'Su silueta vertical decorada con porcelana china. Duración: 45 min.',
+     det:['<ul><li>Entrada de unos 200 THB. Abre de 8:00 a 18:00 y la última entrada es hacia las 17:30. Hombros y rodillas cubiertos.</li></ul>'], maps:[G('Ver Wat Arun','Wat Arun Bangkok')]},
+    {t:'12:45', icon:'🍜', cat:'comida', title:'Regreso en barco y almuerzo exprés', sum:'Un restaurante local cercano o un puesto, y a hidratarse bien'},
+    {t:'14:45', icon:'🚇', cat:'trayecto', title:'Regreso al Amara en metro', sum:'Caminad a Sanam Chai y MRT de vuelta hasta Sam Yan',
+     det:['<ul><li>El metro os aísla del tráfico, que a esa hora ya empieza a complicarse en superficie.</li></ul>'],
+     routes:[R('Wat Arun a Sanam Chai',L.ARUN,'Sanam Chai MRT Station, Bangkok','walking'),R('Sanam Chai a MRT Sam Yan','Sanam Chai MRT Station, Bangkok','Sam Yan MRT Station, Bangkok','transit'),R('Sam Yan al Amara','Sam Yan MRT Station, Bangkok',L.AMARA,'walking')]},
+    {t:'15:15', icon:'🧳', cat:'hotel', title:'Recoger las mochilas de mano y pedir taxi o Grab', sum:'Solo mostráis el ticket de equipaje',
+     det:['<ul><li>Podéis pedir Grab o Bolt desde la puerta del hotel.</li></ul>']},
+    {t:'15:35', icon:'🚕', cat:'trayecto', title:'Trayecto crítico al aeropuerto', sum:'Entre 1 h 15 min y 1 h 45 min por el atasco del lunes',
+     det:['<ul><li>Pedid al conductor que vaya por la <b>autopista de peaje</b>: “Expressway, please”.</li><li>El peaje se paga aparte.</li></ul>'],
+     routes:[R('Amara a Suvarnabhumi',L.AMARA,L.BKK,'driving')]},
+    {t:'17:20', icon:'🛫', cat:'vuelo', title:'Llegada a Suvarnabhumi, terminal de salidas', sum:'1 h 20 min antes del vuelo',
+     det:['<ul><li>El bulto de mano de este vuelo (VietJet) es de 23 × 36 × 56 cm y 5 kg como máximo, menos que en los vuelos con Iberojet e ITA.</li></ul>'],
+     warn:'Margen ajustado: con el peor caso de tráfico (1 h 45 min) llegaríais a las 17:20 justas. Tened el pase de embarque digital ya descargado y confirmad con VietJet la hora de cierre del embarque.'},
+    {t:'17:30', icon:'🛂', cat:'otros', title:'Seguridad directa', sum:'Con la tarjeta digital y sin equipaje que facturar, de 17:30 a 18:10',
+     det:['<ul><li>Entráis directamente al control de seguridad doméstico.</li></ul>']},
+    {t:'18:10', icon:'🚪', cat:'vuelo', title:'Embarque', sum:'Llegáis a la puerta justo a tiempo'},
+    {t:'18:40', icon:'✈️', cat:'vuelo', title:'Despegue del VZ344 a Krabi', sum:'Thai VietJet. Llegada a las 20:10.', refs:[['Reserva','EFW5T2']]},
+    {t:'~20:30', icon:'🚕', cat:'trayecto', title:'Aeropuerto de Krabi al hotel', sum:'No hay traslado reservado',
+     det:['<ul><li>El correo no incluye ningún traslado. Mirad opciones de taxi, minibús o Grab al salir.</li><li>Una duración razonable es de unos 40 min hasta Ao Nang (estimación).</li></ul>'],
+     routes:[R('Aeropuerto de Krabi al Krabi Tipa',L.KBV,L.TIPA,'driving')]},
+    {t:'~21:30', icon:'🏨', cat:'hotel', title:'Check-in en Krabi Tipa Resort', sum:'7 noches, hasta el 7 de diciembre',
+     det:['<ul><li>Ao Nang Beach, Moo 2, 121/1. Teléfono: +66 75 637 527. Habitación Deluxe doble.</li><li>Piden un depósito de <b>2.000 THB en efectivo</b>, que devuelven al salir.</li><li>El desayuno no está incluido: 400 THB por persona y noche.</li><li>Cargo de 20.954,93 THB el 14 nov. Cancelación gratuita hasta el 15 nov a las 23:59.</li><li>Como llegáis de noche, os conviene avisar al hotel de la hora de llegada (sugerencia).</li></ul>'],
+     maps:[G('Ver el hotel','Krabi Tipa Resort Ao Nang')], refs:[['Conf.','5132817769']]}
+   ]},
+ { key:'2026-12-01', short:'Mar', num:'1', date:'Martes 1 de diciembre', title:'Tour James Bond', city:'krabi', scene:'sea', variant:0, wx:'krabi',
+   sleep:'Krabi Tipa Resort, Ao Nang (noche 2 de 7)', sum:'Desayuno, excursión de 9:00 a 17:00, moto, cena en Walking Street, fuego y masaje.',
+   items:[
+    {t:'08:00', icon:'🥐', cat:'comida', title:'Desayuno en Much & Mellow Bread and Brunch', sum:'Abre a las 8:00. Tenéis 45 min hasta la recogida.',
+     det:['<ul><li>Dirección: 328 Ao Nang, Mueang Krabi. Según una web de locales abre todos los días de 8:00 a 22:00.</li><li>Id directos y pedid rápido: a las 8:45 tenéis la recogida en el Hotel Krabi Resort.</li></ul>'],
+     maps:[G('Ver Much & Mellow','Much & Mellow Bread and Brunch Ao Nang')], routes:[R('Krabi Tipa a Much & Mellow',L.TIPA,L.MUCH,'walking')]},
+    {t:'08:45', icon:'📍', cat:'otros', title:'Recogida junto al Hotel Krabi Resort (según la web)', sum:'El correo de la reserva no indica la recogida; la web de Thalassa sí',
+     det:['<ul><li>La web de Thalassa pone el punto de encuentro gratuito de este tour a las 8:45 en el Hotel Krabi Resort, igual que en vuestros otros dos tours. Espera máxima de 15 min.</li></ul>'],
+     warn:'Confirmadlo por correo con Thalassa, porque vuestro correo de reserva no lo dice.',
+     routes:[R('Krabi Tipa al Hotel Krabi Resort',L.TIPA,L.HKR,'walking')],
+     links:[{l:'Punto de recogida (mapa de Thalassa)',url:'https://goo.gl/maps/N95GjPqu3KGJhzQc9',icon:'📍'},{l:'Escribir a Thalassa Tour',url:'mailto:info@thalassatour.com?subject=Recogida%20TOUR%206%20James%20Bond%20T259-261028-12',icon:'✉️'}]},
+    {t:'09:00', icon:'🚤', cat:'visita', tide:true, title:'Tour semiprivado James Bond (Thalassa Tour)', sum:'Phang Nga, Koh Yao Noi y las islas Hong. Fin sobre las 17:00.',
+     det:['<ul><li>Total 7.790 THB (2 × 3.850 + 90 de comisión): ya pagados 1.590. <b>Quedan 6.200 THB</b> en efectivo el día del tour.</li><li>Todo el trayecto es en lancha rápida desde Ao Nang, no por carretera.</li><li>La isla de James Bond se ve desde el barco: no se desembarca ni se hace cola. El resto del día es para islas menos turísticas: Koh Yao Noi, la laguna de las islas Hong, playas semidesiertas y cuevas accesibles solo con marea baja.</li><li>Si el tiempo y la marea acompañan, pueden entrar en Koh Roy, un manglar escondido al que se accede por una cueva.</li><li>El tour se ofrece en español, en grupo semiprivado.</li></ul>',
+          INC(['Recogida gratuita en Ao Nang','Lancha rápida','Guías locales certificados','Equipo de snorkel: máscara, tubo, chaleco salvavidas y ficha de peces','Comida buffet en la playa: arroz tres delicias, noodles transparentes con marisco, pollo al curry estilo Penang, pollo con salsa de ostras y revuelto de gambas y verduras (menú vegetariano bajo petición)','Fruta fresca, refrescos, agua y café','Entrada al Parque Nacional (600 THB por persona)','Seguro de responsabilidad civil (AIG)'],
+              ['La web no lista exclusiones: no menciona toalla, propinas ni bebidas alcohólicas'],
+              'Fuente: ficha del tour en la web de Thalassa Tour.')],
+     links:[{l:'Ficha del tour en Thalassa',url:'https://thalassatour.com/tours-en-barco/tours-semiprivados/james-bond-island/',icon:'📄'}],
+     refs:[['Reserva','T259-261028-12']]},
+    {t:'~17:30', icon:'🛵', cat:'otros', title:'Alquilar la moto antes de la cena', sum:'Tenéis el carnet internacional de moto',
+     det:['<ul><li>Pedid <b>dos cascos</b>, comprobad frenos y luces, y haced fotos a la moto antes de salir.</li><li>El seguro solo vale si lleváis el permiso internacional (con la categoría de moto) junto con el carnet español.</li><li>Tenéis que devolverla el miércoles 2 por la noche, antes de ir al hotel.</li><li>No he podido comprobar hasta qué hora abren las tiendas de alquiler.</li></ul>'],
+     warn:'El tour termina sobre las 17:00: preguntad a la tienda si os la dan a esa hora.',
+     maps:[G('Alquiler de motos en Ao Nang','motorbike rental Ao Nang Krabi')]},
+    {t:'~19:30', icon:'🍜', cat:'comida', title:'Cena en Walking Street de Ao Nang', sum:'Abre de 9:00 a 23:00 según la web',
+     det:['<ul><li>Está en Ao Nang, a poca distancia de la playa y del hotel.</li></ul>'],
+     routes:[R('Krabi Tipa a Walking Street',L.TIPA,L.WALK,'walking')], maps:[G('Ver Walking Street','Ao Nang Walking Street Krabi')]},
+    {t:'Noche', icon:'🔥', cat:'visita', title:'Espectáculo de fuego en la playa', sum:'No he podido confirmar la hora ni el sitio',
+     det:['<ul><li>No he encontrado un horario fiable de los espectáculos de fuego en la playa de Ao Nang. Una web sí los cita en el Landmark Night Market, pero solo los fines de semana, y el 1 dic es martes.</li><li>Lo más fácil es preguntar en el hotel o ver cuál hay en la playa esa noche.</li></ul>']},
+    {t:'Después', icon:'💆', cat:'otros', title:'Masaje', sum:'Después del fuego. Local por decidir.',
+     det:['<ul><li>No habéis dicho dónde. Una opción que encontré es “The Blue Spa & Massage @Aonang”, de 10:00 a 23:00; no sé si es el “Blue Beach Massage” que tenéis apuntado.</li></ul>'],
+     maps:[G('Ver The Blue Spa & Massage','The Blue Spa & Massage Ao Nang')]}
+   ]},
+ { key:'2026-12-02', short:'Mié', num:'2', date:'Miércoles 2 de diciembre', title:'Las 4 islas, atardecer y plancton luminoso', city:'krabi', scene:'sea', variant:1, wx:'krabi',
+   sleep:'Krabi Tipa Resort, Ao Nang (noche 3 de 7)', sum:'Desayuno en Kuan Nom Saow, kayak, Into the Forest, Templo del Tigre y tour de las 4 islas.',
+   items:[
+    {t:'~06:00', icon:'🛵', cat:'trayecto', title:'Salir en moto a Kuan Nom Saow', sum:'Con la moto del día 1. El amanecer es hacia las 6:23.',
+     det:['<ul><li>Si llueve o no hay luz, no cojáis la carretera.</li><li>No he encontrado el tiempo de viaje desde el hotel: mirad la ruta en Google Maps.</li></ul>'],
+     routes:[R('Krabi Tipa a Kuan Nom Saow',L.TIPA,L.KUAN,'driving')]},
+    {t:'06:30', icon:'🌄', cat:'comida', title:'Desayuno en Kuan Nom Saow', sum:'El restaurante abre a las 6:30',
+     maps:[G('Ver Kuan Nom Saow','Kuan Nom Saow Krabi')]},
+    {t:'~07:30', icon:'🛶', cat:'visita', title:'Kayak en Ao Thalane', sum:'Llegar sobre las 7:30 u 8:00',
+     det:['<ul><li>Hay excursiones que combinan el mirador de Kuan Nom Sao con el kayak de Ao Thalane en unas 4 horas, así que las dos paradas encajan.</li><li>No he encontrado cuánto se tarda entre un sitio y otro: mirad la ruta, porque el margen hasta el desayuno es corto.</li><li>Reservad o preguntad el kayak con tiempo si no lo habéis hecho.</li></ul>'],
+     routes:[R('Kuan Nom Saow a Ao Thalane',L.KUAN,L.THALANE,'driving')], maps:[G('Ver Ao Thalane','Ao Thalane Krabi')]},
+    {t:'09:00', icon:'🌿', cat:'comida', title:'Into the Forest', sum:'Abre a las 9:00, según vosotros',
+     det:['<ul><li>Una guía lo sitúa a unos 30 min de Ao Nang. No he podido verificar su horario.</li></ul>'],
+     routes:[R('Ao Thalane a Into the Forest',L.THALANE,L.FOREST,'driving')], maps:[G('Ver Into the Forest','Into the Forest restaurant Ao Nang Krabi')]},
+    {t:'Luego', icon:'🛕', cat:'visita', title:'Templo del Tigre, sin subir arriba', sum:'Solo la parte de abajo',
+     routes:[R('Into the Forest al Templo del Tigre',L.FOREST,L.TIGER,'driving')], maps:[G('Ver el Templo del Tigre','Tiger Cave Temple Krabi')]},
+    {t:'12:45', icon:'📍', cat:'otros', title:'Recogida del tour de las 4 islas en el Hotel Krabi Resort', sum:'Entrada del Hotel Krabi Resort, junto al cartel del Rey. Margen de 15 min. Tour a las 13:00.',
+     det:['<ul><li>Es el punto de encuentro de Thalassa para todos los hoteles de Ao Nang.</li><li>El correo escribe “12.45am”, pero es la tarde: recogida a las 12:45 para un tour de las 13:00.</li><li>Volved en moto del Templo del Tigre con tiempo y dejadla aparcada cerca; la devolvéis por la noche.</li></ul>'],
+     routes:[R('Krabi Tipa al Hotel Krabi Resort',L.TIPA,L.HKR,'walking')],
+     links:[{l:'Punto de recogida (mapa de Thalassa)',url:'https://goo.gl/maps/N95GjPqu3KGJhzQc9',icon:'📍'},{l:'Mapa de recogida de la reserva',url:'https://app.turitop.com/transfer/map/T259/T259-261028-10/2710',icon:'🗺️'},{l:'Foto del punto de recogida',url:'https://thalassatour.com/pick-up-locations/#aonang',icon:'📷'}]},
+    {t:'13:00', icon:'🏝️', cat:'visita', tide:true, title:'Tour semiprivado 4 islas con plancton luminoso (Thalassa Tour)', sum:'13:00 a 19:30. Incluye puesta de sol y snorkel nocturno.',
+     det:['<ul><li>Total 6.890 THB (2 × 3.400 + 90 de comisión): ya pagados 1.590. <b>Quedan 5.300 THB</b> en efectivo el día del tour.</li><li><b>Es un tour de tarde-noche:</b> según la web, estaréis de vuelta en Ao Nang entre las 19:00 y las 19:30, así que cenaréis después.</li><li>Ruta en lancha rápida: Railay West (según tiempo, mareas y ocupación), isla de Poda con la comida buffet en la playa, vistas de Tup y Chicken (unidas con marea baja), snorkel en Koh Sii y Phra Nang Beach con su Cueva de la Princesa, snack y atardecer.</li><li>De camino a Ao Nang paran para el <b>snorkel nocturno</b> entre plancton fluorescente, de unos 10 min.</li><li>Se ofrece en español, en grupo semiprivado.</li><li>Dudas: info@thalassatour.com.</li></ul>',
+          INC(['Recogida gratuita en el Hotel Krabi Resort','Lancha rápida','Guías locales certificados','Equipo de snorkel: máscara, tubo, chaleco salvavidas y ficha de peces','Comida: arroz frito con verduras, pad see ew con marisco, rollitos de verdura, pollo frito con albahaca y calamares a la pimienta y ajo (menú vegetariano bajo petición)','Snack de club sándwich y fruta fresca; refrescos, agua y café','Entrada al Parque Nacional (400 THB por persona)','Seguro de responsabilidad civil (AIG)'],
+              ['La web no lista exclusiones: no menciona toalla, propinas ni bebidas alcohólicas'],
+              'Fuente: ficha del tour en la web de Thalassa Tour. Llevad toalla, cámara, crema solar, chubasquero, antimosquitos, pastillas para el mareo y escarpines. No hay aseos en las islas ni en el barco.')],
+     links:[{l:'Ficha del tour en Thalassa',url:'https://thalassatour.com/tours-en-barco/tours-semiprivados/4-islas/',icon:'📄'}],
+     refs:[['Reserva','T259-261028-10']]},
+    {t:'~19:15', icon:'🌙', cat:'otros', title:'Vuelta a Ao Nang', sum:'Entre las 19:00 y las 19:30, según la web',
+     det:['<ul><li>Cenad ya en Ao Nang; llevaréis el pelo y la ropa mojados, así que pasad antes por el hotel si queréis.</li></ul>']},
+    {t:'~20:30', icon:'🍜', cat:'comida', title:'Cena en Night Marketplace', sum:'No he podido confirmar su horario',
+     det:['<ul><li>El mercado nocturno de Ao Nang del miércoles cierra a las 20:00 y vosotros volvéis hacia las 19:30. Una alternativa que encontré es el Landmark Night Market, de 17:00 a 23:00.</li></ul>'],
+     maps:[G('Ver Night Market Place','Night Market Place Krabi'), G('Ver Landmark Night Market','Landmark Night Market Ao Nang')]},
+    {t:'Después', icon:'💆', cat:'otros', title:'Masaje', sum:'Después de cenar'},
+    {t:'Luego', icon:'🛵', cat:'otros', title:'Devolver la moto', sum:'Antes de ir al hotel',
+     det:['<ul><li>Tiene que estar devuelta esta noche: mañana la recogida de Khao Sok es a las 7:20.</li></ul>']},
+    {t:'Noche', icon:'🎒', cat:'otros', title:'Preparar la mochila de Khao Sok', sum:'De vuelta en el hotel',
+     det:['<ul><li>Bañador y toalla, gafas de sol, gorra, calzado cómodo, chubasquero, repelente, efectivo, funda impermeable para el móvil y una foto del pasaporte.</li><li>Una prenda de manga larga para el aire acondicionado y las tardes en el lago.</li><li>Comprad ahora un desayuno en el 7-Eleven por si mañana no desayunáis en el 8.98.</li></ul>']}
+   ]},
+ { key:'2026-12-03', short:'Jue', num:'3', date:'Jueves 3 de diciembre', title:'Khao Sok, noche en un resort flotante', city:'krabi', scene:'lake', wx:'krabi', wxNote:'Khao Sok está tierra adentro, así que la previsión de Ao Nang es solo orientativa. Las mareas de abajo son las de la costa de Ao Nang.',
+   sleep:'Cabaña en el resort flotante de Khao Sok', sum:'Excursión de 2 días con Olé Tours. El hotel de Ao Nang sigue reservado.',
+   items:[
+    {t:'Ayer', icon:'🛒', cat:'comida', title:'Comprar el desayuno en el 7-Eleven', sum:'Por si el 8.98 no abre a las 7:00',
+     det:['<ul><li>Sustituye al “breakfast box” del hotel, que ya no se pide.</li><li>Comprad esta noche (2 dic) lo que queráis desayunar.</li></ul>']},
+    {t:'07:00', icon:'🥐', cat:'comida', title:'Desayuno en el Café 8.98, o el del 7-Eleven', sum:'Junto al hotel, abre a las 7:00. Vais justos; el 7-Eleven es rápido.',
+     det:['<ul><li>Está junto al hotel. Vais justos de tiempo, pero el 7-Eleven es rápido si preferís comprar algo y desayunar en el momento.</li><li>La recogida de Olé Tours es a las 7:20 y no esperan: si a las 7:10 no os han servido, desayunad lo del 7-Eleven en el hotel.</li></ul>'],
+     warn:'Desayuno a las 7:00 y recogida a las 7:20: vais justos. Si hay cola, coged algo en el 7-Eleven.',
+     routes:[R('Krabi Tipa al Café 8.98',L.TIPA,L.C898,'walking')], maps:[G('Ver el Café 8.98','Cafe 8.98 Ao Nang')]},
+    {t:'07:20', icon:'🚐', cat:'trayecto', title:'Recogida en la recepción del Krabi Tipa', sum:'Entre las 7:20 y las 7:30. No hay margen de espera.',
+     det:['<ul><li>Esperad desde las 7:20: es un tour grupal y no esperan. Puede haber espera adicional según el tráfico.</li><li>Traslado compartido grupal desde el hotel, incluido en el precio de la cabaña.</li><li>Las comunicaciones en destino llegan por WhatsApp al +34 606 034 573.</li></ul>'],
+     maps:[G('Ver el Krabi Tipa Resort','Krabi Tipa Resort Ao Nang')]},
+    {t:'Día', icon:'🛶', cat:'visita', tide:false, title:'Actividades en Khao Sok', sum:'El horario se concreta en la recepción del resort flotante',
+     det:['<ul><li>Olé Tours adjuntó al correo la programación aproximada y un ejemplo de cabaña (el nombre del archivo es “Fan bungalow 1 noche”, así que es la cabaña con ventilador). Los horarios finales se cierran al llegar, porque varían según la ocupación y el clima.</li><li>Según la web de Olé Tours, el día 1 incluye la travesía en barca de cola larga, la comida, tiempo libre para bañarse y un safari en barca al atardecer para ver fauna; el día 2, un safari al amanecer con la niebla sobre el lago, desayuno, tiempo libre y kayak, y de vuelta una parada en el “Guilin de Tailandia” antes de llegar al muelle.</li><li><b>La electricidad (generador) solo funciona de 18:00 a 09:00.</b> De día no hay corriente: el ventilador funciona por la noche.</li><li>No pueden hacer el tour embarazadas, menores de 4 años ni personas con problemas de espalda o de salud. La ruta, las paradas y el orden pueden cambiar por clima, oleaje y mareas.</li></ul>',
+          INC(['Noche en cabaña flotante con ventilador','Traslado compartido desde el hotel y vuelta a Ao Nang','Travesía en barca de cola larga','Safari en barca al atardecer y safari de fauna al amanecer','Comidas (el tour de la web incluye comida, cena y desayuno, y una comida picnic al final)','Kayak en las casas flotantes y tiempo libre para bañarse','Entradas al Parque Nacional','Seguro de accidentes'],
+              ['Gastos personales'],
+              'Fuente: ficha del tour de 2 días desde Krabi en la web de Olé Tours. Esa ficha no menciona bebidas aparte del agua: llevad efectivo por si queréis comprar algo.'),
+          '<ul><li><b>Qué llevar:</b> bañador y toalla, gafas de sol, gorra, calzado cómodo, chubasquero, repelente, efectivo, una funda impermeable para el móvil y una foto del pasaporte en el móvil. Una prenda de manga larga por el aire acondicionado del transporte y las tardes en el lago.</li><li>Si la mochila no es impermeable, llevad un chubasquero para taparla: en la barca salpica bastante.</li></ul>'],
+     warn:'Para validar el seguro de accidentes hay que dar a Olé Tours el nombre completo, el sexo y el número de pasaporte de los dos; si no, pueden cancelar la reserva. Confirmad que ya lo tienen. Además, el 28 oct seguían esperando la transferencia.',
+     links:[{l:'Ficha del tour en Olé Tours',url:'https://www.oletoursamui.com/en/thailand-tours/krabi-tours/khao-sok-overnight-tour-from-krabi',icon:'📄'},{l:'WhatsApp de Olé Tours',url:'https://wa.me/660925792007',icon:'💬'}],
+     refs:[['Reserva','612OTS']]},
+    {t:'Noche', icon:'🛖', cat:'hotel', title:'Cabaña con ventilador en el resort flotante', sum:'1 noche (el ejemplo de cabaña puede variar ligeramente)',
+     det:['<ul><li>Contacto de Olé Tours: 092-579-2007 o info@oletoursamui.com. El WhatsApp es la forma más rápida.</li></ul>']}
+   ]},
+ { key:'2026-12-04', short:'Vie', num:'4', date:'Viernes 4 de diciembre', title:'Vuelta de Khao Sok y tarde libre', city:'krabi', scene:'lake', variant:1, wx:'krabi', wxNote:'Khao Sok está tierra adentro, así que la previsión de Ao Nang es solo orientativa.',
+   sleep:'Krabi Tipa Resort, Ao Nang (noche 5 de 7)', sum:'Regreso de Khao Sok, moto y cena en Khaothong Hill.',
+   items:[
+    {t:'~09:00', icon:'⛴️', cat:'trayecto', title:'Salida del resort flotante', sum:'Entre las 9:00 y las 9:30. Confirmad la hora por la mañana.',
+     det:['<ul><li>Hay que concretarlo en recepción por la mañana para no perder la barca. En temporada alta el horario puede variar ligeramente.</li><li>Ruta: barca al muelle de Khao Sok, furgonetas a la base de autobuses, autobús hasta Krabi y de nuevo furgonetas para el reparto por la zona costera, donde los autobuses grandes no entran. Es lo mismo que a la ida, en orden inverso.</li><li>Según la web de Olé Tours, de vuelta hacia el muelle paran en el “Guilin de Tailandia”, uno de los puntos más fotogénicos del lago.</li><li>El correo no da hora de llegada a Ao Nang.</li><li>Antes de bajar de cada vehículo, revisad bien las pertenencias: recuperar o enviar un objeto olvidado corre a cargo del cliente.</li></ul>']},
+    {t:'~16:00', icon:'🚐', cat:'trayecto', title:'Llegada a Ao Nang', sum:'Hora estimada por vosotros; el correo no da hora de llegada'},
+    {t:'~16:30', icon:'🛵', cat:'otros', title:'Alquilar una moto', sum:'Para ir a cenar a Khaothong Hill',
+     det:['<ul><li>Dos cascos, permiso internacional con la categoría de moto y carnet español, y fotos de la moto antes de salir.</li><li>Khaothong Hill está a unos 30 min de Ao Nang, y volveréis de noche: id despacio.</li></ul>'],
+     maps:[G('Alquiler de motos en Ao Nang','motorbike rental Ao Nang Krabi')]},
+    {t:'~17:30', icon:'🌅', cat:'comida', title:'Cena en Khaothong Hill (hay que reservar)', sum:'Según lo que encontré cierra a las 20:00; el atardecer es hacia las 18:04',
+     det:['<ul><li><b>Reservad antes.</b> Se contacta por el teléfono +66 96 991 9365 o por su Facebook. No he podido comprobar que acepten reservas: preguntadlo.</li><li>Pedid mesa pronto (sobre las 18:00 o 18:30) para llegar al atardecer y tener tiempo antes del cierre.</li></ul>'],
+     warn:'Llegáis de Khao Sok sobre las 16:00, así que el margen es corto: reservad ya y confirmad la hora de cierre.',
+     routes:[R('Krabi Tipa a Khaothong Hill',L.TIPA,L.KHAOTHONG,'driving')], maps:[G('Ver Khaothong Hill','Khaothong Hill Krabi')]},
+    {t:'Después', icon:'💆', cat:'otros', opt:true, title:'Masaje, si os apetece', sum:'Al volver a Ao Nang'}
+   ]},
+ { key:'2026-12-05', short:'Sáb', num:'5', date:'Sábado 5 de diciembre', title:'Koh Phi Phi', city:'krabi', scene:'sea', variant:2, wx:'krabi',
+   sleep:'Krabi Tipa Resort, Ao Nang (noche 6 de 7)', sum:'Tour de Koh Phi Phi, sendero de los monos y cena en Dragon View Bar.',
+   items:[
+    {t:'07:45', icon:'📍', cat:'otros', title:'Recogida junto al Hotel Krabi Resort', sum:'Entrada del hotel, al lado del cartel del Rey. Margen de 15 min.',
+     routes:[R('Krabi Tipa al Hotel Krabi Resort',L.TIPA,L.HKR,'walking')],
+     links:[{l:'Punto de recogida (mapa de Thalassa)',url:'https://goo.gl/maps/N95GjPqu3KGJhzQc9',icon:'📍'},{l:'Mapa de recogida de la reserva',url:'https://app.turitop.com/transfer/map/T259/T259-261028-11/2711',icon:'🗺️'},{l:'Foto del punto de recogida',url:'https://thalassatour.com/pick-up-locations/#aonang',icon:'📷'}]},
+    {t:'08:00', icon:'🏝️', cat:'visita', tide:true, title:'Tour semiprivado a Koh Phi Phi (Thalassa Tour)', sum:'08:00 a 15:30. Laguna de Phi Phi Leh, Maya Bay y snorkel.',
+     det:['<ul><li>Total 7.190 THB (2 × 3.550 + 90 de comisión): ya pagados 1.590. <b>Quedan 5.600 THB</b> en efectivo el día del tour.</li><li>Lancha rápida desde Ao Nang (las islas están a unos 34 km). Visitan la laguna de Phi Phi Leh y la bahía de Maya, y hacen snorkel en varios puntos (por ejemplo Bida Nok, Bida Nai o Palong), donde a veces se ven tiburones de punta negra y tortugas.</li><li>Evitan el pueblo de Tonsai y buscan rincones menos concurridos. El programa no es fijo: cambia según el viento, las mareas y la afluencia.</li><li>Maya Bay solo cierra del 1 de agosto al 30 de septiembre, así que en diciembre se puede pisar la playa.</li><li>Se ofrece en español, en grupo semiprivado.</li></ul>',
+          INC(['Recogida gratuita en el Hotel Krabi Resort','Lancha rápida','Guías locales certificados','Equipo de snorkel: máscara, tubo, chaleco salvavidas y ficha de peces','Comida buffet en la playa: arroz tres delicias, pad thai de pescado, rollitos de primavera, pollo al curry Massaman y pollo frito con anacardos (menú vegetariano bajo petición)','Fruta fresca, refrescos, agua y café','Entrada al Parque Nacional (400 THB por persona)','Seguro de responsabilidad civil (AIG)'],
+              ['La web no lista exclusiones: no menciona toalla, propinas ni bebidas alcohólicas'],
+              'Fuente: ficha del tour en la web de Thalassa Tour. Llevad toalla, cámara, crema solar, chubasquero, antimosquitos, pastillas para el mareo y escarpines. No hay aseos en las islas ni en el barco.')],
+     links:[{l:'Ficha del tour en Thalassa',url:'https://thalassatour.com/tours-en-barco/tours-semiprivados/koh-phi-phi/',icon:'📄'}],
+     refs:[['Reserva','T259-261028-11']]},
+    {t:'~15:30', icon:'🏁', cat:'otros', title:'Fin del tour', sum:'Según la web, de vuelta sobre las 15:30. Tarde libre.'},
+    {t:'~16:00', icon:'🐒', cat:'visita', title:'Sendero de los monos', sum:'Cerca del Centara Grand, en el extremo sur de la playa de Ao Nang',
+     det:['<ul><li>Unos 15 min, con escalones de madera. El sol se pone hacia las 18:04, así que id con luz.</li></ul>'],
+     routes:[R('Krabi Tipa al sendero de los monos',L.TIPA,L.MONKEY,'driving')], maps:[G('Ver el sendero de los monos','Ao Nang Monkey Trail Krabi')]},
+    {t:'Noche', icon:'🍽️', cat:'comida', title:'Cena en Dragon View Bar', sum:'Terrazas de madera con vistas, a unos 20 min de Ao Nang',
+     det:['<ul><li>Está junto a la playa de Tubkaek, con vistas a la montaña Khao Ngon Nak. Una guía dice que el atardecer allí es muy bueno.</li><li>No he encontrado su horario: miradlo en Google Maps antes de ir.</li><li>Necesitáis moto, taxi o Grab; no está andando.</li></ul>'],
+     routes:[R('Krabi Tipa a Dragon View Bar',L.TIPA,L.DRAGON,'driving')], maps:[G('Ver Dragon View Bar','Dragon View Bar and Restaurant Krabi')]},
+    {t:'Después', icon:'💆', cat:'otros', opt:true, title:'Masaje, si os apetece', sum:'De vuelta en Ao Nang'}
+   ]},
+ { key:'2026-12-06', short:'Dom', num:'6', date:'Domingo 6 de diciembre', title:'Railay, elefantes y cena en Andalay', city:'krabi', scene:'sea', variant:3, wx:'krabi',
+   sleep:'Krabi Tipa Resort, Ao Nang (noche 7 de 7)', sum:'Longtail a Railay, moto al santuario de elefantes y cena en Andalay Beach Bar.',
+   items:[
+    {t:'Mañana', icon:'🥐', cat:'comida', title:'Desayuno donde podáis', sum:'Antes de las 8:00'},
+    {t:'08:00', icon:'⛵', cat:'trayecto', title:'Longtail de Ao Nang a Railay', sum:'100 THB por trayecto. Los barcos funcionan de 8:00 a 18:00.',
+     det:['<ul><li>Salen de la playa de Ao Nang. Hay dos taquillas, una en cada extremo; en el extremo sur salen más barcos.</li><li>Cuesta 100 THB por persona y trayecto (200 THB ida y vuelta, precios de 2024) y se paga en efectivo. Los billetes son blancos hacia Railay y azules de vuelta.</li><li>Con marea baja o mal tiempo salen de otra bahía y os acercan en tuk-tuk. Llevad chanclas y una bolsa estanca: se sube con el agua por las rodillas.</li></ul>'],
+     routes:[R('Ao Nang a Railay',L.AONANG,L.RAILAY,'driving')], maps:[G('Ver Railay Beach','Railay Beach Krabi')]},
+    {t:'08:15', icon:'🏖️', cat:'visita', title:'Phra Nang Beach y Cueva de la Princesa', sum:'De 8:15 a 10:00. Llegáis antes de las excursiones masivas.',
+     det:['<ul><li>Al bajar de la barca en Railay West, cruzad a Railay East y seguid el sendero de acantilados hasta Phra Nang.</li><li>Con poca gente, es buen momento para la arena, el baño y la Cueva de la Princesa, con buena luz para fotos.</li></ul>'],
+     maps:[G('Ver Phra Nang Beach','Phra Nang Beach Krabi')]},
+    {t:'10:00', icon:'⛰️', cat:'visita', opt:true, title:'Subida al mirador de Railay (o kayak)', sum:'De 10:00 a 11:00, antes del calor fuerte',
+     det:['<ul><li>Volviendo de Phra Nang pasáis por el inicio de la subida. Llevad calzado cerrado y no subáis si ha llovido.</li><li>Alternativa tranquila: 1 hora de kayak desde Phra Nang hasta Railay West.</li></ul>'],
+     maps:[G('Ver el mirador de Railay','Railay Viewpoint Krabi')]},
+    {t:'11:00', icon:'🏊', cat:'visita', title:'Railay West y baño', sum:'De 11:00 a 12:15. Último baño o un zumo frente al mar.'},
+    {t:'12:15', icon:'🍜', cat:'comida', title:'Comida rápida en la Walking Street de Railay', sum:'Algo ligero, a dos pasos de Railay West',
+     det:['<ul><li>A las 13:00 id a la orilla de Railay West a comprar el billete de vuelta (unos 100 THB) y esperar a que se junten unas 8 personas para que salga el longtail.</li></ul>']},
+    {t:'13:15', icon:'⛵', cat:'trayecto', title:'Vuelta a Ao Nang y al hotel a cambiaros', sum:'Los barcos regulares funcionan hasta las 18:00',
+     routes:[R('Railay a Ao Nang',L.RAILAY,L.AONANG,'driving')]},
+    {t:'15:20', icon:'🐘', cat:'visita', title:'Santuario de elefantes Following Giants (reservado)', sum:'Programa de 90 min, de 15:30 a 17:00. Llegad a las 15:20 para el check-in.',
+     det:['<ul><li><b>Reserva #392444585</b>: 2 adultos, 1.700 THB cada uno más 204 THB de comisión (total 3.604 THB).</li><li>Pagado 1.054 THB. <b>Quedan 2.550 THB para pagar al llegar</b>, en efectivo o con tarjeta (la tarjeta lleva un 3% extra; no aceptan American Express).</li><li>Dirección: 305 mu 2, Khao Khram, Tha Pom Klong Song Nam, Krabi. Está a unos 45 min de Ao Nang y es difícil pedir un taxi allí: si vais en Grab o taxi, que el conductor os espere. En moto no hay problema.</li><li>Llevad calcetines, crema solar, gorra y repelente. Ellos dan agua y botas de goma, y paraguas o poncho si llueve.</li><li>Cancelación gratuita hasta 24 horas antes (hasta el sábado 5 dic a las 15:30). Después no hay reembolso. Contacto: +66 81 008 6999 (WhatsApp) o followinggiants.krabi@gmail.com.</li></ul>'],
+     warn:'El santuario queda a unos 45 min de Ao Nang. Para llegar a las 15:20, salid del hotel como tarde a las 14:30. Como coméis en Railay, entre el barco de las 13:15 y esa hora solo necesitáis tiempo para cambiaros.',
+     refs:[['Reserva','392444585']],
+     routes:[R('Krabi Tipa al santuario Following Giants',L.TIPA,L.GIANTS,'driving')], maps:[G('Ver Following Giants','Following Giants, 305 mu 2, Khao Khram, Tha Pom Klong Song Nam, Krabi 81000, Thailand')],
+     links:[{l:'Ver la reserva online',url:'https://fareharbor.com/embeds/book/followinggiants/items/636723/booking/934da277-23b1-4741-b34b-774959ad0e20/',icon:'🎟️'},{l:'Mapa de Following Giants',url:'https://maps.app.goo.gl/q4SmE516pRJf7ghf9',icon:'📍'}]},
+    {t:'Luego', icon:'🍽️', cat:'comida', title:'Cena en Andalay Beach Bar', sum:'Abre de 11:00 a 20:30, según Wanderlog',
+     det:['<ul><li>Está en Nong Thale, no en el centro de Ao Nang. Un cliente dice que pagó unos 160 THB en Grab desde Ao Nang.</li><li>Hay que volver a Ao Nang de noche en moto: id con calma.</li></ul>'],
+     routes:[R('Santuario a Andalay Beach Bar',L.GIANTS,L.ANDALAY,'driving')], maps:[G('Ver Andalay Beach Bar','Andalay Beach Bar & Cafe Krabi')]},
+    {t:'Después', icon:'🛵', cat:'otros', title:'Devolver la moto en Ao Nang', sum:'Antes de dormir'},
+    {t:'Noche', icon:'📲', cat:'otros', title:'Dejar listo el día del vuelo', sum:'Check-in online, traslado y efectivo',
+     det:['<ul><li>Haced el <b>check-in online</b> de los vuelos de mañana (VZ341, AZ759 y AZ64) si la aerolínea lo permite.</li><li>Reservad el taxi o traslado al aeropuerto de Krabi para mañana temprano: no hay ninguno reservado.</li><li>Recordad que el depósito de 2.000 THB del hotel se devuelve en efectivo.</li></ul>']}
+   ]},
+ { key:'2026-12-07', short:'Lun', num:'7', date:'Lunes 7 de diciembre', title:'Krabi, Bangkok, Roma y Madrid', city:'viaje', scene:'plane', variant:1,
+   sleep:'En el avión', sum:'Día de viaje con una conexión muy justa en Bangkok.',
+   items:[
+    {t:'~06:00', icon:'🚕', cat:'trayecto', title:'Salida del hotel al aeropuerto de Krabi', sum:'Sin traslado reservado. Hora estimada.',
+     routes:[R('Krabi Tipa al aeropuerto',L.TIPA,L.KBV,'driving')]},
+    {t:'09:00', icon:'✈️', cat:'vuelo', title:'Vuelo VZ341 de Krabi a Bangkok', sum:'Thai VietJet. Llegada a las 10:25.', refs:[['Reserva','EFW5T2']]},
+    {t:'10:25', icon:'⚠️', cat:'otros', title:'Conexión en Bangkok: solo 1 h 50 min', sum:'Son reservas separadas, sin protección automática',
+     det:['<ul><li>El vuelo de Krabi (ref. EFW5T2) y el de Roma (ref. YK7MO8) son reservas distintas. Si el primero se retrasa, no hay protección automática.</li><li>Haced el <b>check-in online</b> del AZ759 antes y solo con equipaje de mano: id directos a inmigración y seguridad.</li><li>Comprobad con ITA a qué hora cierra el mostrador de ese vuelo.</li></ul>'],
+     warn:'Es el punto más delicado del viaje. Conviene confirmar con ITA y con Booking cómo queda cubierta esta conexión.'},
+    {t:'12:15', icon:'✈️', cat:'vuelo', title:'Vuelo ITA AZ759 de Bangkok a Roma', sum:'Llegada a Fiumicino a las 18:55',
+     det:['<ul><li>Equipaje de mano de 23 × 40 × 55 cm y 8 kg. No incluye maleta facturada.</li><li>Billete de Nuria: 0559262047605. Billete de Jose Luis: 0559262047606.</li></ul>'], refs:[['Reserva','YK7MO8'],['Localizador','JJWPEH']]},
+    {t:'21:35', icon:'✈️', cat:'vuelo', title:'Vuelo ITA AZ64 de Roma a Madrid', sum:'Llegada el 8 de diciembre a las 00:05',
+     det:['<ul><li>ITA adelantó la llegada 5 min: antes era a las 00:10.</li></ul>'], refs:[['Reserva','YK7MO8']]}
+   ]},
+ { key:'2026-12-08', short:'Mar', num:'8', date:'Martes 8 de diciembre', title:'De vuelta en Madrid', city:'viaje', scene:'plane', variant:2,
+   sleep:'En casa', sum:'Último tramo del viaje.',
+   items:[
+    {t:'00:05', icon:'🛬', cat:'vuelo', title:'Llegada a Madrid-Barajas', sum:'Fin del viaje',
+     maps:[G('Ver Madrid-Barajas','Aeropuerto Adolfo Suárez Madrid-Barajas')]}
+   ]}
+];
+DAYS.forEach((d, di) => d.items.forEach((it, i) => it.id = 'd' + (di + 1) + '-' + (i + 1)));
+const CITY = {viaje:{c:'#5B73D6',n:'Viaje'}, bkk:{c:'#E39A12',n:'Bangkok'}, krabi:{c:'#13A39A',n:'Krabi'}};
+const CATS = [['todo','Todo'],['vuelo','✈️ Vuelos'],['trayecto','🚕 Trayectos'],['comida','🍜 Comer'],['visita','🛕 Visitas'],['hotel','🏨 Alojamiento']];
+
+/* Reservas */
+const RES = [
+ {g:'Vuelos', items:[
+  {ic:'✈️', t:'E9845 Madrid a Bangkok', m:'Jue 26 nov, 21:45 a vie 27 nov, 15:30', refs:[['Reserva','1FN52O']], det:['Iberojet. Directo, turista. Equipaje de mano de 8 kg, sin maleta facturada.','Billetes: Nuria 7835462120437, Jose Luis 7835462120438.']},
+  {ic:'✈️', t:'VZ344 Bangkok a Krabi', m:'Lun 30 nov, 18:40 a 20:10', refs:[['Reserva','EFW5T2']], det:['Thai VietJet. Bulto de mano de 5 kg (23 × 36 × 56 cm). Sin maleta facturada.']},
+  {ic:'✈️', t:'VZ341 Krabi a Bangkok', m:'Lun 7 dic, 09:00 a 10:25', refs:[['Reserva','EFW5T2']], det:['Thai VietJet. Bulto de mano de 5 kg. Sin maleta facturada.']},
+  {ic:'✈️', t:'AZ759 Bangkok a Roma', m:'Lun 7 dic, 12:15 a 18:55', refs:[['Reserva','YK7MO8'],['Localizador','JJWPEH']], det:['ITA Airways. Bulto de mano de 8 kg (23 × 40 × 55 cm).','Billetes: Nuria 0559262047605, Jose Luis 0559262047606.','Hay solo 1 h 50 min entre la llegada del VZ341 y este vuelo, en reservas separadas.']},
+  {ic:'✈️', t:'AZ64 Roma a Madrid', m:'Lun 7 dic, 21:35 a mar 8 dic, 00:05', refs:[['Reserva','YK7MO8']], det:['ITA Airways. La llegada cambió de las 00:10 a las 00:05.']}
+ ]},
+ {g:'Alojamiento', items:[
+  {ic:'🏨', t:'Victora Hostel, Bangkok', m:'27 a 29 nov, 2 noches', refs:[['Conf.','6902252527']], det:['Habitación doble con balcón, sin comidas. Phra Sumen Road 365/6. Teléfono +66 64 883 6465.','Cargo de 3.216,67 THB el 11 nov. Cancelación gratuita hasta el 12 nov a las 23:59.']},
+  {ic:'🏨', t:'Amara Bangkok Hotel', m:'29 a 30 nov, 1 noche', refs:[['Conf.','5098794014']], det:['Deluxe doble, 2 camas, con desayuno. Surawong Road 180/1. Teléfono +66 2 021 8888.','Cargo de 4.163,68 THB el 22 nov. Cancelación gratuita hasta el 23 nov a las 23:59.']},
+  {ic:'🏨', t:'Krabi Tipa Resort, Ao Nang', m:'30 nov a 7 dic, 7 noches', refs:[['Conf.','5132817769']], det:['Deluxe doble. Teléfono +66 75 637 527. Depósito de 2.000 THB en efectivo.','Desayuno aparte: 400 THB por persona y noche.','Cargo de 20.954,93 THB el 14 nov. Cancelación gratuita hasta el 15 nov a las 23:59.']},
+  {ic:'🛖', t:'Cabaña en Khao Sok (resort flotante)', m:'3 a 4 dic, 1 noche', refs:[['Reserva','612OTS']], det:['Olé Tours Tailandia. El 28 oct esperaban la transferencia de pago.']}
+ ]},
+ {g:'Excursiones', items:[
+  {ic:'🚂', t:'Ayutthaya, tren y mercado flotante', m:'Sáb 28 nov, 7:00', refs:[['Reserva','GYGBLG9X36F5']], det:['TripGuru, vía GetYourGuide. 153,32 € con cargo el 25 nov. Cancelación gratuita hasta las 7:00 del 27 nov.','<b>Incluye:</b> guía, vehículo con aire acondicionado, traslados entre visitas, agua, seguro, paseo de ida en barca, audio guía y entradas a Wat Yai Chai Mongkhon, Wat Phra Sri Sanphet y Wat Mahathat.','<b>No incluye:</b> almuerzo, recogida y vuelta al hotel y gastos personales. Sin maletas en el vehículo.','WhatsApp (solo chat) +1 254 454 4878. reservations@thetripguru.com.'], links:[{l:'Ficha del tour',url:'https://thetripguru.com/tour/ayutthaya-railway-market-and-damnoen-saduak-floating-market/',icon:'📄'}]},
+  {ic:'🚤', t:'Tour James Bond', m:'Mar 1 dic, 9:00 a 17:00', refs:[['Reserva','T259-261028-12']], det:['Thalassa Tour. Total 7.790 THB, pendientes 6.200 THB. La web indica recogida a las 8:45 en el Hotel Krabi Resort: confirmadlo.','<b>Incluye:</b> recogida en Ao Nang, lancha rápida, guías, equipo de snorkel, comida buffet, fruta, bebidas (refrescos, agua y café), entrada al parque nacional (600 THB) y seguro.','<b>No incluye:</b> la web no lista exclusiones.'], links:[{l:'Ficha del tour',url:'https://thalassatour.com/tours-en-barco/tours-semiprivados/james-bond-island/',icon:'📄'}]},
+  {ic:'🏝️', t:'Tour 4 islas con plancton luminoso', m:'Mié 2 dic, 13:00 a 19:30', refs:[['Reserva','T259-261028-10']], det:['Thalassa Tour. 2 adultos × 3.400 THB + 90 THB de comisión. Total 6.890 THB, pagados 1.590, pendientes 5.300 THB.','Recogida a las 12:45 en la entrada del Hotel Krabi Resort, al lado del cartel del Rey (margen de 15 min). Vuelta a Ao Nang entre las 19:00 y las 19:30.','<b>Incluye:</b> lancha rápida, guías, snorkel de día y de noche, equipo de snorkel, comida buffet, snack, bebidas, atardecer en Phra Nang, entrada al parque nacional (400 THB) y seguro.','<b>No incluye:</b> la web no lista exclusiones.'], links:[{l:'Reserva en Turitop',url:'https://app.turitop.com/transfer/map/T259/T259-261028-10/2710',icon:'🗺️'},{l:'Ficha del tour',url:'https://thalassatour.com/tours-en-barco/tours-semiprivados/4-islas/',icon:'📄'}]},
+  {ic:'🛶', t:'Khao Sok, 2 días', m:'Jue 3 dic, recogida a las 7:20', refs:[['Reserva','612OTS']], det:['Olé Tours Tailandia. Recogida entre las 7:20 y las 7:30 en la recepción del Krabi Tipa. Vuelta el 4 dic hacia las 9:00-9:30.','<b>Incluye:</b> cabaña flotante con ventilador, traslados, barca de cola larga, safaris de atardecer y amanecer, comidas, kayak, entradas al parque nacional y seguro de accidentes.','<b>No incluye:</b> gastos personales. La electricidad solo funciona de 18:00 a 09:00.','Para el seguro hay que dar nombre completo, sexo y pasaporte de los dos.','Contacto: 092-579-2007 o info@oletoursamui.com. El correo adjunta un PDF con el reporte de reserva y una imagen con la cabaña y la programación aproximada.'], links:[{l:'Ficha del tour',url:'https://www.oletoursamui.com/en/thailand-tours/krabi-tours/khao-sok-overnight-tour-from-krabi',icon:'📄'},{l:'WhatsApp de Olé Tours',url:'https://wa.me/660925792007',icon:'💬'}]},
+  {ic:'🏝️', t:'Koh Phi Phi', m:'Sáb 5 dic, 8:00 a 15:30', refs:[['Reserva','T259-261028-11']], det:['Thalassa Tour. 2 adultos × 3.550 THB + 90 THB de comisión. Total 7.190 THB, pagados 1.590, pendientes 5.600 THB.','Recogida a las 7:45 en la entrada del Hotel Krabi Resort, al lado del cartel del Rey (margen de 15 min).','<b>Incluye:</b> lancha rápida, guías, equipo de snorkel, comida buffet, fruta, bebidas, entrada al parque nacional (400 THB) y seguro.','<b>No incluye:</b> la web no lista exclusiones.'], links:[{l:'Reserva en Turitop',url:'https://app.turitop.com/transfer/map/T259/T259-261028-11/2711',icon:'🗺️'},{l:'Ficha del tour',url:'https://thalassatour.com/tours-en-barco/tours-semiprivados/koh-phi-phi/',icon:'📄'}]},
+  {ic:'🐘', t:'Following Giants, santuario de elefantes', m:'Dom 6 dic, 15:30 a 17:00', refs:[['Reserva','392444585']], det:['Programa de 90 minutos para 2 adultos. Total 3.604 THB, pagados 1.054, pendientes 2.550 THB al llegar (efectivo, o tarjeta con 3% extra).','Llegad 5 a 10 minutos antes. Sin traslado: vais por vuestra cuenta. Cancelación gratuita hasta 24 h antes.'], links:[{l:'Ver la reserva online',url:'https://fareharbor.com/embeds/book/followinggiants/items/636723/booking/934da277-23b1-4741-b34b-774959ad0e20/',icon:'🎟️'}]}
+ ]}
+];
+const PAGOS = [['11 nov','Cargo del Victora Hostel (3.216,67 THB)'],['12 nov','Último día de cancelación gratuita del Victora'],['14 nov','Cargo del Krabi Tipa Resort (20.954,93 THB)'],['15 nov','Último día de cancelación gratuita del Krabi Tipa'],['22 nov','Cargo del Amara Bangkok (4.163,68 THB)'],['23 nov','Último día de cancelación gratuita del Amara'],['25 nov','Cargo del tour de Ayutthaya (153,32 €)'],['27 nov, 7:00','Último momento para cancelar el tour de Ayutthaya sin coste']];
+
+/* Efectivo */
+const CASH = [
+ {id:'c1', l:'Tour James Bond', d:'Mar 1 dic', a:6200},
+ {id:'c2', l:'Tour 4 islas', d:'Mié 2 dic', a:5300},
+ {id:'c3', l:'Tour Koh Phi Phi', d:'Sáb 5 dic', a:5600},
+ {id:'c8', l:'Following Giants (resto)', d:'Dom 6 dic. Se paga al llegar.', a:2550},
+ {id:'c4', l:'Depósito del Krabi Tipa Resort', d:'Lun 30 nov. Se devuelve en efectivo al salir.', a:2000},
+ {id:'c5', l:'Gran Palacio (2 × 500)', d:'Lun 30 nov. Precio orientativo.', a:1000, est:true},
+ {id:'c6', l:'Wat Pho (2 × 300)', d:'Lun 30 nov. Precio orientativo.', a:600, est:true},
+ {id:'c7', l:'Wat Arun (2 × 200)', d:'Lun 30 nov. Precio orientativo.', a:400, est:true}
+];
+
+/* Antes de volar */
+const PREP = [
+ {id:'p1', t:'Rellenar la TDAC (una por persona)', s:'Se puede enviar desde 3 días antes, hasta el mismo día de llegada. Es gratuita: usad solo tdac.immigration.go.th. Guardad el código QR.'},
+ {id:'p2', t:'Rellenar el formulario de seguro del tour de Ayutthaya', s:'Obligatorio antes del 28 nov. Datos del pasaporte de los dos. Pasos más abajo.'},
+ {id:'p3', t:'Llevar euros en efectivo para Superrich', s:'Se cambia en la planta B del aeropuerto, con el pasaporte.'},
+ {id:'p4', t:'Comprobar el límite diario de las tarjetas en cajeros', s:'Cada retirada lleva unos 220 THB de comisión en Tailandia, más lo que cobre vuestro banco.'},
+ {id:'p5', t:'Preparar una SIM o eSIM con datos', s:'Hace falta para Grab desde el primer momento.'},
+ {id:'p6', t:'Descargar Grab y la app de GetYourGuide', s:'La recogida del tour del sábado aparece en la app el viernes entre las 19:00 y las 21:00.'},
+ {id:'p7', t:'Hacer el check-in online de los vuelos que lo permitan', s:'Sobre todo el AZ759 del 7 de diciembre, por la conexión justa.'},
+ {id:'p8', t:'Confirmar con Olé Tours que recibieron la transferencia de Khao Sok', s:'El 28 oct seguían esperándola.'},
+ {id:'p9', t:'Preguntar a Thalassa dónde os recogen en el tour James Bond', s:'info@thalassatour.com. El correo no lo indica.'},
+ {id:'p10', t:'Mirar la página “Vijit Chao Phraya” el 27 nov', s:'Para confirmar dónde son los drones y las funciones de Wat Kalayanamit.'},
+ {id:'p11', t:'Mirar la previsión del tiempo cuando falten unos 10 días', s:'Abrid la pestaña “Tiempo”: tiene los enlaces a la previsión en vivo de Bangkok y Krabi.'},
+ {id:'p12', t:'Descargar el pase de embarque digital del VZ344 (lunes 30 nov)', s:'El plan del lunes depende de entrar directos al control de seguridad sin facturar.'},
+ {id:'p13', t:'Dar a Olé Tours nombre completo, sexo y pasaporte de los dos', s:'Lo piden para validar el seguro de accidentes de Khao Sok; sin ello pueden cancelar la reserva.'},
+ {id:'p14', t:'Confirmar con Thalassa la recogida del tour James Bond', s:'La web dice las 8:45 en el Hotel Krabi Resort, pero vuestro correo no lo indica.'},
+ {id:'p16', t:'Preparar el botiquín y marcarlo en “Cosas que llevar”', s:'La pestaña Salud tiene el inventario completo y las dolencias más frecuentes en Tailandia.'},
+ {id:'p15', t:'Preguntar en qué idioma será el guía de Khao Sok', s:'La ficha de Olé Tours lo anuncia en inglés; los tours de Thalassa y TripGuru se ofrecen en español.'}
+];
+
+/* ============ Ilustraciones ============ */
+function stars(n, w, h, seed){
+  let s = seed, out = '';
+  for (let i = 0; i < n; i++){
+    s = (s * 9301 + 49297) % 233280; const x = (s / 233280) * w;
+    s = (s * 9301 + 49297) % 233280; const y = (s / 233280) * h;
+    s = (s * 9301 + 49297) % 233280; const r = 0.6 + (s / 233280) * 1.3;
+    out += '<circle cx="' + x.toFixed(0) + '" cy="' + y.toFixed(0) + '" r="' + r.toFixed(1) + '" fill="#fff" opacity="' + (0.4 + r / 3).toFixed(2) + '"/>';
+  }
+  return out;
+}
+function prang(cx, y0, H, W, fill){
+  const s = H / 170, w = W;
+  return '<path d="M' + (cx - w/2) + ' ' + y0 + ' L' + (cx - w/2) + ' ' + (y0 - 30*s) + ' L' + (cx - w*.42) + ' ' + (y0 - 30*s) + ' L' + (cx - w*.42) + ' ' + (y0 - 60*s) + ' L' + (cx - w*.33) + ' ' + (y0 - 60*s) + ' L' + (cx - w*.33) + ' ' + (y0 - 95*s) + ' Q' + (cx - w*.22) + ' ' + (y0 - 115*s) + ' ' + (cx - w*.12) + ' ' + (y0 - 135*s) + ' L' + (cx - w*.04) + ' ' + (y0 - 160*s) + ' L' + cx + ' ' + (y0 - H) + ' L' + (cx + w*.04) + ' ' + (y0 - 160*s) + ' L' + (cx + w*.12) + ' ' + (y0 - 135*s) + ' Q' + (cx + w*.22) + ' ' + (y0 - 115*s) + ' ' + (cx + w*.33) + ' ' + (y0 - 95*s) + ' L' + (cx + w*.33) + ' ' + (y0 - 60*s) + ' L' + (cx + w*.42) + ' ' + (y0 - 60*s) + ' L' + (cx + w*.42) + ' ' + (y0 - 30*s) + ' L' + (cx + w/2) + ' ' + (y0 - 30*s) + ' L' + (cx + w/2) + ' ' + y0 + ' Z" fill="' + fill + '"/>';
+}
+function stupa(cx, y0, w, h, fill, band){
+  let o = '<path d="M' + (cx - w/2) + ' ' + y0 + ' L' + (cx - w/2) + ' ' + (y0 - h*.2) + ' L' + (cx - w*.36) + ' ' + (y0 - h*.2) + ' L' + (cx - w*.36) + ' ' + (y0 - h*.32) + ' Q' + (cx - w*.34) + ' ' + (y0 - h*.62) + ' ' + (cx - w*.08) + ' ' + (y0 - h*.82) + ' L' + cx + ' ' + (y0 - h) + ' L' + (cx + w*.08) + ' ' + (y0 - h*.82) + ' Q' + (cx + w*.34) + ' ' + (y0 - h*.62) + ' ' + (cx + w*.36) + ' ' + (y0 - h*.32) + ' L' + (cx + w*.36) + ' ' + (y0 - h*.2) + ' L' + (cx + w/2) + ' ' + (y0 - h*.2) + ' L' + (cx + w/2) + ' ' + y0 + ' Z" fill="' + fill + '"/>';
+  for (let i = 1; i <= 4; i++){ const yy = y0 - h*(.34 + i*.1); const ww = w*(.3 - i*.045); o += '<rect x="' + (cx - ww) + '" y="' + yy + '" width="' + (ww*2) + '" height="2.4" fill="' + band + '" opacity=".6"/>'; }
+  return o;
+}
+function karst(x, y, w, h, fill, hi){
+  return '<path d="M' + x + ' ' + y + ' C' + (x + w*.04) + ' ' + (y - h*.55) + ' ' + (x + w*.12) + ' ' + (y - h) + ' ' + (x + w*.38) + ' ' + (y - h) + ' C' + (x + w*.62) + ' ' + (y - h*1.02) + ' ' + (x + w*.76) + ' ' + (y - h*.5) + ' ' + (x + w) + ' ' + y + ' Z" fill="' + fill + '"/><path d="M' + (x + w*.2) + ' ' + (y - h*.7) + ' C' + (x + w*.28) + ' ' + (y - h*.96) + ' ' + (x + w*.4) + ' ' + (y - h*.98) + ' ' + (x + w*.5) + ' ' + (y - h*.95) + ' C' + (x + w*.38) + ' ' + (y - h*.86) + ' ' + (x + w*.28) + ' ' + (y - h*.8) + ' ' + (x + w*.2) + ' ' + (y - h*.7) + ' Z" fill="' + hi + '" opacity=".55"/>';
+}
+const SC = {
+ plane(v){
+  const sets = [['#0F1B4A','#3E4F9A','#F2E8C8'],['#16224F','#B5527A','#FFE3B3'],['#0B1330','#2A5CA8','#E8F0FF']][v || 0];
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gpl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + sets[0] + '"/><stop offset="1" stop-color="' + sets[1] + '"/></linearGradient></defs><rect width="800" height="260" fill="url(#gpl)"/>' + stars(70, 800, 170, 11 + (v||0)) +
+  '<circle cx="665" cy="64" r="26" fill="' + sets[2] + '"/><circle cx="677" cy="57" r="24" fill="' + sets[0] + '"/>' +
+  '<path d="M30 226 Q400 -40 772 200" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2.2" stroke-dasharray="2 10" stroke-linecap="round"/>' +
+  '<g transform="translate(402 92) rotate(4)"><path d="M-46 0 Q-46 -7 -34 -7 L30 -7 Q50 -5 56 0 Q50 5 30 7 L-34 7 Q-46 7 -46 0Z" fill="#fff"/><path d="M-6 -5 L-26 -40 L-17 -40 L16 -5Z" fill="#E7EEFF"/><path d="M-6 5 L-26 40 L-17 40 L16 5Z" fill="#D3DEFA"/><path d="M-38 -5 L-50 -20 L-43 -20 L-28 -5Z" fill="#E7EEFF"/><path d="M-38 5 L-50 20 L-43 20 L-28 5Z" fill="#D3DEFA"/><circle cx="42" cy="0" r="1.6" fill="' + sets[0] + '"/></g>' +
+  '<ellipse cx="120" cy="248" rx="230" ry="40" fill="#fff" opacity=".13"/><ellipse cx="560" cy="256" rx="260" ry="36" fill="#fff" opacity=".1"/><ellipse cx="760" cy="238" rx="150" ry="28" fill="#fff" opacity=".14"/></svg>';
+ },
+ river(){
+  let drones = '';
+  for (let i = 0; i < 26; i++){ const a = i / 26 * Math.PI * 2; drones += '<circle cx="' + (590 + 62 * Math.cos(a)).toFixed(1) + '" cy="' + (78 + 46 * Math.sin(a)).toFixed(1) + '" r="2.6" fill="#FFD27A"/>'; }
+  for (let i = 0; i < 14; i++){ const a = i / 14 * Math.PI * 2; drones += '<circle cx="' + (590 + 30 * Math.cos(a)).toFixed(1) + '" cy="' + (78 + 22 * Math.sin(a)).toFixed(1) + '" r="2.4" fill="#FF8FB1"/>'; }
+  drones += '<circle cx="590" cy="78" r="3.2" fill="#fff"/>';
+  let refl = ''; for (let i = 0; i < 9; i++){ refl += '<rect x="' + (470 + i * 22) + '" y="' + (212 + (i % 3) * 12) + '" width="' + (40 - (i % 4) * 7) + '" height="2.2" rx="1" fill="#FFB347" opacity=".4"/>'; }
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gri" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151A49"/><stop offset=".62" stop-color="#7A3A85"/><stop offset="1" stop-color="#E0587C"/></linearGradient></defs><rect width="800" height="260" fill="url(#gri)"/>' + stars(45, 800, 120, 3) +
+  '<path d="M0 190 L0 168 L30 168 L30 150 L48 150 L48 172 L80 172 L80 140 L96 140 L96 164 L130 164 L130 176 L170 176 L170 154 L190 154 L190 170 L230 170 L230 160 L250 160 L250 190Z" fill="#241B58"/><path d="M850 190 L850 150 L780 150 L780 128 L760 128 L760 168 L720 168 L720 142 L700 142 L700 176 L440 176 L440 190Z" fill="#241B58"/>' +
+  '<g class="twinkle">' + drones + '</g>' +
+  prang(300, 196, 78, 52, '#1A1445') + prang(402, 196, 70, 48, '#1A1445') + prang(590, 196, 150, 100, '#120E3A') +
+  '<g fill="#FFC15A" opacity=".85"><rect x="582" y="150" width="3" height="5"/><rect x="595" y="150" width="3" height="5"/><rect x="588" y="136" width="3" height="5"/><rect x="578" y="170" width="3" height="5"/><rect x="599" y="170" width="3" height="5"/></g>' +
+  '<rect y="196" width="800" height="64" fill="#0F1239"/>' + refl +
+  '<g transform="translate(180 226)"><path d="M0 8 Q60 22 130 4 L124 0 Q60 12 6 2Z" fill="#05071F"/><path d="M104 0 L150 -14 L128 3Z" fill="#05071F"/><circle cx="52" cy="-6" r="3.4" fill="#FFC15A"/><path d="M52 -2 L52 5" stroke="#FFC15A" stroke-width="1.6"/></g>' +
+  '<path d="M0 232 Q200 224 400 234 T800 230 L800 260 L0 260Z" fill="#0A0D2B" opacity=".6"/></svg>';
+ },
+ ruins(){
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gru" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A5FB5"/><stop offset=".55" stop-color="#F3A06A"/><stop offset="1" stop-color="#FFD688"/></linearGradient></defs><rect width="800" height="260" fill="url(#gru)"/>' +
+  '<circle cx="610" cy="150" r="56" fill="#FFE7A8" opacity=".95"/><circle cx="610" cy="150" r="82" fill="#FFE7A8" opacity=".25"/>' +
+  '<path d="M0 190 Q120 150 240 184 T480 178 T800 186 L800 260 L0 260Z" fill="#2F6B4B"/>' +
+  stupa(190, 214, 130, 170, '#A24A36', '#5E241F') + stupa(330, 218, 80, 100, '#B85A42', '#5E241F') + stupa(470, 220, 100, 128, '#9A422F', '#5E241F') +
+  '<path d="M520 222 L520 150 Q530 120 560 120 Q585 118 596 140 L596 222Z" fill="#7B3427" opacity=".9"/>' +
+  '<path d="M610 220 Q650 190 700 206 T800 200 L800 260 L610 260Z" fill="#245A3E"/>' +
+  '<g transform="translate(660 206)"><rect width="110" height="20" rx="3" fill="#3A2345"/><rect x="8" y="5" width="14" height="8" fill="#FFD688"/><rect x="30" y="5" width="14" height="8" fill="#FFD688"/><rect x="52" y="5" width="14" height="8" fill="#FFD688"/><rect x="74" y="5" width="14" height="8" fill="#FFD688"/><rect x="-6" y="20" width="122" height="3" fill="#1C1130"/></g>' +
+  '<path d="M0 234 L800 234 L800 260 L0 260Z" fill="#1E4F37"/><path d="M60 234 Q70 200 96 190 Q86 214 92 234Z" fill="#173F2B"/><path d="M730 236 Q740 200 770 190 Q758 216 764 236Z" fill="#173F2B"/></svg>';
+ },
+ city(){
+  let w = ''; for (let i = 0; i < 40; i++){ const x = 30 + (i * 53) % 700, y = 120 + (i * 37) % 80; w += '<rect x="' + x + '" y="' + y + '" width="4" height="5" fill="#FFD08A" opacity="' + ((i % 3) ? .75 : .35) + '"/>'; }
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gci" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C2A74"/><stop offset=".55" stop-color="#E8648A"/><stop offset="1" stop-color="#FFB36B"/></linearGradient></defs><rect width="800" height="260" fill="url(#gci)"/>' +
+  '<circle cx="250" cy="150" r="44" fill="#FFD9A0"/><circle cx="250" cy="150" r="70" fill="#FFD9A0" opacity=".25"/>' +
+  '<path d="M0 200 L0 150 L40 150 L40 120 L70 120 L70 160 L110 160 L110 104 L140 104 L140 170 L190 170 L190 140 L220 140 L220 200Z" fill="#2A1D55"/>' +
+  '<path d="M330 200 L330 136 L370 136 L370 112 L400 112 L400 150 L440 150 L440 96 L470 96 L470 160 L520 160 L520 124 L560 124 L560 200Z" fill="#2A1D55"/>' +
+  '<path d="M600 200 L600 150 L640 150 L640 118 L664 118 L664 90 L684 90 L684 70 L696 70 L696 40 L702 14 L708 40 L708 70 L720 70 L720 90 L740 90 L740 118 L764 118 L764 150 L800 150 L800 200Z" fill="#20154A"/>' +
+  '<path d="M696 40 L708 40 L714 70 L690 70Z" fill="#33236A"/>' + w +
+  '<rect y="200" width="800" height="60" fill="#12294A"/><rect y="200" width="800" height="6" fill="#E8EEF5"/><path d="M0 214 Q200 208 400 216 T800 212 L800 260 L0 260Z" fill="#19A8A0"/><path d="M0 232 Q200 226 400 234 T800 230" fill="none" stroke="#A8F0E8" stroke-width="2" opacity=".6"/>' +
+  '<path d="M30 260 Q40 220 80 206 Q66 232 70 260Z" fill="#0B2C2C"/><path d="M60 260 Q92 226 140 226 Q104 238 96 260Z" fill="#0F3A39"/><path d="M770 260 Q760 224 724 208 Q738 234 734 260Z" fill="#0B2C2C"/></svg>';
+ },
+ temple(){
+  const spire = (cx, y0, w, h, gold) => '<path d="M' + (cx - w/2) + ' ' + y0 + ' L' + (cx - w*.42) + ' ' + (y0 - h*.4) + ' Q' + (cx - w*.3) + ' ' + (y0 - h*.7) + ' ' + (cx - w*.1) + ' ' + (y0 - h*.88) + ' L' + cx + ' ' + (y0 - h) + ' L' + (cx + w*.1) + ' ' + (y0 - h*.88) + ' Q' + (cx + w*.3) + ' ' + (y0 - h*.7) + ' ' + (cx + w*.42) + ' ' + (y0 - h*.4) + ' L' + (cx + w/2) + ' ' + y0 + 'Z" fill="' + gold + '"/>';
+  const roof = (x, y, w) => '<path d="M' + x + ' ' + (y + 16) + ' L' + (x + w*.12) + ' ' + y + ' L' + (x + w*.88) + ' ' + y + ' L' + (x + w) + ' ' + (y + 16) + 'Z" fill="#C8333D"/><path d="M' + (x + 4) + ' ' + (y + 16) + ' L' + (x + w*.14) + ' ' + (y + 6) + ' L' + (x + w*.86) + ' ' + (y + 6) + ' L' + (x + w - 4) + ' ' + (y + 16) + 'Z" fill="#E7A93A"/>';
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gte" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C9BE0"/><stop offset="1" stop-color="#BFE6FA"/></linearGradient></defs><rect width="800" height="260" fill="url(#gte)"/>' +
+  '<ellipse cx="140" cy="64" rx="70" ry="14" fill="#fff" opacity=".75"/><ellipse cx="640" cy="44" rx="90" ry="12" fill="#fff" opacity=".6"/>' +
+  spire(260, 190, 54, 150, '#F0B63A') + spire(400, 190, 74, 190, '#F6C451') + spire(540, 190, 54, 150, '#F0B63A') +
+  '<rect x="150" y="150" width="500" height="50" fill="#F5F0E3"/><rect x="150" y="196" width="500" height="6" fill="#D9A93E"/>' +
+  roof(160, 128, 150) + roof(330, 112, 140) + roof(490, 128, 150) +
+  '<g fill="#8E2A31"><rect x="180" y="166" width="14" height="26" rx="6"/><rect x="220" y="166" width="14" height="26" rx="6"/><rect x="262" y="166" width="14" height="26" rx="6"/><rect x="358" y="166" width="16" height="30" rx="7"/><rect x="396" y="166" width="16" height="30" rx="7"/><rect x="434" y="166" width="16" height="30" rx="7"/><rect x="528" y="166" width="14" height="26" rx="6"/><rect x="570" y="166" width="14" height="26" rx="6"/><rect x="610" y="166" width="14" height="26" rx="6"/></g>' +
+  '<rect y="202" width="800" height="58" fill="#6AA862"/><path d="M0 226 L800 226" stroke="#4F8A4F" stroke-width="3" opacity=".6"/><path d="M60 260 Q76 214 104 204 Q92 232 96 260Z" fill="#2E6A3A"/><path d="M730 260 Q714 218 684 206 Q698 234 692 260Z" fill="#2E6A3A"/></svg>';
+ },
+ sea(v){
+  v = v || 0;
+  const skies = [['#6FD0F2','#E4F8FF'],['#FFB27A','#FFE3B0'],['#58C4F0','#C9F1FF'],['#8AB8F0','#FFD9C0']][v % 4];
+  const sx = [610, 180, 700, 420][v % 4];
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gse" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + skies[0] + '"/><stop offset="1" stop-color="' + skies[1] + '"/></linearGradient><linearGradient id="gsw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17C2B5"/><stop offset="1" stop-color="#0C7F8E"/></linearGradient></defs><rect width="800" height="260" fill="url(#gse)"/>' +
+  '<circle cx="' + sx + '" cy="62" r="30" fill="#FFF3B8"/><circle cx="' + sx + '" cy="62" r="52" fill="#FFF3B8" opacity=".3"/>' +
+  karst(40, 170, 170, 96, '#3E7A5A', '#9FD3A8') + karst(190, 170, 130, 70, '#2F6A4E', '#8FC79C') + karst(520, 170, 230, 118, '#35705A', '#9FD3A8') + karst(700, 170, 140, 64, '#2A6049', '#86BE95') +
+  '<rect y="168" width="800" height="92" fill="url(#gsw)"/><path d="M0 184 Q100 178 200 186 T400 184 T600 186 T800 182" fill="none" stroke="#B5F5EE" stroke-width="2" opacity=".6"/><path d="M0 206 Q100 200 200 208 T400 206 T600 208 T800 204" fill="none" stroke="#B5F5EE" stroke-width="2" opacity=".4"/>' +
+  '<g transform="translate(330 214)"><path d="M0 0 Q60 16 140 -2 L132 -10 Q64 2 8 -8Z" fill="#D9503F"/><path d="M110 -6 L172 -22 L140 -2Z" fill="#7A3A2A"/><path d="M20 -8 L26 -34 L32 -8Z" fill="#FFD166"/><path d="M26 -34 L60 -28" stroke="#FF8FB1" stroke-width="2"/><path d="M26 -30 L56 -20" stroke="#FFD166" stroke-width="2"/></g>' +
+  '<path d="M0 240 Q200 232 400 244 T800 238 L800 260 L0 260Z" fill="#0B6E7C" opacity=".6"/></svg>';
+ },
+ lake(v){
+  return '<svg viewBox="0 0 800 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="gla" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CC9C0"/><stop offset="1" stop-color="#E4F2E6"/></linearGradient></defs><rect width="800" height="260" fill="url(#gla)"/>' +
+  '<circle cx="' + (v ? 160 : 620) + '" cy="70" r="26" fill="#FFF8D6" opacity=".9"/>' +
+  karst(-20, 170, 230, 120, '#8FB9AE', '#C9E4DB') + karst(260, 170, 260, 150, '#7BA79C', '#C0DED3') + karst(560, 170, 280, 118, '#8FB9AE', '#C9E4DB') +
+  karst(80, 176, 220, 90, '#4E8478', '#A5D1C5') + karst(430, 176, 230, 104, '#3E7568', '#99C9BB') + karst(690, 176, 160, 80, '#4E8478', '#A5D1C5') +
+  '<rect y="170" width="800" height="90" fill="#3E8480"/><rect y="164" width="800" height="22" fill="#fff" opacity=".28"/>' +
+  '<path d="M0 196 Q100 190 200 198 T400 196 T600 198 T800 194" fill="none" stroke="#CFEDE6" stroke-width="2" opacity=".6"/>' +
+  [[120, 212],[330, 220],[540, 210]].map(function(p){ return '<g transform="translate(' + p[0] + ' ' + p[1] + ')"><rect x="0" y="12" width="64" height="6" rx="2" fill="#6B4630"/><rect x="8" y="-2" width="48" height="14" fill="#B98A5B"/><path d="M2 -2 L32 -20 L62 -2Z" fill="#8A5A3A"/><rect x="26" y="2" width="10" height="10" fill="#4B2F1F"/><rect x="-6" y="18" width="76" height="3" fill="#1F5E5B" opacity=".6"/></g>'; }).join('') +
+  '<path d="M0 238 Q200 230 400 242 T800 236 L800 260 L0 260Z" fill="#2B6B69" opacity=".7"/></svg>';
+ }
+};
+
+/* ============ Estado ============ */
+const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const state = {
+  view:'plan', day:0, filter:'todo', showOpt:true, expandAll:false, open:new Set(),
+  done:new Set(), prep:new Set(), cash:new Set(), rate:'', gastos:[], cashStart:'',
+  plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
+  readOnly:false, sync:'connecting', pending:false
+};
+const VIEWS = {plan:'Itinerario', reservas:'Reservas', efectivo:'Efectivo', 'antes-de-volar':'Antes de volar', tiempo:'Tiempo', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', gastos:'Gastos', resumen:'Resumen', sync:'Sincronización'};
+
+function todayKey(){
+  try { return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Bangkok', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); } catch(e){ return ''; }
+}
+const fmtNum = n => n.toLocaleString('es-ES');
+let undoFn = null;
+function toast(msg, label, fn){
+  const t = $('#toast'); t.textContent = msg; undoFn = fn || null;
+  if (label && fn){ const b = document.createElement('button'); b.setAttribute('data-undo', '1'); b.textContent = label; t.appendChild(b); }
+  t.classList.add('on'); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('on'), label ? 6000 : 1800);
+}
+function copyText(txt){
+  const ok = () => toast('Copiado: ' + txt);
+  try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(ok, fallback); return; } } catch(e){}
+  fallback();
+  function fallback(){
+    try { const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); ok(); }
+    catch(e){ toast('No se pudo copiar. Seleccionadlo a mano: ' + txt); }
+  }
+}
+
+/* ============ Cabecera ============ */
+function renderWidgets(){
+  const now = new Date();
+  const start = new Date('2026-11-26T20:45:00Z'), end = new Date('2026-12-08T00:05:00Z');
+  let a, b;
+  if (now < start){ const d = Math.ceil((start - now) / 864e5); a = ['Cuenta atrás', d + (d === 1 ? ' día' : ' días')]; }
+  else if (now <= end){ a = ['Estado', 'De viaje']; }
+  else { a = ['Estado', 'Viaje hecho']; }
+  const f = tz => { try { return new Intl.DateTimeFormat('es-ES', {timeZone:tz, hour:'2-digit', minute:'2-digit'}).format(now); } catch(e){ return '--:--'; } };
+  $('#widgets').innerHTML =
+    '<div class="w hl"><small>' + a[0] + '</small><b>' + a[1] + '</b></div>' +
+    '<div class="w"><small>Ahora en Bangkok</small><b>' + f('Asia/Bangkok') + '</b></div>' +
+    '<div class="w"><small>Ahora en Madrid</small><b>' + f('Europe/Madrid') + '</b></div>';
+}
+
+function renderSeg(){
+  $('#seg').innerHTML = Object.keys(VIEWS).map(k => '<button data-view="' + k + '"' + (state.view === k ? ' aria-current="page"' : '') + '>' + VIEWS[k] + '</button>').join('');
+  const sa = $('#seg [aria-current="page"]'); if (sa && sa.scrollIntoView) { try { sa.scrollIntoView({inline:'center', block:'nearest'}); } catch(e){} }
+  const days = $('#days');
+  days.hidden = state.view !== 'plan';
+  if (state.view !== 'plan') return;
+  const tk = todayKey();
+  days.innerHTML = DAYS.map((d, i) => {
+    const n = d.items.filter(it => state.done.has(it.id)).length;
+    return '<button class="day" role="tab" data-day="' + i + '" aria-current="' + (state.day === i) + '" style="--c:' + CITY[d.city].c + '"><small>' + d.short + '</small><b>' + d.num + '</b>' + (n ? '<span class="cnt">' + n + '/' + d.items.length + '</span>' : '') + '<i></i>' + (d.key === tk ? '<span class="hoy">Hoy</span>' : '') + '</button>';
+  }).join('');
+  const act = days.querySelector('[aria-current="true"]');
+  if (act && act.scrollIntoView) { try { act.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'}); } catch(e){} }
+}
+
+/* ============ Itinerario ============ */
+function itemHTML(it, isNext){
+  const open = state.expandAll || state.open.has(it.id);
+  const hasDet = true;
+  let inner = '';
+  if (it.det) inner += it.det.join('');
+  inner += tideLine(it);
+  if (it.warn) inner += '<div class="warn">⚠️ ' + it.warn + '</div>';
+  if (it.routes || it.maps || it.links){
+    inner += '<div class="routes">' + (it.routes || []).map(r => '<a class="route" target="_blank" rel="noopener noreferrer" href="' + gdir(r.from, r.to, r.m) + '"><em>' + MODE_ICON[r.m] + '</em>' + r.l + '</a>').join('') +
+      (it.maps || []).map(p => '<a class="route place" target="_blank" rel="noopener noreferrer" href="' + (p.url || gplace(p.q)) + '"><em>📍</em>' + p.l + '</a>').join('') +
+      (it.links || []).map(l => '<a class="route place" target="_blank" rel="noopener noreferrer" href="' + l.url + '"><em>' + (l.icon || '🔗') + '</em>' + l.l + '</a>').join('') + '</div>';
+  }
+  if (it.refs) inner += '<div class="refs">' + it.refs.map(r => '<button class="ref" data-copy="' + r[1] + '" aria-label="Copiar ' + r[0] + ' ' + r[1] + '"><b>' + r[0] + '</b>' + r[1] + '<span>Copiar</span></button>').join('') + '</div>';
+  inner += '<div class="foot">' + (it.link ? '<button class="btn" data-goto="' + it.link.view + '">' + it.link.label + '</button>' : '') +
+    '<button class="btn ' + (state.done.has(it.id) ? '' : 'pri') + '" data-done="' + it.id + '">' + (state.done.has(it.id) ? 'Desmarcar' : 'Marcar como hecho') + '</button></div>';
+  return '<li class="item ' + (it.opt ? 'opt ' : '') + (state.done.has(it.id) ? 'done ' : '') + (isNext ? 'next ' : '') + '" data-cat="' + it.cat + '" data-id="' + it.id + '">' +
+    '<div class="tcol"><span class="time">' + it.t + '</span></div><div class="node c-' + it.cat + '" aria-hidden="true">' + it.icon + '</div>' +
+    '<div class="card ' + (open ? 'open' : '') + '"><button class="head" aria-expanded="' + open + '" aria-controls="p-' + it.id + '" data-toggle="' + it.id + '"><span class="htxt">' + (it.opt ? '<span class="tag">Opcional</span>' : '') + '<span class="title">' + it.title + '</span>' + (it.sum ? '<span class="sum">' + it.sum + '</span>' : '') + '</span><span class="chev" aria-hidden="true"></span></button>' +
+    '<div class="panel" id="p-' + it.id + '"><div><div class="pin">' + inner + '</div></div></div></div></li>';
+}
+
+function renderPlan(){
+  const d = DAYS[state.day];
+  const tk = todayKey();
+  const items = d.items.filter(it => (state.showOpt || !it.opt) && (state.filter === 'todo' || it.cat === state.filter));
+  const nextId = d.key === tk ? (d.items.find(it => !state.done.has(it.id)) || {}).id : null;
+  const counts = {}; d.items.forEach(it => { counts[it.cat] = (counts[it.cat] || 0) + 1; });
+  const chips = CATS.filter(c => c[0] === 'todo' || counts[c[0]]).map(c => '<button class="chip" data-filter="' + c[0] + '" aria-pressed="' + (state.filter === c[0]) + '">' + c[1] + '</button>').join('');
+  const hasOpt = d.items.some(it => it.opt);
+  $('#app').innerHTML =
+    '<section class="hero" style="background:#1B1F4B">' + SC[d.scene](d.variant) + '<div class="shade"></div><div class="date">' + d.date + '</div><div class="txt"><h2>' + d.title + '</h2><p>' + d.sum + '</p></div></section>' +
+    '<div class="sleep"><span>🛏️</span><div><b>Dónde dormís:</b> ' + d.sleep + '</div></div>' + wxHTML(d) +
+    '<div class="ctrl">' + chips + '<span class="sw">' + (hasOpt ? '<button class="chip" data-opt aria-pressed="' + state.showOpt + '">Opcionales</button>' : '') + '<button class="chip" data-expand aria-pressed="' + state.expandAll + '">Ver todo el detalle</button></span></div>' +
+    (items.length ? '<ol class="tl">' + items.map(it => itemHTML(it, it.id === nextId)).join('') + '</ol>' : '<div class="empty">No hay actividades con este filtro. Probad con “Todo”.</div>') +
+    '<div class="pager">' + (state.day > 0 ? '<button class="btn" data-step="-1">Día anterior</button>' : '<span style="flex:1"></span>') + (state.day < DAYS.length - 1 ? '<button class="btn pri" data-step="1">Día siguiente</button>' : '<span style="flex:1"></span>') + '</div>';
+}
+
+/* ============ Reservas ============ */
+function renderRes(){
+  let h = '<h2 class="sec">Reservas</h2><p class="lead">Toca una reserva para ver los detalles. Toca el código para copiarlo.</p>';
+  RES.forEach(g => {
+    h += '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">' + g.g + '</h3>';
+    g.items.forEach((r, i) => {
+      const id = 'r-' + g.g + i;
+      const open = state.open.has(id);
+      h += '<div class="box ' + (open ? 'open' : '') + '"><button class="head" aria-expanded="' + open + '" data-toggle="' + id + '"><span class="node c-' + (g.g === 'Vuelos' ? 'vuelo' : g.g === 'Alojamiento' ? 'hotel' : 'visita') + '" style="margin:0;flex:none">' + r.ic + '</span><span class="htxt"><span class="title">' + r.t + '</span><span class="sum">' + r.m + '</span></span><span class="chev" aria-hidden="true"></span></button>' +
+        '<div class="panel"><div><div class="pin"><ul>' + r.det.map(x => '<li>' + x + '</li>').join('') + '</ul>' + (r.links ? '<div class="routes">' + r.links.map(l => '<a class="route place" target="_blank" rel="noopener noreferrer" href="' + l.url + '"><em>' + (l.icon || '🔗') + '</em>' + l.l + '</a>').join('') + '</div>' : '') + '<div class="refs">' + r.refs.map(x => '<button class="ref" data-copy="' + x[1] + '"><b>' + x[0] + '</b>' + x[1] + '<span>Copiar</span></button>').join('') + '</div></div></div></div></div>';
+    });
+  });
+  h += '<h3 class="sec" style="font-size:1.35rem;margin-top:22px">Pagos y plazos de cancelación</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><dl class="kv">' + PAGOS.map(p => '<dt>' + p[0] + '</dt><dd>' + p[1] + '</dd>').join('') + '</dl></div></div>';
+  $('#app').innerHTML = h;
+}
+
+/* ============ Efectivo ============ */
+function renderCash(){
+  const sure = CASH.filter(c => !c.est), est = CASH.filter(c => c.est);
+  const sum = arr => arr.reduce((s, c) => s + c.a, 0);
+  const total = sum(CASH), pending = sum(CASH.filter(c => !state.cash.has(c.id)));
+  const rate = parseFloat(String(state.rate).replace(',', '.'));
+  const eur = n => rate > 0 ? ' <small class="meta">(' + (n / rate).toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €)</small>' : '';
+  const row = c => '<button class="check" role="checkbox" aria-checked="' + state.cash.has(c.id) + '" data-cash="' + c.id + '"><span class="bx">✓</span><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span><span style="margin-left:auto;font-weight:700;white-space:nowrap">' + fmtNum(c.a) + ' THB</span></button>';
+  $('#app').innerHTML = '<h2 class="sec">Efectivo</h2><p class="lead">Marca lo que ya tengas apartado o pagado. El total se actualiza solo.</p>' +
+    '<div class="box"><div class="pin" style="border:0;padding-top:14px"><div class="row"><span>Efectivo seguro (tours y depósito)</span><span class="big">' + fmtNum(sum(sure)) + '</span></div><div class="row"><span>Con entradas de templos (orientativo)</span><b>' + fmtNum(total) + ' THB' + eur(total) + '</b></div><div class="row"><span>Por apartar todavía</span><b>' + fmtNum(pending) + ' THB' + eur(pending) + '</b></div></div></div>' +
+    '<h3 class="sec" style="font-size:1.35rem">Pagos seguros</h3>' + sure.map(row).join('') +
+    '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Estimados</h3>' + est.map(row).join('') +
+    '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Superrich frente a CN Money</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0"><b>CN Money</b> existe: lo habéis comprobado vosotros. Está en el aeropuerto, un poco más adelante que Superrich. No tengo sus tipos de cambio, así que comparadlos en los mostradores con la calculadora de abajo. Lo que he encontrado:</p><table class="cmp"><tr><th></th><th>Superrich</th><th>CN Money</th></tr><tr><td>Existe</td><td>Sí. Mostrador naranja en la planta B del aeropuerto y otras sucursales (también en Krabi)</td><td>Sí. En el aeropuerto, un poco más adelante que Superrich (confirmado por vosotros)</td></tr><tr><td>Tipo de cambio</td><td>Cambia a diario: se mira en su web o en el mostrador</td><td>Se mira en el mostrador</td></tr></table><p class="meta" style="margin:8px 0 0">Otras casas que he visto nombradas: Siam Exchange, Vasu, X-One, YES Exchange y Value Plus en Ao Nang. No he comprobado sus tipos.</p><p style="margin:12px 0 4px"><b>Comparad vosotros con cifras reales</b> (poned los THB que os da cada casa por 1 €, para el mismo billete):</p><div class="field"><label for="xa">Superrich (THB por 1 €)</label><input id="xa" inputmode="decimal" placeholder="37,5"></div><div class="field"><label for="xb">CN Money u otra casa (THB por 1 €)</label><input id="xb" inputmode="decimal" placeholder="37,2"></div><div class="field"><label for="xe">Euros a cambiar</label><input id="xe" inputmode="decimal" placeholder="300"></div><b id="xo"></b></div></div>' +
+    '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Conversor</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0">Escribe el tipo de cambio que te dé Superrich (baht por 1 €) y verás los importes en euros.</p><div class="field"><label for="rate">THB por 1 €</label><input id="rate" inputmode="decimal" placeholder="Por ejemplo, 37,5" value="' + (state.rate || '') + '"></div><div class="field"><label for="thb">Importe en THB</label><input id="thb" inputmode="numeric" placeholder="1000"><b id="thbOut"></b></div><p class="meta" style="margin:8px 0 0">No pongo un tipo de cambio por vosotros porque cambia a diario.</p></div></div>' +
+    '<div class="warn">🍜 Ojo con lo que los tours <b>no</b> incluyen: el almuerzo del tour de Ayutthaya (28 nov) y los gastos personales en Khao Sok (3 y 4 dic). En los tours de Thalassa la comida va incluida.</div>' +
+    '<div class="warn">💡 Cada retirada en cajero cuesta unos 220 THB fijos en Tailandia, más lo que cobre vuestro banco. Conviene sacar el máximo permitido de una vez y rechazar la conversión a euros.</div>';
+}
+
+/* ============ Antes de volar ============ */
+function airportSVG(){
+  return '<svg viewBox="0 0 360 330" role="img" aria-label="Plantas del aeropuerto: llegadas en la 2, taxi en la 1, Superrich en la B"><rect x="10" y="10" width="340" height="310" rx="16" fill="var(--surface2)"/>' +
+   [['Planta 4','Salidas',24],['Planta 3','Tiendas y servicios',78],['Planta 2','Llegadas e inmigración',132],['Planta 1','Taxi y Grab',186],['Planta B','Airport Rail Link',250]].map(function(l){
+     return '<rect x="28" y="' + l[2] + '" width="304" height="46" rx="10" fill="var(--surface)" stroke="var(--line)"/><text x="42" y="' + (l[2] + 20) + '" font-size="12" font-weight="700" fill="var(--muted)">' + l[0] + '</text><text x="42" y="' + (l[2] + 37) + '" font-size="14" font-weight="600" fill="var(--ink)">' + l[1] + '</text>';
+   }).join('') +
+   '<rect x="236" y="262" width="80" height="26" rx="8" fill="#F28A1F"/><text x="276" y="279" font-size="12" font-weight="800" text-anchor="middle" fill="#2A1500">Superrich</text>' +
+   '<text x="276" y="258" font-size="11" text-anchor="middle" fill="var(--muted)">mostrador naranja</text>' +
+   '<circle cx="306" cy="156" r="13" fill="var(--ink)"/><text x="306" y="161" font-size="14" font-weight="700" text-anchor="middle" fill="var(--bg)">1</text>' +
+   '<circle cx="306" cy="262" r="0" fill="none"/><circle cx="206" cy="273" r="13" fill="var(--ink)"/><text x="206" y="278" font-size="14" font-weight="700" text-anchor="middle" fill="var(--bg)">2</text>' +
+   '<circle cx="306" cy="210" r="13" fill="var(--ink)"/><text x="306" y="215" font-size="14" font-weight="700" text-anchor="middle" fill="var(--bg)">3</text>' +
+   '<path d="M300 226 L300 226" stroke="none"/></svg>';
+}
+function renderPrep(){
+  const done = PREP.filter(p => state.prep.has(p.id)).length;
+  $('#app').innerHTML = '<h2 class="sec">Antes de volar</h2><p class="lead">Lo que conviene dejar hecho antes del 26 de noviembre.</p>' +
+    '<div class="row"><b>' + done + ' de ' + PREP.length + ' hechas</b></div><div class="bar"><i style="width:' + Math.round(done / PREP.length * 100) + '%"></i></div>' +
+    PREP.map(p => '<button class="check" role="checkbox" aria-checked="' + state.prep.has(p.id) + '" data-prep="' + p.id + '"><span class="bx">✓</span><span class="t"><b>' + p.t + '</b><span>' + p.s + '</span></span></button>').join('') +
+    '<div class="box" style="margin-top:14px"><div class="pin" style="border:0;padding-top:12px"><a class="route place" target="_blank" rel="noopener noreferrer" href="https://tdac.immigration.go.th"><em>🛂</em>Abrir la TDAC oficial</a></div></div>' +
+
+    '<h3 class="sec" id="aeropuerto" style="margin-top:26px">Superrich y taxi en Suvarnabhumi</h3><p class="lead">El orden es: llegadas, planta B y vuelta a la planta 1 para el taxi.</p>' +
+    '<div class="box airport"><div class="pin" style="border:0;padding-top:14px">' + airportSVG() +
+    '<ol class="steps"><li>Salís de inmigración a la sala de llegadas (<b>planta 2</b>).</li><li>Seguid los carteles de <b>Airport Rail Link</b> y bajad a la <b>planta B</b>. Superrich es el mostrador naranja a la izquierda de las máquinas de billetes. Abre de 6:00 a 23:00 y necesitáis el pasaporte.</li><li>Subid a la <b>planta 1</b> para coger taxi o Grab hacia el hostel.</li></ol>' +
+    '<div class="routes"><a class="route place" target="_blank" rel="noopener noreferrer" href="' + gplace('SuperRich Suvarnabhumi Airport Bangkok') + '"><em>📍</em>Ver Superrich en Google Maps</a></div></div></div>' +
+
+    '<h3 class="sec" id="seguro" style="margin-top:26px">El formulario de seguro del tour de Ayutthaya</h3>' +
+    '<div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin-top:0">Lo pide el proveedor del tour (TripGuru), no es un seguro que contratéis vosotros. Necesita, de <b>cada participante</b>, el nombre tal como figura en el pasaporte, el número de pasaporte y la fecha de nacimiento. Lo marcan como obligatorio antes del tour del 28 nov.</p>' +
+    '<ol class="steps"><li>En Gmail, abrid el correo “✅ Booking Acknowledgement | Ref: GYGBLG9X36F5”, enviado “via GetYourGuide”.</li><li>Bajad hasta el aviso “Insurance Info” y pulsad <b>Insurance Form</b>.</li><li>Rellenadlo para los dos viajeros, con los dos pasaportes delante.</li><li>Haced una captura de pantalla de la confirmación.</li></ol>' +
+    '<p>Si el enlace falla, responded a ese mismo correo, escribid por la app de GetYourGuide o a reservations@thetripguru.com. Atienden de 6:00 a 24:00 (GMT+8).</p>' +
+    '<div class="refs"><button class="ref" data-copy="GYGBLG9X36F5"><b>Reserva</b>GYGBLG9X36F5<span>Copiar</span></button><button class="ref" data-copy="reservations@thetripguru.com"><b>Correo</b>reservations@thetripguru.com<span>Copiar</span></button></div></div></div>' +
+
+    '<h3 class="sec" style="margin-top:26px">Lo más delicado del viaje</h3><div class="warn">⚠️ El 7 de diciembre aterrizáis en Bangkok a las 10:25 y el vuelo a Roma sale a las 12:15. Son dos reservas separadas (EFW5T2 y YK7MO8), así que no hay protección automática si el primero se retrasa. Haced el check-in online y confirmad con ITA a qué hora cierra su mostrador.</div>';
+}
+
+/* ============ Tiempo, sol y mareas ============ */
+const CLIMA = {
+  bkk:{name:'Bangkok', lat:13.7563, lon:100.5018, temp:'22 a 32 °C', sea:'',
+    rain:'Estación seca: de media, 0 o 1 días de lluvia en diciembre (unos 5 mm). Son datos de diciembre, orientativos para estos días de noviembre.',
+    live:[['Previsión a 14 días','https://www.timeanddate.com/weather/thailand/bangkok/ext'],['Mapa de lluvia y viento','https://www.windy.com/?13.756,100.502,9']]},
+  krabi:{name:'Ao Nang, Krabi', lat:8.03, lon:98.82, temp:'24 a 31 °C', sea:'28 a 29 °C',
+    rain:'Entre 2 y 10 días de lluvia en diciembre, según la fuente. Chubascos breves, sobre todo por la tarde.',
+    live:[['Previsión a 14 días','https://www.timeanddate.com/weather/thailand/krabi/ext'],['Mapa de lluvia y viento','https://www.windy.com/?8.03,98.82,9'],['Mareas actualizadas','https://www.tide-forecast.com/locations/Krabi/forecasts/latest']]}
+};
+/* Previsión exacta por día. Se rellena cuando haya previsión fiable: {'2026-11-27':{hi:33,lo:25,desc:'Soleado',rain:'10 %',wind:'10 km/h'}} */
+const FORECAST = {'2026-11-27':{lo:24,hi:33,rain:'lluvia 5 %'},'2026-11-28':{lo:24,hi:32,rain:'lluvia 10 %'}};
+/* Pleamares (H) y bajamares (L) de Ao Nang, hora local. Altura en pies. Fuente: SeaTemperatu.re (no válido para navegar). */
+const TIDES = {
+ '2026-11-29':[['H','01:17',9.8],['L','07:50',2.0],['H','14:02',8.2],['L','19:52',3.2]],
+ '2026-11-30':[['H','02:08',9.2],['L','08:45',2.5],['H','15:03',7.8],['L','20:52',3.8]],
+ '2026-12-01':[['H','03:07',8.5],['L','09:46',3.1],['H','16:17',7.6],['L','22:06',4.3]],
+ '2026-12-02':[['H','04:19',7.8],['L','10:53',3.4],['H','17:38',7.6],['L','23:32',4.4]],
+ '2026-12-03':[['H','05:43',7.4],['L','12:03',3.5],['H','18:51',7.9]],
+ '2026-12-04':[['L','00:57',4.2],['H','07:04',7.3],['L','13:07',3.5],['H','19:50',8.3]],
+ '2026-12-05':[['L','02:04',3.7],['H','08:09',7.4],['L','14:01',3.3],['H','20:37',8.7]],
+ '2026-12-06':[['L','02:55',3.2],['H','09:00',7.6],['L','14:47',3.1],['H','21:18',9.1]],
+ '2026-12-07':[['L','03:36',2.8],['H','09:43',7.9],['L','15:28',3.0],['H','21:53',9.3]],
+ '2026-12-08':[['L','04:13',2.5],['H','10:19',8.1],['L','16:04',2.8],['H','22:27',9.5]]
+};
+const pad2 = n => String(n).padStart(2, '0');
+const ES = n => n.toFixed(1).replace('.', ',');
+const fmtHour = h => { let m = Math.round(h * 60); m = ((m % 1440) + 1440) % 1440; return pad2(Math.floor(m / 60)) + ':' + pad2(m % 60); };
+const ft2m = ft => ft * 0.3048;
+const TIDE_EV = (function(){
+  const out = [];
+  Object.keys(TIDES).sort().forEach(k => {
+    const base = Date.parse(k + 'T00:00:00Z') / 60000;
+    TIDES[k].forEach(e => { const hm = e[1].split(':'); out.push({m: base + (+hm[0]) * 60 + (+hm[1]), ft: e[2], type: e[0], hhmm: e[1]}); });
+  });
+  return out.sort((a, b) => a.m - b.m);
+})();
+function tideH(m){
+  for (let i = 0; i < TIDE_EV.length - 1; i++){
+    const a = TIDE_EV[i], b = TIDE_EV[i + 1];
+    if (m >= a.m && m <= b.m){ const f = (m - a.m) / (b.m - a.m); return ft2m(a.ft + (b.ft - a.ft) * (1 - Math.cos(Math.PI * f)) / 2); }
+  }
+  return null;
+}
+function sunInfo(ds, lat, lon){
+  const rad = Math.PI / 180, p = ds.split('-').map(Number), y = p[0], m = p[1], d = p[2];
+  const N = Math.floor(275 * m / 9) - Math.floor((m + 9) / 12) * (1 + Math.floor((y - 4 * Math.floor(y / 4) + 2) / 3)) + d - 30, lngHour = lon / 15;
+  function calc(rising){
+    const t = N + ((rising ? 6 : 18) - lngHour) / 24, M = 0.9856 * t - 3.289;
+    let L = M + 1.916 * Math.sin(M * rad) + 0.020 * Math.sin(2 * M * rad) + 282.634; L = ((L % 360) + 360) % 360;
+    let RA = Math.atan(0.91764 * Math.tan(L * rad)) / rad; RA = ((RA % 360) + 360) % 360;
+    RA = (RA + (Math.floor(L / 90) * 90 - Math.floor(RA / 90) * 90)) / 15;
+    const sinDec = 0.39782 * Math.sin(L * rad), cosDec = Math.cos(Math.asin(sinDec));
+    const cosH = (Math.cos(90.833 * rad) - sinDec * Math.sin(lat * rad)) / (cosDec * Math.cos(lat * rad));
+    const H = (rising ? 360 - Math.acos(cosH) / rad : Math.acos(cosH) / rad) / 15;
+    const UT = (((H + RA - 0.06571 * t - 6.622 - lngHour) % 24) + 24) % 24;
+    return (UT + 7 + 24) % 24;
+  }
+  return {rise: calc(true), set: calc(false)};
+}
+function moonInfo(k){
+  const jd = Date.parse(k + 'T12:00:00Z') / 864e5 + 2440587.5, ph = ((((jd - 2451550.1) / 29.530588853) % 1) + 1) % 1;
+  const ill = Math.round((1 - Math.cos(2 * Math.PI * ph)) / 2 * 100);
+  let n = 'Luna menguante';
+  if (ph < .03 || ph > .97) n = 'Luna nueva'; else if (ph < .22) n = 'Luna creciente'; else if (ph < .28) n = 'Cuarto creciente'; else if (ph < .47) n = 'Gibosa creciente'; else if (ph < .53) n = 'Luna llena'; else if (ph < .72) n = 'Gibosa menguante'; else if (ph < .78) n = 'Cuarto menguante';
+  const near = (a, b) => Math.min(Math.abs(ph - a), 1 - Math.abs(ph - a)) < b;
+  const spring = near(0, .09) || near(.5, .09), neap = near(.25, .07) || near(.75, .07);
+  return {n: n, ill: ill, spring: spring, neap: neap};
+}
+function tideLine(it){
+  const d = DAYS[state.day];
+  if (!it.tide || d.wx !== 'krabi' || !TIDES[d.key]) return '';
+  const hm = it.t.replace('~', '').split(':'), m = Date.parse(d.key + 'T00:00:00Z') / 60000 + (+hm[0]) * 60 + (+hm[1]);
+  const h = tideH(m), h2 = tideH(m + 10);
+  if (h === null || h2 === null) return '';
+  const prev = TIDE_EV.filter(e => e.m <= m).pop(), next = TIDE_EV.filter(e => e.m > m)[0];
+  const nm = e => (e.type === 'H' ? 'pleamar' : 'bajamar') + ' a las ' + e.hhmm + ' (' + ES(ft2m(e.ft)) + ' m)';
+  return '<p>🌊 <b>Marea a las ' + it.t + ':</b> ' + (h2 > h ? 'subiendo' : 'bajando') + ', unos ' + ES(h) + ' m. Antes hubo ' + nm(prev) + ' y después habrá ' + nm(next) + '.</p>';
+}
+function tideChart(d, s){
+  const W = 340, H = 150, pl = 30, pr = 10, pt = 16, pb = 24, hmax = 3.2;
+  const base = Date.parse(d.key + 'T00:00:00Z') / 60000;
+  const X = mm => pl + mm / 1440 * (W - pl - pr), Y = h => pt + (1 - h / hmax) * (H - pt - pb);
+  let path = '', first = true;
+  for (let mm = 0; mm <= 1440; mm += 10){ const h = tideH(base + mm); if (h === null) continue; path += (first ? 'M' : 'L') + X(mm).toFixed(1) + ' ' + Y(h).toFixed(1) + ' '; first = false; }
+  const area = path + 'L' + X(1440) + ' ' + Y(0) + ' L' + X(0) + ' ' + Y(0) + ' Z';
+  let g = '<rect x="' + X(0) + '" y="' + pt + '" width="' + (X(s.rise * 60) - X(0)) + '" height="' + (H - pt - pb) + '" fill="var(--ink)" opacity=".1"/><rect x="' + X(s.set * 60) + '" y="' + pt + '" width="' + (X(1440) - X(s.set * 60)) + '" height="' + (H - pt - pb) + '" fill="var(--ink)" opacity=".1"/>';
+  [0, 1, 2, 3].forEach(v => { g += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="var(--line)"/><text x="' + (pl - 5) + '" y="' + (Y(v) + 4) + '" font-size="10" text-anchor="end" fill="var(--muted)">' + v + ' m</text>'; });
+  [0, 6, 12, 18, 24].forEach(v => { g += '<text x="' + X(v * 60) + '" y="' + (H - 6) + '" font-size="10" text-anchor="middle" fill="var(--muted)">' + pad2(v) + 'h</text>'; });
+  g += '<path d="' + area + '" fill="var(--jade)" opacity=".22"/><path d="' + path + '" fill="none" stroke="var(--jade)" stroke-width="2.4" stroke-linejoin="round"/>';
+  TIDE_EV.filter(e => e.m >= base && e.m < base + 1440).forEach(e => {
+    const mm = e.m - base, h = ft2m(e.ft), hi = e.type === 'H';
+    g += '<circle cx="' + X(mm) + '" cy="' + Y(h) + '" r="3.6" fill="' + (hi ? 'var(--blue)' : 'var(--lotus)') + '"/><text x="' + X(mm) + '" y="' + (hi ? Y(h) - 7 : Y(h) + 15) + '" font-size="10" font-weight="700" text-anchor="middle" fill="var(--ink)">' + e.hhmm + '</text>';
+  });
+  d.items.filter(i => i.tide).forEach(i => {
+    const hm = i.t.replace('~', '').split(':'), mm = (+hm[0]) * 60 + (+hm[1]);
+    g += '<line x1="' + X(mm) + '" x2="' + X(mm) + '" y1="' + pt + '" y2="' + (H - pb) + '" stroke="var(--gold)" stroke-width="2" stroke-dasharray="4 3"/><text x="' + (X(mm) + 4) + '" y="' + (pt + 11) + '" font-size="10" font-weight="700" fill="var(--goldink)">tour ' + i.t + '</text>';
+  });
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Gráfico de la marea del día">' + g + '</svg>';
+}
+function wxHTML(d, force){
+  if (!d.wx) return '';
+  const c = CLIMA[d.wx], s = sunInfo(d.key, c.lat, c.lon), mo = moonInfo(d.key);
+  const id = 'wx-' + d.key, open = force || state.open.has(id);
+  const ev = (d.wx === 'krabi' && TIDES[d.key]) ? TIDES[d.key] : null;
+  const f = FORECAST[d.key], PEND = 'Pendiente de previsión';
+  let inner = '<div class="wxrow"><div class="wxb"><small>Previsión</small><b>' + (f ? f.lo + ' a ' + f.hi + ' °C' + (f.desc ? ', ' + f.desc : '') : PEND) + '</b></div><div class="wxb"><small>Sol</small><b>' + fmtHour(s.rise) + ' a ' + fmtHour(s.set) + '</b></div><div class="wxb"><small>Luna</small><b>' + mo.n + ', ' + mo.ill + ' %</b></div>' +
+    '<div class="wxb"><small>Lluvia y viento</small><b>' + (f ? f.rain + (f.wind ? ', ' + f.wind : '') : PEND) + '</b></div></div>' + (f ? '' : '<p>Aún no hay previsión para este día: las previsiones solo cubren unos 7 días. Cuando salga, aparecerá aquí.</p>');
+  if (d.wxNote) inner += '<p class="meta">' + d.wxNote + '</p>';
+  if (ev){
+    inner += '<div class="tide"><b>Mareas en Ao Nang</b>' + tideChart(d, s) + '<div class="tlist">' +
+      ev.map(e => '<div class="' + (e[0] === 'H' ? 'hi' : 'lo') + '"><small>' + (e[0] === 'H' ? 'Pleamar' : 'Bajamar') + '</small><b>' + e[1] + '</b>' + ES(ft2m(e[2])) + ' m</div>').join('') + '</div>' +
+      '<p class="meta">' + (mo.spring ? 'Mareas vivas por la fase de la luna: más diferencia entre pleamar y bajamar. ' : mo.neap ? 'Mareas muertas por la fase de la luna: poca diferencia entre pleamar y bajamar. ' : '') + 'Las zonas sombreadas son de noche. Alturas orientativas, no válidas para navegar.</p></div>';
+  }
+  inner += '<p class="meta">El sol, la luna y las mareas son cálculos astronómicos. La previsión del tiempo es la de arriba.</p><div class="routes">' + c.live.map(l => '<a class="route place" target="_blank" rel="noopener noreferrer" href="' + l[1] + '"><em>🌦️</em>' + l[0] + '</a>').join('') + '</div>';
+  const sum = (f ? f.lo + ' a ' + f.hi + ' °C' : PEND) + ', sol de ' + fmtHour(s.rise) + ' a ' + fmtHour(s.set) + (ev ? ', mareas' : '');
+  return '<div class="box wx ' + (open ? 'open' : '') + '"><button class="head" aria-expanded="' + open + '" data-toggle="' + id + '"><span class="node c-visita" style="margin:0;flex:none">🌤️</span><span class="htxt"><span class="title">Tiempo, sol y mareas</span><span class="sum">' + sum + '</span></span><span class="chev" aria-hidden="true"></span></button><div class="panel"><div><div class="pin">' + inner + '</div></div></div></div>';
+}
+function renderTiempo(){
+  const daysTo = Math.ceil((Date.parse('2026-11-27T00:00:00+07:00') - Date.now()) / 864e5);
+  let h = '<h2 class="sec">Tiempo, sol y mareas</h2><p class="lead">' +
+    (daysTo > 10 ? 'Faltan ' + daysTo + ' días para llegar. Todavía no hay una previsión fiable para estos días, así que cada día pone “Pendiente de previsión”. Sí tenéis el sol, la luna y las mareas de Krabi, que son cálculos astronómicos. Los botones abren la previsión en vivo.'
+                 : 'Ya falta poco: si algún día aparece “Pendiente de previsión”, abrid los enlaces para ver la previsión en vivo, junto con el sol, la luna y las mareas.') + '</p>';
+  DAYS.filter(d => d.wx).forEach(d => { h += '<h3 class="sec" style="font-size:1.3rem;margin-top:18px">' + d.date + ', ' + CLIMA[d.wx].name + '</h3>' + wxHTML(d, true); });
+  $('#app').innerHTML = h;
+}
+
+/* ============ Datos compartidos entre los dos móviles (db) ============ */
+const SYNC = {db:null, queues:{}, rt:null, timer:null, canWrite:null};
+const SYNC_TXT = {
+  connecting:['', 'Conectando con Google Drive…'],
+  ok:['ok', 'Sincronizado con Google Drive'],
+  local:['warn', 'Sin sincronizar: toca aquí para configurar Drive'],
+  ro:['warn', 'Solo lectura: no tenéis permiso para editar'],
+  slow:['warn', 'Sin conexión con Drive: los cambios se guardan y se enviarán solos'],
+  off:['off', 'Se ha perdido el acceso a la copia compartida']
+};
+function setSync(k){
+  state.sync = k; const el = $('#sync'); if (!el) return;
+  const m = SYNC_TXT[k]; el.className = 'sync ' + m[0]; el.querySelector('span').textContent = m[1];
+}
+function persistLocal(){
+  if (SYNC.db) return;
+  store.set('done', Array.from(state.done)); store.set('prep', Array.from(state.prep)); store.set('cash', Array.from(state.cash));
+  store.set('gastos', state.gastos); store.set('cashStart', state.cashStart); store.set('rate', state.rate); store.set('plists', state.plists); store.set('pitems', state.pitems);
+}
+function loadLocal(){
+  state.done = new Set(store.get('done', [])); state.prep = new Set(store.get('prep', [])); state.cash = new Set(store.get('cash', []));
+  state.gastos = store.get('gastos', []); state.cashStart = store.get('cashStart', ''); state.rate = store.get('rate', ''); state.plists = store.get('plists', []); state.pitems = store.get('pitems', []);
+}
+function canMutate(){
+  if (state.readOnly){ toast('Solo lectura: pedid que os den permiso de edición.'); return false; }
+  return true;
+}
+function dbq(path, fn, creating){
+  const prev = SYNC.queues[path] || Promise.resolve();
+  const p = prev.then(fn).catch(e => dbErr(e, creating));
+  SYNC.queues[path] = p; return p;
+}
+function dbErr(e, creating){
+  const c = e && e.code;
+  if (c === 'invalid_argument' && creating && SYNC.canWrite === null){ state.readOnly = true; setSync('ro'); toast('Solo lectura: no tenéis permiso para editar.'); }
+  else if (c === 'quota_exceeded') toast('La base de datos compartida está llena.');
+  else if (c === 'resource_exhausted') toast('Demasiados cambios seguidos. Esperad unos segundos.');
+  else if (c === 'revoked') setSync('off');
+  else if (c !== 'invalid_argument') console.error(e);
+}
+function dset(path, data){ if (!SYNC.db) return; const a = path.split('/'); return dbq(path, () => SYNC.db.collection(a[0]).doc(a[1]).set(data), true); }
+function dupd(path, data){ if (!SYNC.db) return; const a = path.split('/'); return dbq(path, () => SYNC.db.collection(a[0]).doc(a[1]).update(data), false); }
+function ddel(path){ if (!SYNC.db) return; const a = path.split('/'); return dbq(path, () => SYNC.db.collection(a[0]).doc(a[1]).delete(), false); }
+const nid = () => 'i' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+function setCheck(kind, id, on){
+  if (!canMutate()) return;
+  if (on) state[kind].add(id); else state[kind].delete(id);
+  persistLocal();
+  if (on) dset('checks/' + kind + ':' + id, {v: 1}); else ddel('checks/' + kind + ':' + id);
+}
+function setRate(v){
+  state.rate = v; persistLocal();
+  if (SYNC.db){ clearTimeout(SYNC.rt); SYNC.rt = setTimeout(() => { SYNC.rt = null; dset('settings/rate', {v: state.rate}); }, 700); }
+}
+function addList(title){
+  title = String(title || '').trim(); if (!title || !canMutate()) return false;
+  const row = {id: nid(), title: title, order: Date.now()};
+  state.plists.push(row); persistLocal(); dset('plists/' + row.id, {title: row.title, order: row.order}); return true;
+}
+function renameList(id, title){
+  title = String(title || '').trim(); const l = state.plists.find(x => x.id === id); if (!l || !title || !canMutate()) return;
+  l.title = title; persistLocal(); dupd('plists/' + id, {title: title});
+}
+function delList(id){
+  if (!canMutate()) return;
+  const its = state.pitems.filter(i => i.listId === id);
+  state.plists = state.plists.filter(l => l.id !== id); state.pitems = state.pitems.filter(i => i.listId !== id);
+  persistLocal(); its.forEach(i => ddel('pitems/' + i.id)); ddel('plists/' + id);
+}
+function addItem(listId, text){
+  text = String(text || '').trim(); if (!text || !canMutate()) return false;
+  const row = {id: nid(), listId: listId, text: text, done: false, order: Date.now()};
+  state.pitems.push(row); persistLocal(); dset('pitems/' + row.id, {listId: listId, text: text, done: false, order: row.order}); return true;
+}
+function editItem(id, text){
+  text = String(text || '').trim(); const it = state.pitems.find(x => x.id === id); if (!it || !text || !canMutate()) return;
+  it.text = text; persistLocal(); dupd('pitems/' + id, {text: text});
+}
+function toggleItem(id){
+  const it = state.pitems.find(x => x.id === id); if (!it || !canMutate()) return;
+  it.done = !it.done; persistLocal(); dupd('pitems/' + id, {done: it.done});
+}
+function delItem(id){
+  const it = state.pitems.find(x => x.id === id); if (!it || !canMutate()) return;
+  state.pitems = state.pitems.filter(x => x.id !== id); persistLocal(); ddel('pitems/' + id); render();
+  toast('Elemento eliminado', 'Deshacer', () => {
+    if (state.pitems.some(x => x.id === it.id)) return;
+    state.pitems.push(it); persistLocal(); dset('pitems/' + it.id, {listId: it.listId, text: it.text, done: it.done, order: it.order}); render();
+  });
+}
+function seedBotiquin(){
+  if (!canMutate() || state.plists.some(l => l.id === 'botiquin')) return;
+  const base = Date.now();
+  state.plists.push({id: 'botiquin', title: 'Botiquín', order: base}); dset('plists/botiquin', {title: 'Botiquín', order: base});
+  KITC.forEach((k, i) => {
+    const row = {id: k.id, listId: 'botiquin', text: k.name, done: false, order: base + i + 1};
+    state.pitems.push(row); dset('pitems/' + k.id, {listId: 'botiquin', text: k.name, done: false, order: row.order});
+  });
+  persistLocal(); render(); toast('Botiquín añadido a “Cosas que llevar”');
+}
+
+function isTyping(){ const a = document.activeElement; return !!(a && a.tagName === 'INPUT' && $('#app').contains(a)); }
+let srT = null;
+function captureFocus(){
+  const a = document.activeElement; if (!a || a.tagName !== 'INPUT' || !$('#app').contains(a)) return null;
+  const sel = a.id ? '#' + a.id : a.hasAttribute('data-padd') ? '[data-padd="' + a.getAttribute('data-padd') + '"]' : a.hasAttribute('data-pinput') ? '[data-pinput]' : null;
+  return sel ? {sel: sel, v: a.value, s: a.selectionStart, e: a.selectionEnd} : null;
+}
+function restoreFocus(f){
+  if (!f) return; const el = document.querySelector(f.sel); if (!el) return;
+  el.value = f.v; el.focus(); try { el.setSelectionRange(f.s, f.e); } catch(e){}
+}
+function softRender(){
+  clearTimeout(srT);
+  srT = setTimeout(() => { const f = captureFocus(); render(); restoreFocus(f); }, 60);
+}
+
+function listen(db){
+  const fail = e => { if (e && e.code === 'revoked') setSync('off'); else setSync('slow'); };
+  const okSnap = snap => { if (!snap.metadata.fromCache){ clearTimeout(SYNC.timer); setSync(state.readOnly ? 'ro' : 'ok'); } };
+  db.collection('checks').onSnapshot(snap => {
+    const sets = {done: new Set(), prep: new Set(), cash: new Set()};
+    snap.docs.forEach(x => { const k = x.id.indexOf(':'); if (k < 0) return; const kind = x.id.slice(0, k); if (sets[kind]) sets[kind].add(x.id.slice(k + 1)); });
+    state.done = sets.done; state.prep = sets.prep; state.cash = sets.cash; okSnap(snap); softRender();
+  }, fail);
+  db.collection('plists').onSnapshot(snap => { state.plists = snap.docs.map(x => Object.assign({id: x.id}, x.data())); okSnap(snap); softRender(); }, fail);
+  db.collection('pitems').onSnapshot(snap => { state.pitems = snap.docs.map(x => Object.assign({id: x.id}, x.data())); okSnap(snap); softRender(); }, fail);
+  db.collection('gastos').onSnapshot(snap => { state.gastos = snap.docs.map(x => Object.assign({id: x.id}, x.data())); okSnap(snap); softRender(); }, fail);
+  db.doc('settings/cash').onSnapshot(sn => {
+    if (SYNC.ct || (sn.metadata && sn.metadata.hasPendingWrites)) return;
+    const v = sn.exists ? (sn.data().v || '') : ''; if (v !== state.cashStart){ state.cashStart = v; softRender(); }
+  }, fail);
+  db.doc('settings/rate').onSnapshot(sn => {
+    if (SYNC.rt || (sn.metadata && sn.metadata.hasPendingWrites)) return;
+    const v = sn.exists ? (sn.data().v || '') : ''; if (v !== state.rate){ state.rate = v; softRender(); }
+  }, fail);
+}
+
+/* ============ Sincronización con Google Drive (versión app) ============ */
+const DRIVE = {KEY: 'rAC1p-yudDmxn8xUlOBoi0dT', url: '', docs: {}, pending: {}, subs: {coll: {}, doc: {}}, ok: false, last: 0, busy: false, t: null, err: ''};
+const DPFX = {plists: 'list:', pitems: 'item:', gastos: 'gasto:', settings: 'setting:', checks: 'check:'};
+const DRPFX = {'list:': 'plists', 'item:': 'pitems', 'gasto:': 'gastos', 'setting:': 'settings', 'check:': 'checks'};
+const dkey = (c, id) => DPFX[c] + id;
+function dsplit(k){ const i = k.indexOf(':'); return [DRPFX[k.slice(0, i + 1)], k.slice(i + 1)]; }
+function dstrip(e){ const o = Object.assign({}, e); delete o.t; delete o.deleted; return o; }
+function dmeta(){ return {fromCache: !DRIVE.ok, hasPendingWrites: false}; }
+function dcollSnap(c){
+  const p = DPFX[c], docs = [];
+  Object.keys(DRIVE.docs).forEach(k => { const e = DRIVE.docs[k]; if (k.indexOf(p) === 0 && e && !e.deleted){ const d = dstrip(e); docs.push({id: k.slice(p.length), data: () => d}); } });
+  return {docs: docs, metadata: dmeta()};
+}
+function ddocSnap(c, id){ const e = DRIVE.docs[dkey(c, id)], ex = !!(e && !e.deleted), d = ex ? dstrip(e) : {}; return {exists: ex, data: () => d, metadata: dmeta()}; }
+function dnotify(colls){
+  colls.forEach(c => (DRIVE.subs.coll[c] || []).forEach(cb => { try { cb(dcollSnap(c)); } catch(e){ console.error(e); } }));
+  Object.keys(DRIVE.subs.doc).forEach(p => { const a = p.split('/'); if (colls.indexOf(a[0]) >= 0) DRIVE.subs.doc[p].forEach(cb => { try { cb(ddocSnap(a[0], a[1])); } catch(e){ console.error(e); } }); });
+}
+function dsave(){ store.set('drive.docs', DRIVE.docs); store.set('drive.pending', DRIVE.pending); store.set('drive.last', DRIVE.last); }
+let dLastT = 0;
+function dwrite(c, id, data, del){
+  if (!DPFX[c]) return Promise.resolve();
+  let t = Date.now(); if (t <= dLastT) t = dLastT + 1; dLastT = t;
+  const k = dkey(c, id), e = Object.assign({}, data, {deleted: !!del, t: t});
+  DRIVE.docs[k] = e; DRIVE.pending[k] = e; dsave(); dnotify([c]); dsched(800);
+  return Promise.resolve();
+}
+const ddb = {
+  collection(c){ return {
+    doc(id){ return {
+      set(data){ return dwrite(c, id, Object.assign({}, data), false); },
+      update(data){ const cur = DRIVE.docs[dkey(c, id)]; const base = cur && !cur.deleted ? dstrip(cur) : {}; return dwrite(c, id, Object.assign(base, data), false); },
+      delete(){ return dwrite(c, id, {}, true); }
+    }; },
+    onSnapshot(cb){ (DRIVE.subs.coll[c] = DRIVE.subs.coll[c] || []).push(cb); setTimeout(() => cb(dcollSnap(c)), 0); return () => {}; }
+  }; },
+  doc(path){ const a = path.split('/'); return { onSnapshot(cb){ (DRIVE.subs.doc[path] = DRIVE.subs.doc[path] || []).push(cb); setTimeout(() => cb(ddocSnap(a[0], a[1])), 0); return () => {}; } }; }
+};
+function dsched(ms){ clearTimeout(DRIVE.t); DRIVE.t = setTimeout(dsync, ms); }
+async function dsync(){
+  if (!DRIVE.url){ setSync('local'); return; }
+  if (DRIVE.busy){ dsched(1500); return; }
+  DRIVE.busy = true;
+  const sent = Object.assign({}, DRIVE.pending);
+  try {
+    const r = await fetch(DRIVE.url, {method: 'POST', body: JSON.stringify({key: DRIVE.KEY, changes: sent})});
+    const j = await r.json();
+    if (!j || !j.ok) throw new Error((j && j.error) || 'Respuesta no válida');
+    Object.keys(sent).forEach(k => { if (DRIVE.pending[k] === sent[k]) delete DRIVE.pending[k]; });
+    const ch = new Set();
+    Object.keys(j.items || {}).forEach(k => {
+      const rem = j.items[k], loc = DRIVE.docs[k], col = dsplit(k)[0];
+      if (!col || DRIVE.pending[k]) return;
+      if (!loc || ((rem.t || 0) >= (loc.t || 0) && JSON.stringify(rem) !== JSON.stringify(loc))){ DRIVE.docs[k] = rem; ch.add(col); }
+    });
+    DRIVE.ok = true; DRIVE.err = ''; DRIVE.last = Date.now(); dsave();
+    clearTimeout(SYNC.timer); setSync('ok');
+    if (ch.size) dnotify(Array.from(ch));
+  } catch(e){
+    DRIVE.ok = false; DRIVE.err = String(e && e.message || e); setSync('slow');
+  } finally {
+    DRIVE.busy = false;
+    if (Object.keys(DRIVE.pending).length) dsched(DRIVE.ok ? 600 : 15000);
+    if (state.view === 'sync' && !isTyping()) renderSync();
+  }
+}
+function initDrive(){
+  DRIVE.url = store.get('drive.url', ''); DRIVE.docs = store.get('drive.docs', {}) || {}; DRIVE.pending = store.get('drive.pending', {}) || {}; DRIVE.last = store.get('drive.last', 0) || 0;
+  SYNC.db = ddb;
+  state.done = new Set(); state.prep = new Set(); state.cash = new Set(); state.plists = []; state.pitems = []; state.rate = ''; state.gastos = []; state.cashStart = '';
+  setSync(DRIVE.url ? 'connecting' : 'local');
+  listen(ddb); render();
+  if (DRIVE.url){ SYNC.timer = setTimeout(() => { if (state.sync !== 'ok') setSync('slow'); }, 12000); dsync(); }
+  setInterval(() => { if (!document.hidden) dsync(); }, 20000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) dsync(); });
+  window.addEventListener('online', () => dsync());
+}
+function renderSync(){
+  const n = Object.keys(DRIVE.pending).length;
+  $('#app').innerHTML = '<h2 class="sec">Sincronización</h2><p class="lead">Las listas, los checks, los gastos, el efectivo y el cambio se guardan en el archivo <b>tailandia-2026-datos.json</b> de la carpeta <b>Tailandia 2026</b> de Google Drive. Pegad aquí la dirección del script de sincronización. Es la misma en los dos móviles.</p>' +
+    '<div class="box"><div class="pin" style="border:0;padding-top:14px"><div class="field"><label for="durl">Dirección del script</label><input id="durl" value="' + esc(DRIVE.url) + '" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" autocapitalize="off" spellcheck="false"></div>' +
+    '<div class="padd" style="border:0;padding:10px 0 0"><button class="btn pri" data-dsave>Guardar y sincronizar</button><button class="btn" data-dnow>Sincronizar ahora</button></div>' +
+    '<p class="meta" style="margin:12px 0 0">' + (DRIVE.last ? 'Última sincronización: ' + new Date(DRIVE.last).toLocaleString('es-ES') : 'Todavía no se ha sincronizado.') + (n ? ' · ' + n + ' cambio' + (n > 1 ? 's' : '') + ' pendiente' + (n > 1 ? 's' : '') + ' de enviar' : '') + '</p>' +
+    (DRIVE.err ? '<p class="meta" style="margin:6px 0 0;color:#c0392b">Último error: ' + esc(DRIVE.err) + '</p>' : '') +
+    '</div></div><p class="meta">Sin conexión podéis seguir usando la app: los cambios se guardan en el móvil y se envían solos cuando vuelva internet. Si los dos cambiáis lo mismo, se queda el cambio más reciente.</p>';
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-dsave],[data-dnow],#sync'); if (!t) return;
+  if (t.id === 'sync'){ go('sync'); return; }
+  if (t.hasAttribute('data-dsave')){
+    const v = ($('#durl') || {}).value || ''; DRIVE.url = v.trim(); store.set('drive.url', DRIVE.url);
+    if (!DRIVE.url){ setSync('local'); renderSync(); return; }
+    toast('Sincronizando…'); dsync(); return;
+  }
+  if (t.hasAttribute('data-dnow')){ toast('Sincronizando…'); dsync(); }
+});
+
+async function initSync(){
+  if (!window.claude || !window.claude.use){ initDrive(); return; }
+  let db = null, user = null;
+  try { db = await window.claude.use('db'); } catch(e){}
+  if (!db){ setSync('local'); return; }
+  try { user = await window.claude.use('user'); SYNC.canWrite = user ? await user.can('data.write') : null; } catch(e){ SYNC.canWrite = null; }
+  if (SYNC.canWrite === false) state.readOnly = true;
+  SYNC.db = db;
+  state.done = new Set(); state.prep = new Set(); state.cash = new Set(); state.plists = []; state.pitems = []; state.rate = ''; state.gastos = []; state.cashStart = '';
+  SYNC.timer = setTimeout(() => { if (state.sync !== 'ok' && state.sync !== 'ro') setSync('slow'); }, 10000);
+  setSync(state.readOnly ? 'ro' : 'connecting');
+  listen(db); render();
+}
+
+/* ============ Salud ============ */
+const ILL = [
+ {n:1, name:'Diarrea del viajero', cat:'digestivo', sx:'Diarrea acuosa, cólicos', tx:[['Loperamida'],['Suero oral'],['Azitromicina',1]],
+  info:'<ul><li>Lo primero es hidratarse con suero oral. La loperamida solo si no hay fiebre ni sangre en las heces.</li><li>La azitromicina se toma solo con indicación médica. En Tailandia se prefiere a otros antibióticos porque hay mucha resistencia a las quinolonas.</li><li><b>Id al médico</b> si dura más de 3 días, hay fiebre, hay sangre o no podéis beber.</li></ul>'},
+ {n:2, name:'Dengue', cat:'infeccion', sx:'Fiebre alta, dolores articulares', tx:[['Paracetamol'],['NUNCA ibuprofeno',2]],
+  info:'<ul><li>Lo transmite el mosquito Aedes, que pica de día, sobre todo al amanecer y al atardecer. Hay casos todo el año y más en época de lluvias.</li><li>Evitad también la aspirina por el riesgo de sangrado.</li><li><b>Urgencias</b> si hay dolor abdominal intenso, vómitos persistentes, sangrado de nariz o encías, somnolencia, o si os encontráis peor cuando baja la fiebre.</li></ul>'},
+ {n:3, name:'Infección respiratoria', cat:'infeccion', sx:'Dolor de garganta, tos', tx:[['Paracetamol'],['Caramelos para la garganta']],
+  info:'<ul><li>Fiebre alta que no cede, dificultad para respirar o dolor en el pecho: médico.</li><li>El contraste entre el calor de la calle y el aire acondicionado fuerte favorece los resfriados: llevad una prenda de manga larga.</li></ul>'},
+ {n:4, name:'Heridas de moto infectadas', cat:'piel', sx:'Abrasiones, supuración', tx:[['Clorhexidina'],['Mupirocina',1]],
+  info:'<ul><li>Limpiad cuanto antes con agua limpia y jabón y quitad la arena o la gravilla antes del antiséptico.</li><li>Comprobad que tenéis la vacuna del tétanos al día.</li><li>Pus, enrojecimiento que se extiende, calor o fiebre: médico.</li><li>Si alquiláis moto: casco siempre y comprobad que el seguro cubre la conducción.</li></ul>'},
+ {n:5, name:'Intoxicación alimentaria', cat:'digestivo', sx:'Vómitos, diarrea', tx:[['Metoclopramida',1],['Suero oral']],
+  info:'<ul><li>Suero oral a sorbos pequeños y frecuentes.</li><li>La metoclopramida solo con indicación médica.</li><li>Sangre en las heces, fiebre alta, vómitos durante más de 24 horas o no poder retener líquidos: médico.</li></ul>'},
+ {n:6, name:'Golpe de calor', cat:'calor', sx:'Mareos, confusión', tx:[['Paños fríos'],['Electrolitos']],
+  info:'<ul><li><b>Es una urgencia: llamad al 1669.</b></li><li>Mientras llega la ayuda: sombra o aire acondicionado, quitar ropa, paños fríos en cuello, axilas e ingles y agua si está consciente.</li><li>Confusión, desmayo, piel muy caliente o dejar de sudar son señales graves.</li></ul>'},
+ {n:7, name:'Quemaduras solares', cat:'calor', sx:'Enrojecimiento, ampollas', tx:[['Aloe vera'],['Ibuprofeno']],
+  info:'<ul><li>Aftersun e hidratación. El ibuprofeno solo si no hay sospecha de dengue.</li><li>Ampollas extensas, fiebre, escalofríos o mareo: médico.</li><li>Prevención: FPS 50 cada 2 horas y después de bañaros, gorra y camiseta en las excursiones en barco.</li></ul>'},
+ {n:8, name:'Picaduras de medusa', cat:'mar', sx:'Dolor ardiente', tx:[['Vinagre'],['Antihistamínicos']],
+  info:'<ul><li>Salid del agua, no frotéis la zona y no uséis agua dulce. Retirad los tentáculos con pinzas, nunca con las manos.</li><li>Vinagre durante al menos 30 segundos: es lo que recomiendan las autoridades tailandesas ante medusas peligrosas. Después, agua caliente tolerable.</li><li><b>Llamad al 1669</b> si hay dolor intenso, náuseas, dificultad para respirar o dolor en el pecho.</li></ul>'},
+ {n:9, name:'Otitis externa', cat:'mar', sx:'Dolor al tirar de la oreja', tx:[['Gotas óticas (ciprofloxacino)',1]],
+  info:'<ul><li>Secad bien los oídos después de bañaros.</li><li>Si hay secreción, oís peor o hay fiebre, id al médico: con el tímpano perforado hay gotas que no se deben usar.</li></ul>'},
+ {n:10, name:'Cistitis', cat:'infeccion', sx:'Ardor al orinar', tx:[['Fosfomicina',1]],
+  info:'<ul><li>Beber agua abundante.</li><li>Fiebre, dolor en la zona lumbar o sangre en la orina: médico.</li></ul>'},
+ {n:11, name:'Conjuntivitis', cat:'infeccion', sx:'Enrojecimiento, legañas', tx:[['Tobramicina oftálmica',1]],
+  info:'<ul><li>Lavaos las manos, no compartáis toalla y no uséis lentillas hasta que pase.</li><li>Dolor intenso, visión borrosa o molestia con la luz: médico.</li></ul>'},
+ {n:12, name:'Pie de atleta', cat:'piel', sx:'Picor entre los dedos', tx:[['Clotrimazol']],
+  info:'<ul><li>Secad bien entre los dedos, usad calzado transpirable y chanclas en duchas comunes.</li></ul>'},
+ {n:13, name:'Picaduras de insectos', cat:'piel', sx:'Ronchas, picor', tx:[['Hidrocortisona'],['Loratadina']],
+  info:'<ul><li>La hidrocortisona al 1 % no se aplica sobre piel infectada.</li><li>Repelente con DEET del 30 al 50 %, también de día (dengue).</li><li>Pus, calor en la zona o fiebre: médico.</li></ul>'},
+ {n:14, name:'Indigestión', cat:'digestivo', sx:'Pesadez, acidez', tx:[['Magaldrato'],['Omeprazol']],
+  info:'<ul><li>Dolor intenso en el pecho, vómitos con sangre o heces negras: urgencias.</li></ul>'},
+ {n:15, name:'Esguinces', cat:'dolor', sx:'Dolor e inflamación', tx:[['Diclofenaco gel'],['Ibuprofeno']],
+  info:'<ul><li>Reposo, hielo envuelto en un paño, compresión y elevación.</li><li>Si no podéis apoyar el pie, hay deformidad o mucha hinchazón: radiografía.</li><li>Con sospecha de dengue, nada de ibuprofeno.</li></ul>'},
+ {n:16, name:'Deshidratación', cat:'calor', sx:'Sed excesiva', tx:[['Suero de rehidratación oral']],
+  info:'<ul><li>Otros signos: boca seca, orina oscura y mareo. Beber a sorbos.</li><li>Si no podéis beber, hay confusión o desmayo: médico.</li><li>Con calor y excursiones, llevad siempre una botella de agua.</li></ul>'},
+ {n:17, name:'Reacciones alérgicas', cat:'piel', sx:'Urticaria', tx:[['Cetirizina'],['Prednisona',1]],
+  info:'<ul><li>La prednisona solo con indicación médica.</li><li><b>Llamad al 1669</b> si hay hinchazón de labios o lengua, dificultad para respirar o mareo intenso: puede ser anafilaxia.</li></ul>'},
+ {n:18, name:'Cefalea', cat:'dolor', sx:'Dolor de cabeza', tx:[['Paracetamol'],['Ibuprofeno']],
+  info:'<ul><li>Con sospecha de dengue, solo paracetamol.</li><li>Dolor muy intenso y repentino, rigidez de cuello, fiebre alta o confusión: urgencias.</li><li>El calor y la deshidratación son causas frecuentes: beber agua.</li></ul>'},
+ {n:19, name:'Insomnio', cat:'dolor', sx:'Dificultad para dormir', tx:[['Melatonina'],['Doxilamina']],
+  info:'<ul><li>Hay 6 horas de diferencia con Madrid. Melatonina a la hora de dormir local y luz natural por la mañana.</li><li>La doxilamina da somnolencia: no con alcohol ni antes de conducir.</li></ul>'},
+ {n:20, name:'Cortes por coral', cat:'mar', sx:'Pequeños fragmentos, dolor', tx:[['Pinzas'],['Clorhexidina'],['Mupirocina',1]],
+  info:'<ul><li>Limpiad enseguida con agua y jabón y sacad los fragmentos con las pinzas.</li><li>Los cortes de coral cicatrizan mal: vigilad enrojecimiento, calor o pus.</li><li>Thalassa recomienda escarpines por si hay que andar por una playa rocosa.</li></ul>'}
+];
+const ILL_CATS = [['todo','Todas'],['digestivo','Digestivo'],['infeccion','Infecciones'],['piel','Piel y alergias'],['calor','Sol y calor'],['mar','Mar y agua'],['dolor','Dolor y sueño']];
+const KIT = [
+ {id:'b01', name:'Suero de rehidratación oral', spec:'Sobres para disolver', para:[1,5,16], note:'Disolverlo en agua embotellada o hervida.'},
+ {id:'b02', name:'Loperamida', spec:'Cápsulas de 2 mg', para:[1], note:'No usarla si hay fiebre o sangre en las heces. Seguid el prospecto.'},
+ {id:'b03', name:'Antiácidos / protector gástrico (comprar allí)', spec:'Magaldrato y omeprazol', para:[14], note:'Útil tras comidas picantes o copiosas.'},
+ {id:'b04', name:'Paracetamol (500 mg / 1 g; comprar allí)', spec:'Comprimidos', para:[2,3,18], note:'Es el analgésico y antitérmico de elección si hay sospecha de dengue. Respetad la dosis máxima del prospecto.'},
+ {id:'b05', name:'Ibuprofeno (600 mg; comprar allí, la dosis puede variar)', spec:'Comprimidos', para:[7,15,18], rx:1, note:'En España el de 600 mg lleva receta; sin receta hay de 400 mg. No tomarlo con sospecha de dengue ni si estáis deshidratados.'},
+ {id:'b06', name:'Clorhexidina / povidona yodada', spec:'Monodosis o frasco pequeño', para:[4,20], note:'Limpiar primero con agua y jabón.'},
+ {id:'b07', name:'Suero fisiológico en monodosis', spec:'Ampollas de 5 ml', para:[4,11,20], note:'Para lavar heridas y ojos.'},
+ {id:'b08', name:'Crema antibiótica (mupirocina)', spec:'Tubo pequeño', para:[4,20], rx:1, note:'Requiere receta. Solo sobre heridas limpias y con indicación médica.'},
+ {id:'b09', name:'Tiritas, gasas y esparadrapo (comprar allí)', spec:'Con apósitos resistentes al agua', para:[4,20], note:'Cambiad los apósitos si se mojan.'},
+ {id:'b10', name:'Pinzas pequeñas de precisión', spec:'De punta fina', para:[8,20], note:'Para fragmentos de coral y tentáculos de medusa.'},
+ {id:'b11', name:'Repelente de mosquitos con DEET (30-50 %)', spec:'Envase de hasta 100 ml', para:[2,13], note:'Aplicadlo después del protector solar y también de día.'},
+ {id:'b12', name:'Crema de hidrocortisona al 1 %', spec:'Tubo pequeño', para:[13,17], note:'No sobre piel infectada ni heridas abiertas.'},
+ {id:'b13', name:'Antihistamínico oral (cetirizina / loratadina; comprar allí)', spec:'Comprimidos', para:[8,13,17], note:'La cetirizina puede dar algo de sueño.'},
+ {id:'b14', buy:1, name:'Protector solar (FPS 50) y aftersun (comprar allí)', spec:'No se lleva de casa: se compra allí', para:[7], note:'En los parques nacionales marinos de Tailandia están prohibidos los protectores con oxibenzona, octinoxato, 4-metilbencilidén alcanfor y butilparabeno, con multas de hasta 100.000 THB. Mirad la etiqueta o elegid uno mineral con óxido de zinc.'},
+ {id:'b15', name:'Gotas óticas antibióticas', spec:'Frasco pequeño', para:[9], rx:1, note:'Requieren receta.'},
+ {id:'b16', name:'Melatonina', spec:'Comprimidos', para:[19], note:'Tomarla a la hora de dormir local.'}
+];
+const norm = t => String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+function illHTML(d){
+  const id = 'ill-' + d.n, open = state.open.has(id);
+  const tx = d.tx.map(t => '<span class="txc' + (t[1] === 1 ? ' r' : t[1] === 2 ? ' d' : '') + '">' + esc(t[0]) + (t[1] === 1 ? '<span class="rx">Receta</span>' : '') + '</span>').join('');
+  return '<div class="box ill ' + (open ? 'open' : '') + '"><button class="head" aria-expanded="' + open + '" data-toggle="' + id + '"><span class="num">' + d.n + '</span><span class="htxt"><span class="title">' + esc(d.name) + '</span><span class="sum"><b>Síntomas:</b> ' + esc(d.sx) + '</span></span><span class="chev" aria-hidden="true"></span></button>' +
+    '<div class="ilx"><b>Tratamiento:</b><div class="tx">' + tx + '</div></div>' +
+    '<div class="panel"><div><div class="pin">' + d.info + '</div></div></div></div>';
+}
+function illBlockHTML(){
+  const q = norm(state.ill.q.trim()), cat = state.ill.cat;
+  const rows = ILL.filter(d => (cat === 'todo' || d.cat === cat) && (!q || norm(d.name + ' ' + d.sx + ' ' + d.tx.map(t => t[0]).join(' ')).indexOf(q) >= 0));
+  return '<div class="ctrl">' + ILL_CATS.map(c => '<button class="chip" data-icat="' + c[0] + '" aria-pressed="' + (cat === c[0]) + '">' + c[1] + '</button>').join('') + '</div>' +
+    (rows.length ? rows.map(illHTML).join('') : '<div class="empty">Ninguna dolencia coincide. Probad con otra palabra.</div>');
+}
+const KITC = KIT.filter(k => !k.buy);
+function kitHTML(k){
+  const it = state.pitems.find(x => x.id === k.id);
+  const chk = it ? '<button class="pchk" role="checkbox" aria-checked="' + !!it.done + '" data-kchk="' + k.id + '" aria-label="Marcar ' + esc(k.name) + ' como preparado">✓</button>' : '<span class="num" style="background:var(--surface2);color:var(--muted)">' + (k.buy ? '🛒' : k.id.slice(1).replace(/^0/, '')) + '</span>';
+  return '<div class="box"><div class="kit">' + chk + '<div class="t"><b>' + esc(k.name) + (k.rx ? '<span class="rx">Receta</span>' : '') + '</b><span>' + esc(k.spec) + '</span><span>' + esc(k.note) + '</span>' +
+    '<div class="for">' + k.para.map(n => '<em>' + esc(ILL[n - 1].name) + '</em>').join('') + '</div></div></div></div>';
+}
+function refreshIll(){ const el = $('#illBlock'); if (el) el.innerHTML = illBlockHTML(); }
+function renderSalud(){
+  const hasKit = state.plists.some(l => l.id === 'botiquin');
+  const packed = KITC.filter(k => { const it = state.pitems.find(x => x.id === k.id); return it && it.done; }).length;
+  let h = '<h2 class="sec">Salud</h2><p class="lead">Guía de salud para el viaje a Tailandia. Es información general y no sustituye a un médico ni a un farmacéutico. Antes de salir, consultad con vuestro médico o centro de vacunación internacional.</p>' +
+    '<div class="sos"><b>🚑 Emergencias en Tailandia</b><div class="sosgrid">' +
+    '<a href="tel:1669"><b>1669</b>Ambulancia y urgencias médicas</a><a href="tel:191"><b>191</b>Policía y emergencias generales</a>' +
+    '<a href="tel:1155"><b>1155</b>Policía turística, atienden en inglés</a><a href="tel:199"><b>199</b>Bomberos</a></div>' +
+    '<p class="meta" style="margin:10px 0 0">El 1155 no envía ambulancias. El 112 puede no funcionar allí. Si tenéis seguro de viaje, guardad en el móvil la póliza y el teléfono de asistencia.</p></div>' +
+    '<div class="ctrl"><button class="chip" data-scroll="dolencias">1. Dolencias frecuentes</button><button class="chip" data-scroll="botiquin">2. Botiquín</button></div>' +
+    '<h3 class="sec" id="dolencias">Principales problemas de salud en Tailandia</h3>' +
+    '<p class="lead">Toca cada dolencia para ver cuándo ir al médico. Los medicamentos con la etiqueta “Receta” la requieren en España: llevadlos de casa, con la receta y en su caja original.</p>' +
+    '<input class="srch" id="illq" type="search" placeholder="Buscar una dolencia, un síntoma o un medicamento" value="' + esc(state.ill.q) + '" aria-label="Buscar en las dolencias">' +
+    '<div id="illBlock">' + illBlockHTML() + '</div>' +
+    '<h3 class="sec" id="botiquin" style="margin-top:28px">Inventario del botiquín de viaje</h3>' +
+    '<p class="lead">Los 15 elementos que conviene llevar en la maleta, con para qué sirve cada uno, y el protector solar, que se compra en Tailandia.</p>';
+  if (hasKit){
+    h += '<div class="row"><b>' + packed + ' de ' + KITC.length + ' en la maleta</b><button class="btn" data-view="cosas-que-llevar">Ver en Cosas que llevar</button></div><div class="bar"><i style="width:' + Math.round(packed / KITC.length * 100) + '%"></i></div>';
+  } else {
+    h += '<div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin-top:0">Añade este inventario a “Cosas que llevar” para marcar cada elemento cuando lo guardéis en la maleta. Los dos veréis los cambios.</p><button class="btn pri" data-seed="botiquin">Añadir el botiquín a Cosas que llevar</button></div></div>';
+  }
+  h += KIT.map(kitHTML).join('') +
+    '<div class="warn">✈️ <b>Solo lleváis equipaje de mano.</b> Los líquidos y cremas (repelente, clorhexidina y demás) deben ir en envases de hasta 100 ml dentro de una bolsa transparente. Comprobad también el límite de peso: el bulto de mano de VietJet es de 5 kg.</div>' +
+    '<div class="warn">💊 <b>Medicamentos con receta:</b> llevad la receta o un informe médico y los envases originales, por si os los piden al pasar la aduana. Ibuprofeno de 600 mg, azitromicina, mupirocina, fosfomicina, prednisona, metoclopramida, tobramicina y las gotas óticas con ciprofloxacino requieren receta en España.</div>';
+  $('#app').innerHTML = h;
+}
+
+/* ============ Cosas que llevar ============ */
+function itemRowHTML(it){
+  const ed = state.editing && state.editing.kind === 'item' && state.editing.id === it.id;
+  if (ed) return '<div class="pi"><input class="pinp" data-pinput value="' + esc(it.text) + '" maxlength="120" aria-label="Texto del elemento"><button class="btn pri" data-psave>Guardar</button><button class="btn" data-pcancel>Cancelar</button></div>';
+  return '<div class="pi ' + (it.done ? 'done' : '') + '"><button class="pchk" role="checkbox" aria-checked="' + !!it.done + '" data-pchk="' + it.id + '" aria-label="Marcar ' + esc(it.text) + '">✓</button><span class="ptxt">' + esc(it.text) + '</span><button class="pbtn" data-pedit="' + it.id + '" aria-label="Editar ' + esc(it.text) + '">✏️</button><button class="pbtn" data-pdel="' + it.id + '" aria-label="Eliminar ' + esc(it.text) + '">🗑️</button></div>';
+}
+function listHTML(l, items){
+  items = items.slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  const n = items.filter(i => i.done).length, col = state.collapsed.has(l.id), conf = state.delConfirm === l.id;
+  const edl = state.editing && state.editing.kind === 'list' && state.editing.id === l.id;
+  let h = '<div class="box plist" data-listid="' + l.id + '"><div class="lhead">';
+  if (edl) h += '<input class="pinp" data-pinput value="' + esc(l.title) + '" maxlength="60" aria-label="Nombre de la lista"><button class="btn pri" data-psave>Guardar</button><button class="btn" data-pcancel>Cancelar</button>';
+  else h += '<button class="pbtn" data-ltoggle="' + l.id + '" aria-expanded="' + !col + '" aria-label="Mostrar u ocultar la lista">' + (col ? '▸' : '▾') + '</button><h3>' + esc(l.title) + '</h3><span class="lcount">' + n + '/' + items.length + '</span><button class="pbtn" data-lren="' + l.id + '" aria-label="Cambiar el nombre de la lista">✏️</button><button class="pbtn ' + (conf ? 'dng' : '') + '" data-ldel="' + l.id + '" aria-label="Eliminar la lista completa">' + (conf ? '¿Seguro?' : '🗑️') + '</button>';
+  h += '</div>';
+  if (!col){
+    h += items.map(itemRowHTML).join('');
+    if (!items.length) h += '<div class="pi" style="color:var(--muted)">Esta lista está vacía.</div>';
+    h += '<div class="padd"><input data-padd="' + l.id + '" placeholder="Añadir un elemento" maxlength="120" aria-label="Nuevo elemento de ' + esc(l.title) + '"><button class="btn pri" data-padd-btn="' + l.id + '">Añadir</button></div>';
+  }
+  return h + '</div>';
+}
+function renderMaleta(){
+  const lists = state.plists.slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  const ids = {}; lists.forEach(l => { ids[l.id] = []; });
+  state.pitems.forEach(i => { if (ids[i.listId]) ids[i.listId].push(i); });
+  let total = 0, done = 0; lists.forEach(l => ids[l.id].forEach(i => { total++; if (i.done) done++; }));
+  let h = '<h2 class="sec">Cosas que llevar</h2><p class="lead">Marcad cada cosa cuando esté en la maleta. Podéis añadir listas y elementos, editarlos y eliminarlos. Los dos veis los cambios al momento.</p>' +
+    '<div class="row"><b>' + done + ' de ' + total + ' preparadas</b></div><div class="bar"><i style="width:' + (total ? Math.round(done / total * 100) : 0) + '%"></i></div>' +
+    '<div class="box"><div class="padd" style="border-top:0"><input id="newlist" placeholder="Nueva lista, por ejemplo: Ropa" maxlength="60" aria-label="Nombre de la nueva lista"><button class="btn pri" data-ladd>Crear lista</button></div></div>';
+  if (!lists.length) h += '<div class="empty">' + (state.sync === 'connecting' ? 'Cargando las listas compartidas…' : 'Todavía no hay listas. Crea la primera arriba.') + '</div>';
+  lists.forEach(l => { h += listHTML(l, ids[l.id]); });
+  $('#app').innerHTML = h;
+  if (state.editing){ const el = $('.pinp'); if (el){ el.focus(); el.select(); } }
+}
+function doSave(){
+  const ed = state.editing, el = $('[data-pinput]'); if (!ed || !el) return;
+  if (ed.kind === 'item') editItem(ed.id, el.value); else renameList(ed.id, el.value);
+  state.editing = null; render();
+}
+function doAddItem(listId){
+  const el = document.querySelector('[data-padd="' + listId + '"]'); if (!el) return;
+  if (addItem(el.value, '') === false && !el.value.trim()) return;
+}
+function addItemFrom(listId){
+  const el = document.querySelector('[data-padd="' + listId + '"]'); if (!el) return;
+  const ok = addItem(listId, el.value); if (!ok) return;
+  render(); const n = document.querySelector('[data-padd="' + listId + '"]'); if (n) n.focus();
+}
+function addListFrom(){
+  const el = $('#newlist'); if (!el) return;
+  if (!addList(el.value)) return; render(); const n = $('#newlist'); if (n) n.focus();
+}
+function handlePacking(t){
+  const d = t.dataset;
+  if (t.hasAttribute('data-undo')){ if (undoFn){ const f = undoFn; undoFn = null; $('#toast').classList.remove('on'); f(); } return true; }
+  if (d.scroll){ const el = document.getElementById(d.scroll); if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'}); return true; }
+  if (d.icat){ state.ill.cat = d.icat; refreshIll(); return true; }
+  if (d.seed){ seedBotiquin(); return true; }
+  if (d.kchk){ toggleItem(d.kchk); render(); return true; }
+  if (d.pchk){ toggleItem(d.pchk); render(); return true; }
+  if (d.pedit){ if (!canMutate()) return true; state.editing = {kind: 'item', id: d.pedit}; render(); return true; }
+  if (d.pdel){ delItem(d.pdel); return true; }
+  if (t.hasAttribute('data-psave')){ doSave(); return true; }
+  if (t.hasAttribute('data-pcancel')){ state.editing = null; render(); return true; }
+  if (t.hasAttribute('data-ladd')){ addListFrom(); return true; }
+  if (t.hasAttribute('data-padd-btn')){ addItemFrom(d.paddBtn); return true; }
+  if (d.lren){ if (!canMutate()) return true; state.editing = {kind: 'list', id: d.lren}; render(); return true; }
+  if (d.ldel){
+    if (!canMutate()) return true;
+    if (state.delConfirm === d.ldel){ state.delConfirm = null; delList(d.ldel); render(); toast('Lista eliminada'); }
+    else { state.delConfirm = d.ldel; render(); clearTimeout(handlePacking._t); handlePacking._t = setTimeout(() => { state.delConfirm = null; if (state.view === 'cosas-que-llevar' && !isTyping()) render(); }, 4000); }
+    return true;
+  }
+  if (d.ltoggle){ if (state.collapsed.has(d.ltoggle)) state.collapsed.delete(d.ltoggle); else state.collapsed.add(d.ltoggle); render(); return true; }
+  return false;
+}
+document.addEventListener('keydown', e => {
+  const t = e.target; if (!t || !t.matches || !t.matches('input')) return;
+  if (e.key === 'Enter'){
+    if (t.id === 'newlist'){ e.preventDefault(); addListFrom(); }
+    else if (t.hasAttribute('data-padd')){ e.preventDefault(); addItemFrom(t.getAttribute('data-padd')); }
+    else if (t.hasAttribute('data-pinput')){ e.preventDefault(); doSave(); }
+  } else if (e.key === 'Escape' && t.hasAttribute('data-pinput')){ state.editing = null; render(); }
+});
+document.addEventListener('input', e => { const t = e.target; if (t && /^x[abe]$/.test(t.id)){ const n = id => parseFloat(String((document.getElementById(id) || {}).value).replace(',', '.')), a = n('xa'), b = n('xb'), eu = n('xe'), o = document.getElementById('xo'); if (o) o.textContent = (a > 0 && b > 0 && eu > 0) ? 'Superrich: ' + fmtNum(Math.round(a * eu)) + ' THB. Otra casa: ' + fmtNum(Math.round(b * eu)) + ' THB. Diferencia: ' + fmtNum(Math.abs(Math.round((a - b) * eu))) + ' THB a favor de ' + (a >= b ? 'Superrich' : 'la otra casa') + '.' : ''; } });
+document.addEventListener('input', e => { const t = e.target; if (t && t.id === 'illq'){ state.ill.q = t.value; refreshIll(); } });
+
+
+/* ============ Gastos ============ */
+const numOf = v => { const n = parseFloat(String(v).replace(',', '.')); return isFinite(n) ? n : 0; };
+function setCashStart(v){
+  state.cashStart = v; persistLocal();
+  if (SYNC.db){ clearTimeout(SYNC.ct); SYNC.ct = setTimeout(() => { SYNC.ct = null; dset('settings/cash', {v: state.cashStart}); }, 700); }
+}
+function addGasto(dayKey, text, amt, m){
+  amt = numOf(amt); if (!(amt > 0) || !canMutate()) return false;
+  const row = {id: nid(), day: dayKey, text: String(text || '').trim().slice(0, 80), amt: amt, m: m, order: Date.now()};
+  state.gastos.push(row); persistLocal(); dset('gastos/' + row.id, {day: row.day, text: row.text, amt: row.amt, m: row.m, order: row.order}); return true;
+}
+function delGasto(id, quiet){
+  const g = state.gastos.find(x => x.id === id); if (!g || !canMutate()) return null;
+  state.gastos = state.gastos.filter(x => x.id !== id); persistLocal(); ddel('gastos/' + id); render();
+  if (!quiet) toast('Gasto eliminado', 'Deshacer', () => {
+    if (state.gastos.some(x => x.id === g.id)) return;
+    state.gastos.push(g); persistLocal(); dset('gastos/' + g.id, {day: g.day, text: g.text, amt: g.amt, m: g.m, order: g.order}); render();
+  });
+  return g;
+}
+const RESUMEN = "<div class=\"g\">\n<div class=\"d\" style=\"--c:#5B73D6\"><h2>Jue 26 nov <small>Madrid a Bangkok</small></h2><ul><li><b>21:45</b>Vuelo Iberojet E9845 (noche en el avión)</li></ul></div>\n<div class=\"d\" style=\"--c:#E39A12\"><h2>Vie 27 nov <small>Llegada y Chinatown</small></h2><ul><li><b>15:30</b>Aterrizaje BKK</li><li><b>~16:45</b>Superrich o CN Money (un poco más adelante) y cajero, planta B</li><li><b>~17:15</b>Grab al hostel · check-in 18:15</li><li><b>18:30</b>Barco Phra Arthit a Rajinee</li><li><b>19:50</b>Drones Wat Arun · 20:20 Wat Kalayanamit (op)</li><li><b>~21:15</b>Cena en Yaowarat</li></ul><div class=\"z\">Dormir: Victora Hostel (1/2)</div></div>\n<div class=\"d\" style=\"--c:#E39A12\"><h2>Sáb 28 nov <small>Ayutthaya</small></h2><ul><li><b>06:00</b>Grab al MBK · 06:50 punto de encuentro</li><li><b>07:00</b>Tour Ayutthaya, tren y mercado flotante</li><li><b>~18:00</b>Fin en el MBK y compras</li><li><b>~19:30</b>ICONSIAM (op, barco 8 THB)</li><li><b>~21:00</b>Cena en Khao San Road</li></ul><div class=\"z\">Dormir: Victora Hostel (2/2)</div></div>\n<div class=\"d\" style=\"--c:#E39A12\"><h2>Dom 29 nov <small>Chatuchak</small></h2><ul><li><b>~08:00</b>Grab al Amara (dejar mochilas)</li><li><b>~09:45</b>Chatuchak (MRT) hasta ~14:30</li><li><b>~16:30</b>Amara: check-in y bañador</li><li><b>~17:15</b>Atardecer azotea (17:48)</li><li><b>~18:30</b>Chong Nonsi Canal Park</li><li><b>~19:30</b>Cena Central Park, planta -1</li></ul><div class=\"z\">Dormir: Amara Bangkok</div></div>\n<div class=\"d\" style=\"--c:#E39A12\"><h2>Lun 30 nov <small>Templos y vuelo a Krabi</small></h2><ul><li><b>06:45</b>Check-out, equipaje en consigna</li><li><b>07:45</b>MRT: Gran Palacio 8:30, Wat Pho 10:45, Wat Arun 12:00</li><li><b>14:45</b>Metro al Amara · 15:35 taxi al aeropuerto</li><li><b>17:20</b>Aeropuerto · 18:40 vuelo VZ344 a Krabi</li><li><b>~21:30</b>Check-in Krabi Tipa Resort</li></ul><div class=\"z\">Dormir: Krabi Tipa (1/7)</div></div>\n<div class=\"d\" style=\"--c:#1F9E8C\"><h2>Mar 1 dic <small>James Bond</small></h2><ul><li><b>08:00</b>Desayuno en Much &amp; Mellow Bread and Brunch (abre a las 8)</li><li><b>08:45</b>Recogida Hotel Krabi Resort</li><li><b>09:00</b>Tour James Bond (hasta ~17:00) · pagar 6.200 THB</li><li><b>Tarde</b>Alquilar la moto antes de la cena</li><li><b>Noche</b>Cena en Walking Street de Ao Nang</li><li><b>Noche</b>Espectáculo de fuego en la playa y después masaje</li></ul><div class=\"z\">Dormir: Krabi Tipa (2/7)</div></div>\n<div class=\"d\" style=\"--c:#1F9E8C\"><h2>Mié 2 dic <small>4 islas</small></h2><ul><li><b>~06:30</b>Desayuno en Kuan Nom Saow (abre 6:30), en moto</li><li><b>7:30-8</b>Ao Thalane: kayak</li><li><b>09:00</b>Into the Forest (abre a las 9)</li><li><b>Luego</b>Templo del Tigre, sin subir arriba</li><li><b>12:45</b>Recogida del tour en el Hotel Krabi Resort, junto al cartel del Rey (tour 13:00 a ~19:30) · pagar 5.300 THB</li><li><b>Noche</b>Devolver la moto, cena en Night Marketplace y masaje</li><li><b>Hotel</b>Preparar mochila de Khao Sok</li></ul><div class=\"z\">Dormir: Krabi Tipa (3/7)</div></div>\n<div class=\"d\" style=\"--c:#1F9E8C\"><h2>Jue 3 dic <small>Khao Sok</small></h2><ul><li><b>07:00</b>Desayuno en 8.98, junto al hotel (abre 7:00, justos) o 7-Eleven, que es rápido</li><li><b>07:20</b>Recogida en el Krabi Tipa (sin espera)</li><li><b>Día</b>Lago, barca, safari, cabaña flotante</li></ul><div class=\"z\">Dormir: resort flotante Khao Sok</div></div>\n<div class=\"d\" style=\"--c:#1F9E8C\"><h2>Vie 4 dic <small>Vuelta y Khaothong Hill</small></h2><ul><li><b>~09:00</b>Salida del resort · ~16:00 Ao Nang</li><li><b>Tarde</b>Alquilar una moto</li><li><b>Noche</b>Cena en Khaothong Hill (reservar)</li><li><b>Luego</b>Masaje, si os apetece</li></ul><div class=\"z\">Dormir: Krabi Tipa (5/7)</div></div>\n<div class=\"d\" style=\"--c:#1F9E8C\"><h2>Sáb 5 dic <small>Koh Phi Phi</small></h2><ul><li><b>07:45</b>Recogida · 08:00 tour (hasta ~15:30) · pagar 5.600 THB</li><li><b>~16:00</b>Sendero de los monos</li><li><b>Noche</b>Cena en Dragon View Bar</li><li><b>Luego</b>Masaje, si os apetece</li></ul><div class=\"z\">Dormir: Krabi Tipa (6/7)</div></div>\n<div class=\"d\" style=\"--c:#1F9E8C\"><h2>Dom 6 dic <small>Railay y elefantes</small></h2><ul><li><b>Mañ.</b>Desayuno donde podáis</li><li><b>08:00</b>Longtail a Railay · 08:15 Phra Nang y Cueva de la Princesa</li><li><b>10:00</b>Mirador (op) o kayak · 11:00 Railay West y baño</li><li><b>12:15</b>Comida en la Walking Street de Railay · 13:00 billete de vuelta</li><li><b>13:15</b>Vuelta a Ao Nang · hotel a cambiarse</li><li><b>15:30</b>Following Giants, reservado 15:30 a 17:00 (llegar 15:20) · pagar 2.550 THB</li><li><b>Luego</b>Cena en Andalay Beach Bar y devolver la moto en Ao Nang</li><li><b>Noche</b>Dejar listo el vuelo (salida ~6:00)</li></ul><div class=\"z\">Dormir: Krabi Tipa (7/7)</div></div>\n<div class=\"d\" style=\"--c:#5B73D6\"><h2>Lun 7 dic <small>Regreso</small></h2><ul><li><b>~06:00</b>Al aeropuerto de Krabi</li><li><b>09:00</b>VZ341 Krabi a Bangkok</li><li><b>10:25</b>Conexión justa (1 h 50)</li><li><b>12:15</b>AZ759 a Roma · 21:35 AZ64 a Madrid</li></ul></div>\n<div class=\"d\" style=\"--c:#5B73D6\"><h2>Mar 8 dic <small>Madrid</small></h2><ul><li><b>00:05</b>Llegada a Madrid-Barajas</li></ul></div>\n</div>\n<div class=\"n\"><b style=\"min-width:0\">Pendiente de confirmar:</b> Khaothong Hill el día 4: reservar y mirar la hora de cierre (20:00 según lo que encontré) · previsión del tiempo (aún no disponible).</div>\n";
+function renderResumen(){
+  $('#app').innerHTML = '<h2 class="sec">Resumen</h2><p class="lead">26 nov a 8 dic · Madrid, Bangkok, Krabi · (op) = opcional · ~ = hora estimada</p><div class="rs">' + RESUMEN + '</div>';
+}
+function renderGastos(){
+  const rate = numOf(state.rate);
+  const money = n => fmtNum(Math.round(n * 100) / 100) + ' ฿';
+  const eur = n => rate > 0 ? ' <small class="meta">(' + (n / rate).toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €)</small>' : '';
+  const start = numOf(state.cashStart);
+  let total = 0, cash = 0, card = 0;
+  state.gastos.forEach(g => { total += g.amt; if (g.m === 'tj') card += g.amt; else cash += g.amt; });
+  const left = start - cash;
+  let h = '<h2 class="sec">Gastos</h2><p class="lead">Apuntad cada gasto en su día, en baht. Los dos veis los cambios al momento. El efectivo que queda resta solo los gastos en efectivo; los de tarjeta suman al total pero no gastan efectivo.</p>' +
+    '<div class="box"><div class="pin" style="border:0;padding-top:14px">' +
+    '<div class="row"><span>Efectivo que tenemos (฿)</span><input id="gcash" inputmode="decimal" placeholder="0" value="' + esc(state.cashStart) + '" aria-label="Efectivo que tenemos en baht" style="width:120px;text-align:right;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)"></div>' +
+    '<div class="row" style="margin-top:10px"><span>Total gastado</span><span class="big">' + money(total) + eur(total) + '</span></div>' +
+    '<div class="row"><span>En efectivo</span><span>' + money(cash) + '</span></div>' +
+    '<div class="row"><span>Con tarjeta</span><span>' + money(card) + '</span></div>' +
+    '<div class="row" style="margin-top:6px"><b>Efectivo que nos queda</b><span class="big" style="' + (left < 0 ? 'color:#c0392b' : '') + '">' + money(left) + eur(left) + '</span></div>' +
+    (start <= 0 ? '<p class="meta" style="margin:8px 0 0">Rellena arriba el efectivo con el que contáis para ver lo que os queda.</p>' : '') +
+    '</div></div>';
+  DAYS.forEach((d, i) => {
+    const gs = state.gastos.filter(g => g.day === d.key).sort((a, b) => (a.order || 0) - (b.order || 0));
+    const sub = gs.reduce((t, g) => t + g.amt, 0);
+    h += '<div class="box"><div class="head"><div class="row"><b>' + esc(d.date) + '</b><b>' + money(sub) + '</b></div><div class="meta">' + esc(d.title) + '</div></div>';
+    gs.forEach(g => {
+      h += '<div class="row" style="padding:8px 14px;border-top:1px solid var(--line);align-items:center"><span style="min-width:0">' + (g.text ? esc(g.text) : '<span class="meta">Sin concepto</span>') + ' <small class="meta">· ' + (g.m === 'tj' ? 'tarjeta' : 'efectivo') + '</small></span>' +
+        '<span style="white-space:nowrap">' + money(g.amt) + ' <button class="btn" data-gedit="' + g.id + '" aria-label="Editar gasto">✎</button> <button class="btn" data-gdel="' + g.id + '" aria-label="Eliminar gasto">✕</button></span></div>';
+    });
+    h += '<div class="padd"><input id="gc' + i + '" placeholder="Concepto" maxlength="80" aria-label="Concepto del gasto del ' + esc(d.date) + '"><input id="ga' + i + '" inputmode="decimal" placeholder="฿" style="max-width:90px;flex:0 0 90px" aria-label="Importe en baht"></div>' +
+      '<div class="padd" style="border-top:0;padding-top:0"><button class="btn pri" data-gadd="' + i + '" data-gm="ef">+ Efectivo</button><button class="btn" data-gadd="' + i + '" data-gm="tj">+ Tarjeta</button></div></div>';
+  });
+  $('#app').innerHTML = h;
+}
+function gastoFrom(i, m){
+  const c = document.getElementById('gc' + i), a = document.getElementById('ga' + i); if (!c || !a) return;
+  if (!addGasto(DAYS[i].key, c.value, a.value, m)){ if (!(numOf(a.value) > 0)){ a.focus(); toast('Escribe un importe mayor que 0.'); } return; }
+  render(); const n = document.getElementById('gc' + i); if (n) n.focus();
+}
+document.addEventListener('input', e => { const t = e.target; if (t && t.id === 'gcash'){ setCashStart(t.value); renderGastosTotalsOnly(); } });
+function renderGastosTotalsOnly(){ const f = captureFocus(); const y = window.scrollY; renderGastos(); restoreFocus(f); window.scrollTo(0, y); }
+document.addEventListener('keydown', e => {
+  const t = e.target; if (e.key !== 'Enter' || !t || !t.id) return;
+  const m = /^g[ca](\d+)$/.exec(t.id); if (m){ e.preventDefault(); gastoFrom(+m[1], 'ef'); }
+});
+function handleGastos(t){
+  const d = t.dataset;
+  if (d.gadd !== undefined){ gastoFrom(+d.gadd, d.gm); return true; }
+  if (d.gdel){ delGasto(d.gdel); return true; }
+  if (d.gedit){
+    const g = delGasto(d.gedit, true); if (!g) return true;
+    const i = DAYS.findIndex(x => x.key === g.day);
+    const c = document.getElementById('gc' + i), a = document.getElementById('ga' + i);
+    if (c) c.value = g.text; if (a){ a.value = g.amt; a.focus(); }
+    toast('Editando: pulsa + Efectivo o + Tarjeta para guardar'); return true;
+  }
+  return false;
+}
+
+/* ============ Render principal ============ */
+function render(){
+  renderSeg();
+  if (state.view === 'plan') renderPlan();
+  else if (state.view === 'reservas') renderRes();
+  else if (state.view === 'efectivo') renderCash();
+  else if (state.view === 'tiempo') renderTiempo();
+  else if (state.view === 'salud') renderSalud();
+  else if (state.view === 'cosas-que-llevar') renderMaleta();
+  else if (state.view === 'gastos') renderGastos();
+  else if (state.view === 'resumen') renderResumen();
+  else if (state.view === 'sync') renderSync();
+  else renderPrep();
+  const conv = () => { const r = parseFloat(String($('#rate') && $('#rate').value).replace(',', '.')), t = parseFloat(String($('#thb') && $('#thb').value).replace(',', '.')); const o = $('#thbOut'); if (o) o.textContent = (r > 0 && t >= 0) ? '= ' + (t / r).toLocaleString('es-ES', {maximumFractionDigits:2}) + ' €' : ''; };
+  const rEl = $('#rate'), tEl = $('#thb');
+  if (rEl) rEl.addEventListener('input', () => { setRate(rEl.value); conv(); });
+  if (tEl) tEl.addEventListener('input', conv);
+  if (rEl) rEl.addEventListener('change', () => renderCash());
+  conv();
+}
+
+function go(view, day, noPush){
+  state.view = view; if (typeof day === 'number') state.day = day;
+  render();
+  window.scrollTo({top:0, behavior:'smooth'});
+  if (!noPush){ try { location.hash = view === 'plan' ? 'd' + (state.day + 1) : view; } catch(e){} }
+}
+function fromHash(){
+  let h = ''; try { h = location.hash.replace('#', ''); } catch(e){}
+  const m = /^d(\d+)$/.exec(h);
+  if (m && DAYS[+m[1] - 1]){ state.view = 'plan'; state.day = +m[1] - 1; return true; }
+  if (VIEWS[h]){ state.view = h; return true; }
+  return false;
+}
+
+/* ============ Eventos ============ */
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-view],[data-day],[data-toggle],[data-filter],[data-opt],[data-expand],[data-done],[data-copy],[data-step],[data-goto],[data-cash],[data-prep],[data-pchk],[data-pedit],[data-pdel],[data-psave],[data-pcancel],[data-ladd],[data-padd-btn],[data-lren],[data-ldel],[data-ltoggle],[data-seed],[data-icat],[data-kchk],[data-scroll],[data-undo],[data-gadd],[data-gdel],[data-gedit]');
+  if (!t) return;
+  if (t.dataset.view){ go(t.dataset.view); return; }
+  if (t.dataset.day){ state.day = +t.dataset.day; state.filter = 'todo'; go('plan', state.day); return; }
+  if (t.dataset.toggle){
+    const id = t.dataset.toggle, card = t.closest('.card, .box');
+    const open = !card.classList.contains('open');
+    card.classList.toggle('open', open); t.setAttribute('aria-expanded', open);
+    if (open) state.open.add(id); else state.open.delete(id);
+    return;
+  }
+  if (t.dataset.filter){ state.filter = t.dataset.filter; renderPlan(); return; }
+  if (t.hasAttribute('data-opt')){ state.showOpt = !state.showOpt; renderPlan(); return; }
+  if (t.hasAttribute('data-expand')){ state.expandAll = !state.expandAll; renderPlan(); return; }
+  if (t.dataset.done){
+    const id = t.dataset.done; setCheck('done', id, !state.done.has(id)); renderSeg(); renderPlan(); return;
+  }
+  if (t.dataset.copy){ copyText(t.dataset.copy); return; }
+  if (t.dataset.step){ go('plan', Math.max(0, Math.min(DAYS.length - 1, state.day + (+t.dataset.step)))); return; }
+  if (t.dataset.goto){ go(t.dataset.goto); return; }
+  if (t.dataset.cash){ const id = t.dataset.cash; setCheck('cash', id, !state.cash.has(id)); renderCash(); return; }
+  if (handleGastos(t)) return;
+  if (handlePacking(t)) return;
+  if (t.dataset.prep){ const id = t.dataset.prep; setCheck('prep', id, !state.prep.has(id)); renderPrep(); return; }
+});
+
+$('#themeBtn').addEventListener('click', () => {
+  const root = document.documentElement;
+  const dark = root.getAttribute('data-theme') === 'dark' || (!root.getAttribute('data-theme') && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  const next = dark ? 'light' : 'dark';
+  root.setAttribute('data-theme', next); store.set('theme', next);
+});
+(function(){ const th = store.get('theme', ''); if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th); })();
+
+window.addEventListener('hashchange', () => { if (fromHash()){ render(); window.scrollTo({top:0}); } });
+
+/* ============ Arranque ============ */
+(function init(){
+  const tk = todayKey();
+  const idx = DAYS.findIndex(d => d.key === tk);
+  if (idx >= 0) state.day = idx;
+  fromHash();
+  renderWidgets(); setInterval(renderWidgets, 30000);
+  loadLocal();
+  render();
+  initSync();
+})();
+</script>
+</body>
+</html>
