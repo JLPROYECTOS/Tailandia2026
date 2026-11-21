@@ -867,7 +867,7 @@ const state = {
   plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
   readOnly:false, sync:'connecting', pending:false
 };
-const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Efectivo', 'antes-de-volar':'Antes de volar', tiempo:'Tiempo', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen', sync:'Sincronización'};
+const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Efectivo', 'antes-de-volar':'Antes de volar', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen', sync:'Sincronización'};
 
 function todayKey(){
   try { return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Bangkok', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); } catch(e){ return ''; }
@@ -1683,7 +1683,7 @@ function render(){
   if (state.view === 'plan') renderPlan();
   else if (state.view === 'reservas') renderRes();
   else if (state.view === 'efectivo') renderCash();
-  else if (state.view === 'tiempo') renderTiempo();
+  else if (state.view === 'tiempo'){ state.view = 'plan'; return render(); }
   else if (state.view === 'salud') renderSalud();
   else if (state.view === 'cosas-que-llevar') renderMaleta();
   else if (state.view === 'gastos') renderGastos();
