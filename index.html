@@ -322,7 +322,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1121.02</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1121.03</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1199,11 +1199,22 @@ function airportSVG(){
    '<circle cx="306" cy="210" r="13" fill="var(--ink)"/><text x="306" y="215" font-size="14" font-weight="700" text-anchor="middle" fill="var(--bg)">3</text>' +
    '<path d="M300 226 L300 226" stroke="none"/></svg>';
 }
+const ANTES_ID = 'antes';
+function seedAntes(){
+  if (state.readOnly || state.plists.some(l => l.id === ANTES_ID)) return;
+  const base = Date.now();
+  state.plists.push({id: ANTES_ID, title: 'Antes de volar', order: base}); dset('plists/' + ANTES_ID, {title: 'Antes de volar', order: base});
+  PREP.forEach((p, i) => {
+    const id = 'antes-' + p.id, done = state.prep.has(p.id), row = {id: id, listId: ANTES_ID, text: p.t, done: done, order: base + i + 1};
+    state.pitems.push(row); dset('pitems/' + id, {listId: ANTES_ID, text: p.t, done: done, order: row.order});
+  });
+  store.set('antesSeeded', '1'); persistLocal();
+}
 function renderPrep(){
-  const done = PREP.filter(p => state.prep.has(p.id)).length;
-  $('#app').innerHTML = '<h2 class="sec">Antes de volar</h2><p class="lead">Lo que conviene dejar hecho antes del 26 de noviembre.</p>' +
-    '<div class="row"><b>' + done + ' de ' + PREP.length + ' hechas</b></div><div class="bar"><i style="width:' + Math.round(done / PREP.length * 100) + '%"></i></div>' +
-    PREP.map(p => '<button class="check" role="checkbox" aria-checked="' + state.prep.has(p.id) + '" data-prep="' + p.id + '"><span class="bx">✓</span><span class="t"><b>' + p.t + '</b><span>' + p.s + '</span></span></button>').join('') +
+  if (!state.plists.some(l => l.id === ANTES_ID) && !store.get('antesSeeded', '') && (!SYNC.db || state.sync === 'ok')) seedAntes();
+  const antes = state.plists.find(l => l.id === ANTES_ID);
+  $('#app').innerHTML = '<h2 class="sec">Antes de volar</h2><p class="lead">Lo que conviene dejar hecho antes del 26 de noviembre. Podéis marcar, añadir, editar y eliminar elementos.</p>' +
+    (antes ? listHTML(antes, state.pitems.filter(i => i.listId === ANTES_ID)) : '<div class="empty">' + (SYNC.db && state.sync !== 'ok' && state.sync !== 'ro' ? 'Cargando la lista…' : 'La lista no está. <button class="btn pri" data-seedantes>Restaurar la lista</button>') + '</div>') +
     '<div class="box" style="margin-top:14px"><div class="pin" style="border:0;padding-top:12px"><a class="route place" target="_blank" rel="noopener noreferrer" href="https://tdac.immigration.go.th"><em>🛂</em>Abrir la TDAC oficial</a></div></div>' +
 
     '<h3 class="sec" id="aeropuerto" style="margin-top:26px">Superrich y taxi en Suvarnabhumi</h3><p class="lead">El orden es: llegadas, planta B y vuelta a la planta 1 para el taxi.</p>' +
@@ -1736,7 +1747,7 @@ function listHTML(l, items){
   return h + '</div>';
 }
 function renderMaleta(){
-  const lists = state.plists.slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  const lists = state.plists.filter(l => l.id !== ANTES_ID).sort((a, b) => (a.order || 0) - (b.order || 0));
   const ids = {}; lists.forEach(l => { ids[l.id] = []; });
   state.pitems.forEach(i => { if (ids[i.listId]) ids[i.listId].push(i); });
   let total = 0, done = 0; lists.forEach(l => ids[l.id].forEach(i => { total++; if (i.done) done++; }));
@@ -1772,6 +1783,7 @@ function handlePacking(t){
   if (d.scroll){ const el = document.getElementById(d.scroll); if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'}); return true; }
   if (d.icat){ state.ill.cat = d.icat; refreshIll(); return true; }
   if (d.seed){ seedBotiquin(); return true; }
+  if (t.hasAttribute('data-seedantes')){ store.set('antesSeeded', ''); seedAntes(); render(); return true; }
   if (d.kchk){ toggleItem(d.kchk); render(); return true; }
   if (d.pchk){ toggleItem(d.pchk); render(); return true; }
   if (d.pedit){ if (!canMutate()) return true; state.editing = {kind: 'item', id: d.pedit}; render(); return true; }
@@ -2016,7 +2028,7 @@ function fromHash(){
 
 /* ============ Eventos ============ */
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-view],[data-day],[data-toggle],[data-filter],[data-opt],[data-expand],[data-done],[data-copy],[data-step],[data-goto],[data-cash],[data-prep],[data-pchk],[data-pedit],[data-pdel],[data-psave],[data-pcancel],[data-ladd],[data-padd-btn],[data-lren],[data-ldel],[data-ltoggle],[data-seed],[data-icat],[data-kchk],[data-scroll],[data-undo],[data-gadd],[data-gcur],[data-gfopen],[data-gfsave],[data-gfcancel],[data-gfm],[data-quick],[data-gdel],[data-gedit]');
+  const t = e.target.closest('[data-view],[data-day],[data-toggle],[data-filter],[data-opt],[data-expand],[data-done],[data-copy],[data-step],[data-goto],[data-cash],[data-prep],[data-pchk],[data-pedit],[data-pdel],[data-psave],[data-pcancel],[data-ladd],[data-padd-btn],[data-lren],[data-ldel],[data-ltoggle],[data-seed],[data-seedantes],[data-icat],[data-kchk],[data-scroll],[data-undo],[data-gadd],[data-gcur],[data-gfopen],[data-gfsave],[data-gfcancel],[data-gfm],[data-quick],[data-gdel],[data-gedit]');
   if (!t) return;
   if (t.dataset.view){ go(t.dataset.view); return; }
   if (t.dataset.day){ state.day = +t.dataset.day; state.filter = 'todo'; state.quick = false; go('plan', state.day); window.scrollTo({top:0}); return; }
