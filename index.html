@@ -76,6 +76,9 @@ h1{font:600 clamp(2.2rem,9vw,3.3rem)/1.02 "Fraunces",Georgia,"Iowan Old Style",s
 .seg::-webkit-scrollbar{display:none}
 .seg button{flex:none;white-space:nowrap;border:0;background:transparent;border-radius:10px;padding:9px 12px;font-weight:600;font-size:.82rem;cursor:pointer;color:var(--muted);line-height:1.15}
 .seg button[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.seg button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:pan-x}
+.seg.reorder{outline:2px dashed var(--jade);outline-offset:2px}
+.seg button.drag{background:var(--jade);color:#fff;transform:scale(1.08);box-shadow:0 8px 20px -6px rgba(0,0,0,.45);position:relative;z-index:2;transition:transform .12s}
 .days{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;padding:10px 2px 4px;margin-top:2px;scrollbar-width:none}
 .days::-webkit-scrollbar{display:none}
 .days[hidden]{display:none}
@@ -949,8 +952,74 @@ function renderWidgets(){
     '<div class="w"><small>Ahora en Madrid</small><b>' + f('Europe/Madrid') + '</b></div>';
 }
 
+/* Orden de pestañas: se cambia manteniendo pulsada una pestaña y arrastrándola */
+function tabKeys(){
+  let o = store.get('tabOrder', null);
+  if (!Array.isArray(o)) o = [];
+  o = o.filter(k => VIEWS[k]);
+  Object.keys(VIEWS).forEach(k => { if (o.indexOf(k) < 0) o.push(k); });
+  return o;
+}
+(function(){
+  const HOLD = 420, MOVE_TOL = 10;
+  let timer = null, startX = 0, startY = 0, btn = null, dragging = false, justDragged = false, scrollRAF = null, lastX = 0;
+  const seg = () => document.getElementById('seg');
+  function cancelHold(){ clearTimeout(timer); timer = null; }
+  function begin(){
+    dragging = true; btn.classList.add('drag'); seg().classList.add('reorder');
+    try { navigator.vibrate && navigator.vibrate(25); } catch(e){}
+  }
+  function autoScroll(){
+    const s = seg(); if (!dragging || !s) return;
+    const r = s.getBoundingClientRect(), edge = 36;
+    if (lastX < r.left + edge) s.scrollLeft -= 8; else if (lastX > r.right - edge) s.scrollLeft += 8;
+    moveTo(lastX);
+    scrollRAF = requestAnimationFrame(autoScroll);
+  }
+  function moveTo(x){
+    const s = seg(); if (!s) return;
+    const others = Array.from(s.querySelectorAll('button[data-view]')).filter(b => b !== btn);
+    let placed = false;
+    for (const b of others){
+      const r = b.getBoundingClientRect();
+      if (x < r.left + r.width / 2){ if (btn.nextElementSibling !== b) s.insertBefore(btn, b); placed = true; break; }
+    }
+    if (!placed && s.lastElementChild !== btn) s.appendChild(btn);
+  }
+  function finish(){
+    cancelHold(); cancelAnimationFrame(scrollRAF);
+    if (dragging){
+      const order = Array.from(seg().querySelectorAll('button[data-view]')).map(b => b.dataset.view);
+      store.set('tabOrder', order);
+      btn.classList.remove('drag'); seg().classList.remove('reorder');
+      justDragged = true; setTimeout(() => { justDragged = false; }, 350);
+      toast('Orden de pestañas guardado');
+    }
+    dragging = false; btn = null;
+  }
+  function down(x, y, target){
+    const b = target && target.closest && target.closest('#seg button[data-view]'); if (!b) return;
+    btn = b; startX = lastX = x; startY = y; dragging = false;
+    cancelHold(); timer = setTimeout(() => { if (btn) { begin(); scrollRAF = requestAnimationFrame(autoScroll); } }, HOLD);
+  }
+  function move(x, y, ev){
+    if (!btn) return;
+    if (!dragging){ if (Math.abs(x - startX) > MOVE_TOL || Math.abs(y - startY) > MOVE_TOL){ cancelHold(); btn = null; } return; }
+    if (ev && ev.cancelable) ev.preventDefault();
+    lastX = x; moveTo(x);
+  }
+  document.addEventListener('touchstart', e => { const t = e.touches[0]; if (e.touches.length === 1) down(t.clientX, t.clientY, e.target); }, {passive:true});
+  document.addEventListener('touchmove', e => { const t = e.touches[0]; move(t.clientX, t.clientY, e); }, {passive:false});
+  document.addEventListener('touchend', finish); document.addEventListener('touchcancel', finish);
+  document.addEventListener('mousedown', e => { if (e.button === 0) down(e.clientX, e.clientY, e.target); });
+  document.addEventListener('mousemove', e => move(e.clientX, e.clientY, e));
+  document.addEventListener('mouseup', finish);
+  document.addEventListener('contextmenu', e => { if (e.target.closest && e.target.closest('#seg')) e.preventDefault(); });
+  document.addEventListener('click', e => { if (justDragged && e.target.closest && e.target.closest('#seg')){ e.stopPropagation(); e.preventDefault(); } }, true);
+})();
+
 function renderSeg(){
-  $('#seg').innerHTML = Object.keys(VIEWS).map(k => '<button data-view="' + k + '"' + (state.view === k ? ' aria-current="page"' : '') + '>' + VIEWS[k] + '</button>').join('');
+  $('#seg').innerHTML = tabKeys().map(k => '<button data-view="' + k + '"' + (state.view === k ? ' aria-current="page"' : '') + '>' + VIEWS[k] + '</button>').join('');
   const sa = $('#seg [aria-current="page"]'); if (sa && sa.scrollIntoView) { try { sa.scrollIntoView({inline:'center', block:'nearest'}); } catch(e){} }
   const days = $('#days');
   days.hidden = state.view !== 'plan';
