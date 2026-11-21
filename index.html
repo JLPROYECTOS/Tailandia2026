@@ -893,13 +893,12 @@ function copyText(txt){
 function renderWidgets(){
   const now = new Date();
   const start = new Date('2026-11-26T20:45:00Z'), end = new Date('2026-12-08T00:05:00Z');
-  let a, b;
-  if (now < start){ const d = Math.ceil((start - now) / 864e5); a = ['Cuenta atrás', d + (d === 1 ? ' día' : ' días')]; }
-  else if (now <= end){ a = ['Estado', 'De viaje']; }
-  else { a = ['Estado', 'Viaje hecho']; }
+  const d = Math.ceil((start - now) / 864e5);
+  const showCount = now < start && d > 0;
   const f = tz => { try { return new Intl.DateTimeFormat('es-ES', {timeZone:tz, hour:'2-digit', minute:'2-digit'}).format(now); } catch(e){ return '--:--'; } };
+  $('#widgets').style.gridTemplateColumns = showCount ? '' : 'repeat(2,1fr)';
   $('#widgets').innerHTML =
-    '<div class="w hl"><small>' + a[0] + '</small><b>' + a[1] + '</b></div>' +
+    (showCount ? '<div class="w hl"><small>Cuenta atrás</small><b>' + d + (d === 1 ? ' día' : ' días') + '</b></div>' : '') +
     '<div class="w"><small>Ahora en Bangkok</small><b>' + f('Asia/Bangkok') + '</b></div>' +
     '<div class="w"><small>Ahora en Madrid</small><b>' + f('Europe/Madrid') + '</b></div>';
 }
