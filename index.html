@@ -910,7 +910,7 @@ const SC = {
 const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const state = {
   view:'plan', day:0, filter:'todo', showOpt:true, expandAll:false, open:new Set(),
-  done:new Set(), prep:new Set(), cash:new Set(), rate:'', gastos:[], cashStart:'',
+  done:new Set(), prep:new Set(), cash:new Set(), rate:'', gastos:[], cashStart:'', cashEur:'',
   plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
   readOnly:false, sync:'connecting', pending:false
 };
@@ -1326,11 +1326,11 @@ function setSync(k){
 function persistLocal(){
   if (SYNC.db) return;
   store.set('done', Array.from(state.done)); store.set('prep', Array.from(state.prep)); store.set('cash', Array.from(state.cash));
-  store.set('gastos', state.gastos); store.set('cashStart', state.cashStart); store.set('rate', state.rate); store.set('plists', state.plists); store.set('pitems', state.pitems);
+  store.set('gastos', state.gastos); store.set('cashStart', state.cashStart); store.set('cashEur', state.cashEur); store.set('rate', state.rate); store.set('plists', state.plists); store.set('pitems', state.pitems);
 }
 function loadLocal(){
   state.done = new Set(store.get('done', [])); state.prep = new Set(store.get('prep', [])); state.cash = new Set(store.get('cash', []));
-  state.gastos = store.get('gastos', []); state.cashStart = store.get('cashStart', ''); state.rate = store.get('rate', ''); state.plists = store.get('plists', []); state.pitems = store.get('pitems', []);
+  state.gastos = store.get('gastos', []); state.cashStart = store.get('cashStart', ''); state.cashEur = store.get('cashEur', ''); state.rate = store.get('rate', ''); state.plists = store.get('plists', []); state.pitems = store.get('pitems', []);
 }
 function canMutate(){
   if (state.readOnly){ toast('Solo lectura: pedid que os den permiso de edición.'); return false; }
@@ -1440,7 +1440,7 @@ function listen(db){
   db.collection('gastos').onSnapshot(snap => { state.gastos = snap.docs.map(x => Object.assign({id: x.id}, x.data())); okSnap(snap); softRender(); }, fail);
   db.doc('settings/cash').onSnapshot(sn => {
     if (SYNC.ct || (sn.metadata && sn.metadata.hasPendingWrites)) return;
-    const v = sn.exists ? (sn.data().v || '') : ''; if (v !== state.cashStart){ state.cashStart = v; softRender(); }
+    const d = sn.exists ? sn.data() : {}, v = d.v || '', ce = d.eur || ''; if (v !== state.cashStart || ce !== state.cashEur){ state.cashStart = v; state.cashEur = ce; softRender(); }
   }, fail);
   db.doc('settings/rate').onSnapshot(sn => {
     if (SYNC.rt || (sn.metadata && sn.metadata.hasPendingWrites)) return;
@@ -1553,7 +1553,7 @@ async function initSync(){
   try { user = await window.claude.use('user'); SYNC.canWrite = user ? await user.can('data.write') : null; } catch(e){ SYNC.canWrite = null; }
   if (SYNC.canWrite === false) state.readOnly = true;
   SYNC.db = db;
-  state.done = new Set(); state.prep = new Set(); state.cash = new Set(); state.plists = []; state.pitems = []; state.rate = ''; state.gastos = []; state.cashStart = '';
+  state.done = new Set(); state.prep = new Set(); state.cash = new Set(); state.plists = []; state.pitems = []; state.rate = ''; state.gastos = []; state.cashStart = ''; state.cashEur = '';
   SYNC.timer = setTimeout(() => { if (state.sync !== 'ok' && state.sync !== 'ro') setSync('slow'); }, 10000);
   setSync(state.readOnly ? 'ro' : 'connecting');
   listen(db); render();
@@ -1759,10 +1759,13 @@ document.addEventListener('input', e => { const t = e.target; if (t && t.id === 
 
 /* ============ Gastos ============ */
 const numOf = v => { const n = parseFloat(String(v).replace(',', '.')); return isFinite(n) ? n : 0; };
-function setCashStart(v){
-  state.cashStart = v; persistLocal();
-  if (SYNC.db){ clearTimeout(SYNC.ct); SYNC.ct = setTimeout(() => { SYNC.ct = null; dset('settings/cash', {v: state.cashStart}); }, 700); }
+function cashTHB(){ const e = numOf(state.cashEur), r = numOf(state.rate); return e > 0 && r > 0 ? Math.round(e * r) : 0; }
+function saveCash(){
+  state.cashStart = cashTHB() ? String(cashTHB()) : ''; persistLocal();
+  if (SYNC.db){ clearTimeout(SYNC.ct); SYNC.ct = setTimeout(() => { SYNC.ct = null; dset('settings/cash', {v: state.cashStart, eur: state.cashEur}); }, 700); }
 }
+function setCashEur(v){ state.cashEur = v; saveCash(); }
+function setCashStart(v){ state.cashStart = v; persistLocal(); }
 function addGasto(dayKey, text, amt, m){
   amt = numOf(amt); if (!(amt > 0) || !canMutate()) return false;
   const row = {id: nid(), day: dayKey, text: String(text || '').trim().slice(0, 80), amt: amt, m: m, order: Date.now()};
@@ -1784,24 +1787,29 @@ function renderResumen(){
 function renderGastos(){
   const rate = numOf(state.rate);
   const money = n => fmtNum(Math.round(n * 100) / 100) + ' ฿';
-  const eur = n => rate > 0 ? ' <small class="meta">(' + (n / rate).toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €)</small>' : '';
-  const start = numOf(state.cashStart);
+  const eur = n => rate > 0 ? ' <small class="meta" style="white-space:nowrap">(' + fmtNum(Math.round(n / rate)) + ' €)</small>' : '';
+  const start = cashTHB() || (numOf(state.cashEur) > 0 ? 0 : numOf(state.cashStart));
+  const inp = 'width:120px;text-align:right;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)';
   let total = 0, cash = 0, card = 0;
   state.gastos.forEach(g => { total += g.amt; if (g.m === 'tj') card += g.amt; else cash += g.amt; });
   const left = start - cash;
   let h = '<h2 class="sec">Gastos</h2><p class="lead">Apuntad cada gasto en su día, en baht. Los dos veis los cambios al momento. El efectivo que queda resta solo los gastos en efectivo; los de tarjeta suman al total pero no gastan efectivo.</p>' +
     '<div class="box"><div class="pin" style="border:0;padding-top:14px">' +
-    '<div class="row"><span>Efectivo que tenemos (฿)</span><input id="gcash" inputmode="decimal" placeholder="0" value="' + esc(state.cashStart) + '" aria-label="Efectivo que tenemos en baht" style="width:120px;text-align:right;border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--surface)"></div>' +
+    '<div class="row"><span>Euros que traemos de España</span><input id="geur" inputmode="decimal" placeholder="0 €" value="' + esc(state.cashEur) + '" aria-label="Euros que traemos" style="' + inp + '"></div>' +
+    '<div class="row" style="margin-top:8px"><span>Cambio conseguido<br><small class="meta">THB por 1 €</small></span><input id="grate" inputmode="decimal" placeholder="37,0" value="' + esc(state.rate) + '" aria-label="Tipo de cambio en baht por euro" style="' + inp + '"></div>' +
+    '<div class="row" style="margin-top:8px"><b>Efectivo en baht</b><b id="gthb" style="font-size:1.15rem">' + (start > 0 ? money(start) : '—') + '</b></div>' +
+    (numOf(state.cashEur) > 0 && !(numOf(state.rate) > 0) ? '<p class="meta" style="margin:4px 0 0">Poned el cambio que os den en la casa de cambio para calcular los baht.</p>' : '') +
+    '<hr style="border:0;border-top:1px solid var(--line);margin:12px 0 0">' +
     '<div class="row" style="margin-top:10px"><span>Total gastado</span><span class="big">' + money(total) + eur(total) + '</span></div>' +
     '<div class="row"><span>En efectivo</span><span>' + money(cash) + '</span></div>' +
     '<div class="row"><span>Con tarjeta</span><span>' + money(card) + '</span></div>' +
     '<div class="row" style="margin-top:6px"><b>Efectivo que nos queda</b><span class="big" style="' + (left < 0 ? 'color:#c0392b' : '') + '">' + money(left) + eur(left) + '</span></div>' +
-    (start <= 0 ? '<p class="meta" style="margin:8px 0 0">Rellena arriba el efectivo con el que contáis para ver lo que os queda.</p>' : '') +
+    (start <= 0 ? '<p class="meta" style="margin:8px 0 0">Poned arriba los euros que traéis y el cambio que os den para ver el efectivo que os queda.</p>' : '') +
     '</div></div>';
   DAYS.forEach((d, i) => {
     const gs = state.gastos.filter(g => g.day === d.key).sort((a, b) => (a.order || 0) - (b.order || 0));
     const sub = gs.reduce((t, g) => t + g.amt, 0);
-    h += '<div class="box"><div class="head"><div class="row"><b>' + esc(d.date) + '</b><b>' + money(sub) + '</b></div><div class="meta">' + esc(d.title) + '</div></div>';
+    h += '<div class="box"><div class="head" style="display:block"><div class="row"><b>' + esc(d.date) + '</b><b>' + money(sub) + '</b></div><div class="meta">' + esc(d.title) + '</div></div>';
     gs.forEach(g => {
       h += '<div class="row" style="padding:8px 14px;border-top:1px solid var(--line);align-items:center"><span style="min-width:0">' + (g.text ? esc(g.text) : '<span class="meta">Sin concepto</span>') + ' <small class="meta">· ' + (g.m === 'tj' ? 'tarjeta' : 'efectivo') + '</small></span>' +
         '<span style="white-space:nowrap">' + money(g.amt) + ' <button class="btn" data-gedit="' + g.id + '" aria-label="Editar gasto">✎</button> <button class="btn" data-gdel="' + g.id + '" aria-label="Eliminar gasto">✕</button></span></div>';
@@ -1816,7 +1824,7 @@ function gastoFrom(i, m){
   if (!addGasto(DAYS[i].key, c.value, a.value, m)){ if (!(numOf(a.value) > 0)){ a.focus(); toast('Escribe un importe mayor que 0.'); } return; }
   render(); const n = document.getElementById('gc' + i); if (n) n.focus();
 }
-document.addEventListener('input', e => { const t = e.target; if (t && t.id === 'gcash'){ setCashStart(t.value); renderGastosTotalsOnly(); } });
+document.addEventListener('input', e => { const t = e.target; if (!t) return; if (t.id === 'geur'){ setCashEur(t.value); renderGastosTotalsOnly(); } else if (t.id === 'grate'){ setRate(t.value); saveCash(); renderGastosTotalsOnly(); } });
 function renderGastosTotalsOnly(){ const f = captureFocus(); const y = window.scrollY; renderGastos(); restoreFocus(f); window.scrollTo(0, y); }
 document.addEventListener('keydown', e => {
   const t = e.target; if (e.key !== 'Enter' || !t || !t.id) return;
