@@ -1101,7 +1101,7 @@ function renderCash(){
   const C = {paid:'var(--jade)', tours:'var(--gold)', stay:'var(--blue)'};
   const amt = (n, eurTxt) => '<span style="margin-left:auto;text-align:right;white-space:nowrap"><b>' + thb(n) + '</b><br><small class="meta">' + (eurTxt || toE(n)) + '</small></span>';
   const line = (c, n, eurTxt) => '<div class="check" style="cursor:default"><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span>' + amt(n, eurTxt) + '</div>';
-  const tile = (col, ic, lab, n, sub) => '<div style="background:var(--surface);border:1px solid var(--line);border-top:5px solid ' + col + ';border-radius:14px;padding:10px 10px 12px;min-width:0"><div style="font-size:1.3rem">' + ic + '</div><small class="meta" style="display:block;line-height:1.2;margin:2px 0 4px">' + lab + '</small><b style="display:block;font-size:1.05rem;white-space:nowrap">' + fmtNum(Math.round(n)) + '</b><small class="meta" style="display:block">THB</small><small style="display:block;white-space:nowrap;font-weight:700;color:var(--muted)">' + toE(n) + '</small>' + (sub ? '<small style="display:block;margin-top:4px;color:var(--muted)">' + sub + '</small>' : '') + '</div>';
+  const tile = (col, ic, lab, n, sub, eurTxt) => '<div style="background:var(--surface);border:1px solid var(--line);border-top:5px solid ' + col + ';border-radius:14px;padding:10px 10px 12px;min-width:0"><div style="font-size:1.3rem">' + ic + '</div><small class="meta" style="display:block;line-height:1.2;margin:2px 0 4px">' + lab + '</small><b style="display:block;font-size:1.05rem;white-space:nowrap">' + fmtNum(Math.round(n)) + '</b><small class="meta" style="display:block">THB</small><small style="display:block;white-space:nowrap;font-weight:700;color:var(--muted)">' + (eurTxt || toE(n)) + '</small>' + (sub ? '<small style="display:block;margin-top:4px;color:var(--muted)">' + sub + '</small>' : '') + '</div>';
   const head = (col, t, total) => '<h3 class="sec" style="font-size:1.35rem;margin-top:24px;display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:' + col + ';flex:none"></span>' + t + '<span style="margin-left:auto;font:700 1rem Figtree,system-ui,sans-serif;white-space:nowrap">' + thb(total) + '</span></h3>';
   const row = c => '<button class="check" role="checkbox" aria-checked="' + state.cash.has(c.id) + '" data-cash="' + c.id + '"><span class="bx">✓</span><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span>' + amt(c.a) + '</button>';
 
@@ -1115,7 +1115,7 @@ function renderCash(){
         '<i style="width:' + pct(sumPaid) + ';background:' + C.paid + '"></i><i style="width:' + pct(sumTours) + ';background:' + C.tours + '"></i><i style="width:' + pct(sumStay) + ';background:' + C.stay + '"></i></div>' +
       '<small class="meta" style="display:block">Gasto total en Tailandia: <b style="color:var(--ink)">' + thb(all) + ' · ' + toE(all) + '</b></small>' +
       '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px">' +
-        tile(C.paid, '✅', 'Ya pagado', sumPaid, 'Vuelos, hoteles y señales') +
+        tile(C.paid, '✅', 'Ya pagado', sumPaid, 'Vuelos, hoteles y señales', PAID.every(c => c.eur != null) ? fmtNum(Math.round(PAID.reduce((t, c) => t + c.eur, 0) * 100) / 100) + ' €' : null) +
         tile(C.tours, '🎟️', 'Falta pagar excursiones', sumTours, 'En efectivo allí') +
         tile(C.stay, '🍜', 'Para estar allí', sumStay, 'Comida, motos, masajes…') +
       '</div>' +
