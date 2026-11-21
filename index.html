@@ -867,7 +867,7 @@ const state = {
   plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
   readOnly:false, sync:'connecting', pending:false
 };
-const VIEWS = {plan:'Itinerario', reservas:'Reservas', efectivo:'Efectivo', 'antes-de-volar':'Antes de volar', tiempo:'Tiempo', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', gastos:'Gastos', resumen:'Resumen', sync:'Sincronización'};
+const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Efectivo', 'antes-de-volar':'Antes de volar', tiempo:'Tiempo', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen', sync:'Sincronización'};
 
 function todayKey(){
   try { return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Bangkok', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); } catch(e){ return ''; }
