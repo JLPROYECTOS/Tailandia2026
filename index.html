@@ -737,6 +737,20 @@ const CASH = [
  {id:'c7', l:'Wat Arun (2 × 200)', d:'Lun 30 nov. Precio orientativo.', a:400, est:true}
 ];
 
+/* Estimación del día a día (para los dos, en THB) */
+const DAILY = [
+ {l:'Desayunos', d:'10 días × 2 × ~120 (7-Eleven o cafetería). El 4 dic va incluido en Khao Sok', a:2400},
+ {l:'Comidas', d:'7 días × 2 × ~150. En los tours del 1, 2 y 5 dic y en Khao Sok va incluida', a:2100},
+ {l:'Cenas', d:'10 noches × 2 × ~300. Mercados más baratos; Khaothong Hill, Dragon View y Andalay más caros', a:6000},
+ {l:'Bebidas, agua, cafés y zumos', d:'11 días × ~250', a:2750},
+ {l:'Masajes', d:'5 sesiones × 2 × ~350 (1 h). 1, 2, 4 y 5 dic y uno en Bangkok', a:3500},
+ {l:'Alquiler de moto y gasolina', d:'4 días × ~250 + ~100 de gasolina al día (1-2, 4 y 6 dic)', a:1400},
+ {l:'Transporte', d:'Taxis de aeropuerto, Grab y barcos en Bangkok, longtail a Railay y Grab a Dragon View', a:4700},
+ {l:'Regalos', d:'Chatuchak, mercados y recuerdos', a:3000},
+ {l:'Gastos varios', d:'Farmacia, propinas de los guías, lavandería e imprevistos', a:2500}
+];
+const DAILY_MARGIN = 0.10;
+
 /* Antes de volar */
 const PREP = [
  {id:'p1', t:'Rellenar la TDAC (una por persona)', s:'Se puede enviar desde 3 días antes, hasta el mismo día de llegada. Es gratuita: usad solo tdac.immigration.go.th. Guardad el código QR.'},
@@ -984,6 +998,11 @@ function renderCash(){
     '<div class="box"><div class="pin" style="border:0;padding-top:14px"><div class="row"><span>Efectivo seguro (tours y depósito)</span><span class="big">' + fmtNum(sum(sure)) + '</span></div><div class="row"><span>Con entradas de templos (orientativo)</span><b>' + fmtNum(total) + ' THB' + eur(total) + '</b></div><div class="row"><span>Por apartar todavía</span><b>' + fmtNum(pending) + ' THB' + eur(pending) + '</b></div></div></div>' +
     '<h3 class="sec" style="font-size:1.35rem">Pagos seguros</h3>' + sure.map(row).join('') +
     '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Estimados</h3>' + est.map(row).join('') +
+    (function(){ const dsum = DAILY.reduce((t, c) => t + c.a, 0), marg = Math.round(dsum * DAILY_MARGIN / 100) * 100, all = total + dsum + marg;
+      return '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Día a día (estimación)</h3><p class="lead" style="margin-top:0">Comida, masajes, motos, regalos y demás para los dos. Son precios orientativos de Krabi y Bangkok; en zonas turísticas puede costar más.</p>' +
+      DAILY.map(c => '<div class="check" style="cursor:default"><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span><span style="margin-left:auto;font-weight:700;white-space:nowrap">' + fmtNum(c.a) + ' THB</span></div>').join('') +
+      '<div class="box"><div class="pin" style="border:0;padding-top:14px"><div class="row"><span>Día a día</span><b>' + fmtNum(dsum) + ' THB' + eur(dsum) + '</b></div><div class="row"><span>Margen de imprevistos (10 %)</span><b>' + fmtNum(marg) + ' THB</b></div><div class="row" style="margin-top:6px"><b>Total de efectivo para el viaje</b><span class="big">' + fmtNum(all) + ' THB' + eur(all) + '</span></div><p class="meta" style="margin:8px 0 0">Suma los pagos de arriba (' + fmtNum(total) + ' THB), el día a día y el margen. El depósito del hotel (2.000 THB) os lo devuelven al salir.</p></div></div>' +
+      '<div class="warn">🛵 Algunas tiendas de motos piden un depósito en efectivo o el pasaporte. Mejor dejar efectivo que el pasaporte, y sacad fotos de la moto antes de salir.</div>'; })() +
     '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Superrich frente a CN Money</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0"><b>CN Money</b> existe: lo habéis comprobado vosotros. Está en el aeropuerto, un poco más adelante que Superrich. No tengo sus tipos de cambio, así que comparadlos en los mostradores con la calculadora de abajo. Lo que he encontrado:</p><table class="cmp"><tr><th></th><th>Superrich</th><th>CN Money</th></tr><tr><td>Existe</td><td>Sí. Mostrador naranja en la planta B del aeropuerto y otras sucursales (también en Krabi)</td><td>Sí. En el aeropuerto, un poco más adelante que Superrich (confirmado por vosotros)</td></tr><tr><td>Tipo de cambio</td><td>Cambia a diario: se mira en su web o en el mostrador</td><td>Se mira en el mostrador</td></tr></table><p class="meta" style="margin:8px 0 0">Otras casas que he visto nombradas: Siam Exchange, Vasu, X-One, YES Exchange y Value Plus en Ao Nang. No he comprobado sus tipos.</p><p style="margin:12px 0 4px"><b>Comparad vosotros con cifras reales</b> (poned los THB que os da cada casa por 1 €, para el mismo billete):</p><div class="field"><label for="xa">Superrich (THB por 1 €)</label><input id="xa" inputmode="decimal" placeholder="37,5"></div><div class="field"><label for="xb">CN Money u otra casa (THB por 1 €)</label><input id="xb" inputmode="decimal" placeholder="37,2"></div><div class="field"><label for="xe">Euros a cambiar</label><input id="xe" inputmode="decimal" placeholder="300"></div><b id="xo"></b></div></div>' +
     '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Conversor</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0">Escribe el tipo de cambio que te dé Superrich (baht por 1 €) y verás los importes en euros.</p><div class="field"><label for="rate">THB por 1 €</label><input id="rate" inputmode="decimal" placeholder="Por ejemplo, 37,5" value="' + (state.rate || '') + '"></div><div class="field"><label for="thb">Importe en THB</label><input id="thb" inputmode="numeric" placeholder="1000"><b id="thbOut"></b></div><p class="meta" style="margin:8px 0 0">No pongo un tipo de cambio por vosotros porque cambia a diario.</p></div></div>' +
     '<div class="warn">🍜 Ojo con lo que los tours <b>no</b> incluyen: el almuerzo del tour de Ayutthaya (28 nov) y los gastos personales en Khao Sok (3 y 4 dic). En los tours de Thalassa la comida va incluida.</div>' +
