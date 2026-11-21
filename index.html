@@ -752,6 +752,19 @@ const CASH = [
  {id:'c7', l:'Wat Arun (2 × 200)', d:'Lun 30 nov. Precio orientativo.', a:400, est:true}
 ];
 
+/* Ya pagado (con tarjeta o transferencia). a = THB, eur = importe en euros */
+const PAID = [
+ {l:'Victora Hostel, Bangkok', d:'2 noches. Cargado el 11 nov', a:3216.67},
+ {l:'Amara Bangkok Hotel', d:'1 noche. Cargo con tarjeta el 22 nov', a:4163.68},
+ {l:'Krabi Tipa Resort, Ao Nang', d:'7 noches. Cargado el 14 nov', a:20954.93},
+ {l:'Tour de Ayutthaya', d:'GetYourGuide. Cargo con tarjeta el 25 nov', eur:153.32},
+ {l:'Tour James Bond (señal)', d:'Pagados 1.590 de 7.790 THB', a:1590},
+ {l:'Tour 4 islas (señal)', d:'Pagados 1.590 de 6.890 THB', a:1590},
+ {l:'Tour Koh Phi Phi (señal)', d:'Pagados 1.590 de 7.190 THB', a:1590},
+ {l:'Following Giants (señal)', d:'Pagados 1.054 de 3.604 THB', a:1054}
+];
+const PAID_NOAMT = 'Los vuelos y el tour de Khao Sok también están pagados, pero no tengo sus importes apuntados, así que no entran en la suma.';
+
 /* Estimación del día a día (para los dos, en THB) */
 const DAILY = [
  {l:'Desayunos', d:'10 días × 2 × ~120 (7-Eleven o cafetería). El 4 dic va incluido en Khao Sok', a:2400},
@@ -896,12 +909,12 @@ const state = {
   plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
   readOnly:false, sync:'connecting', pending:false
 };
-const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Efectivo', 'antes-de-volar':'Antes de volar', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen', sync:'Sincronización'};
+const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Gastos Tailandia', 'antes-de-volar':'Antes de volar', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen', sync:'Sincronización'};
 
 function todayKey(){
   try { return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Bangkok', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); } catch(e){ return ''; }
 }
-const fmtNum = n => n.toLocaleString('es-ES');
+const fmtNum = n => { try { return n.toLocaleString('es-ES', {useGrouping:'always'}); } catch(e){ return n.toLocaleString('es-ES'); } };
 let undoFn = null;
 function toast(msg, label, fn){
   const t = $('#toast'); t.textContent = msg; undoFn = fn || null;
@@ -1003,26 +1016,64 @@ function renderRes(){
 
 /* ============ Efectivo ============ */
 function renderCash(){
-  const sure = CASH.filter(c => !c.est), est = CASH.filter(c => c.est);
-  const sum = arr => arr.reduce((s, c) => s + c.a, 0);
-  const total = sum(CASH), pending = sum(CASH.filter(c => !state.cash.has(c.id)));
   const userRate = parseFloat(String(state.rate).replace(',', '.'));
-  const rate = userRate > 0 ? userRate : 37;
-  const eur = n => ' <small class="meta">(' + (rate === userRate ? '' : '≈ ') + (n / rate).toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €)</small>';
-  const eurB = n => '<br><small class="meta" style="font-weight:400">' + (rate === userRate ? '' : '≈ ') + (n / rate).toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €</small>';
-  const rateNote = userRate > 0 ? 'Euros calculados con vuestro cambio: ' + String(state.rate) + ' THB por 1 €.' : 'Euros aproximados a 37 THB por 1 € (cambio de referencia del 21 nov; en la casa de cambio os darán algo menos). Si ponéis vuestro cambio en el conversor, se recalcula.';
-  const row = c => '<button class="check" role="checkbox" aria-checked="' + state.cash.has(c.id) + '" data-cash="' + c.id + '"><span class="bx">✓</span><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span><span style="margin-left:auto;font-weight:700;white-space:nowrap;text-align:right">' + fmtNum(c.a) + ' THB' + eurB(c.a) + '</span></button>';
-  $('#app').innerHTML = '<h2 class="sec">Efectivo</h2><p class="lead">Marca lo que ya tengas apartado o pagado. El total se actualiza solo.</p><p class="meta" style="margin-top:-6px">' + rateNote + '</p>' +
-    '<div class="box"><div class="pin" style="border:0;padding-top:14px"><div class="row"><span>Efectivo seguro (tours y depósito)</span><span class="big">' + fmtNum(sum(sure)) + ' THB' + eur(sum(sure)) + '</span></div><div class="row"><span>Con entradas de templos (orientativo)</span><b>' + fmtNum(total) + ' THB' + eur(total) + '</b></div><div class="row"><span>Por apartar todavía</span><b>' + fmtNum(pending) + ' THB' + eur(pending) + '</b></div></div></div>' +
-    '<h3 class="sec" style="font-size:1.35rem">Pagos seguros</h3>' + sure.map(row).join('') +
-    '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Estimados</h3>' + est.map(row).join('') +
-    (function(){ const dsum = DAILY.reduce((t, c) => t + c.a, 0), marg = Math.round(dsum * DAILY_MARGIN / 100) * 100, all = total + dsum + marg;
-      return '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Día a día (estimación)</h3><p class="lead" style="margin-top:0">Comida, masajes, motos, regalos y demás para los dos. Son precios orientativos de Krabi y Bangkok; en zonas turísticas puede costar más.</p>' +
-      DAILY.map(c => '<div class="check" style="cursor:default"><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span><span style="margin-left:auto;font-weight:700;white-space:nowrap;text-align:right">' + fmtNum(c.a) + ' THB' + eurB(c.a) + '</span></div>').join('') +
-      '<div class="box"><div class="pin" style="border:0;padding-top:14px"><div class="row"><span>Día a día</span><b>' + fmtNum(dsum) + ' THB' + eur(dsum) + '</b></div><div class="row"><span>Margen de imprevistos (10 %)</span><b>' + fmtNum(marg) + ' THB' + eur(marg) + '</b></div><div class="row" style="margin-top:6px"><b>Total de efectivo para el viaje</b><span class="big">' + fmtNum(all) + ' THB' + eur(all) + '</span></div><p class="meta" style="margin:8px 0 0">Suma los pagos de arriba (' + fmtNum(total) + ' THB, ' + (rate === userRate ? '' : '≈ ') + (total / rate).toLocaleString('es-ES', {maximumFractionDigits:0}) + ' €), el día a día y el margen. El depósito del hotel (2.000 THB) os lo devuelven al salir.</p></div></div>' +
-      '<div class="warn">🛵 Algunas tiendas de motos piden un depósito en efectivo o el pasaporte. Mejor dejar efectivo que el pasaporte, y sacad fotos de la moto antes de salir.</div>'; })() +
-    '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Superrich frente a CN Money</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0"><b>CN Money</b> existe: lo habéis comprobado vosotros. Está en el aeropuerto, un poco más adelante que Superrich. No tengo sus tipos de cambio, así que comparadlos en los mostradores con la calculadora de abajo. Lo que he encontrado:</p><table class="cmp"><tr><th></th><th>Superrich</th><th>CN Money</th></tr><tr><td>Existe</td><td>Sí. Mostrador naranja en la planta B del aeropuerto y otras sucursales (también en Krabi)</td><td>Sí. En el aeropuerto, un poco más adelante que Superrich (confirmado por vosotros)</td></tr><tr><td>Tipo de cambio</td><td>Cambia a diario: se mira en su web o en el mostrador</td><td>Se mira en el mostrador</td></tr></table><p class="meta" style="margin:8px 0 0">Otras casas que he visto nombradas: Siam Exchange, Vasu, X-One, YES Exchange y Value Plus en Ao Nang. No he comprobado sus tipos.</p><p style="margin:12px 0 4px"><b>Comparad vosotros con cifras reales</b> (poned los THB que os da cada casa por 1 €, para el mismo billete):</p><div class="field"><label for="xa">Superrich (THB por 1 €)</label><input id="xa" inputmode="decimal" placeholder="37,5"></div><div class="field"><label for="xb">CN Money u otra casa (THB por 1 €)</label><input id="xb" inputmode="decimal" placeholder="37,2"></div><div class="field"><label for="xe">Euros a cambiar</label><input id="xe" inputmode="decimal" placeholder="300"></div><b id="xo"></b></div></div>' +
-    '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">Conversor</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0">Escribe el tipo de cambio que te dé Superrich (baht por 1 €) y verás los importes en euros.</p><div class="field"><label for="rate">THB por 1 €</label><input id="rate" inputmode="decimal" placeholder="Por ejemplo, 37,5" value="' + (state.rate || '') + '"></div><div class="field"><label for="thb">Importe en THB</label><input id="thb" inputmode="numeric" placeholder="1000"><b id="thbOut"></b></div><p class="meta" style="margin:8px 0 0">No pongo un tipo de cambio por vosotros porque cambia a diario.</p></div></div>' +
+  const rate = userRate > 0 ? userRate : 37, approx = !(userRate > 0);
+  const toE = n => (approx ? '≈ ' : '') + fmtNum(Math.round(n / rate)) + ' €';
+  const thb = n => fmtNum(Math.round(n)) + ' THB';
+  const paidTHB = c => c.a != null ? c.a : c.eur * rate;
+  const sumPaid = PAID.reduce((t, c) => t + paidTHB(c), 0);
+  const sumTours = CASH.reduce((t, c) => t + c.a, 0);
+  const pendTours = CASH.filter(c => !state.cash.has(c.id)).reduce((t, c) => t + c.a, 0);
+  const dsum = DAILY.reduce((t, c) => t + c.a, 0), marg = Math.round(dsum * DAILY_MARGIN / 100) * 100, sumStay = dsum + marg;
+  const cash = sumTours + sumStay, all = sumPaid + cash;
+  const pct = n => (n / all * 100).toFixed(1) + '%';
+  const C = {paid:'var(--jade)', tours:'var(--gold)', stay:'var(--blue)'};
+  const amt = (n, eurTxt) => '<span style="margin-left:auto;text-align:right;white-space:nowrap"><b>' + thb(n) + '</b><br><small class="meta">' + (eurTxt || toE(n)) + '</small></span>';
+  const line = (c, n, eurTxt) => '<div class="check" style="cursor:default"><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span>' + amt(n, eurTxt) + '</div>';
+  const tile = (col, ic, lab, n, sub) => '<div style="background:var(--surface);border:1px solid var(--line);border-top:5px solid ' + col + ';border-radius:14px;padding:10px 10px 12px;min-width:0"><div style="font-size:1.3rem">' + ic + '</div><small class="meta" style="display:block;line-height:1.2;margin:2px 0 4px">' + lab + '</small><b style="display:block;font-size:1.05rem;white-space:nowrap">' + fmtNum(Math.round(n)) + '</b><small class="meta" style="display:block">THB</small><small style="display:block;white-space:nowrap;font-weight:700;color:var(--muted)">' + toE(n) + '</small>' + (sub ? '<small style="display:block;margin-top:4px;color:var(--muted)">' + sub + '</small>' : '') + '</div>';
+  const head = (col, t, total) => '<h3 class="sec" style="font-size:1.35rem;margin-top:24px;display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;border-radius:50%;background:' + col + ';flex:none"></span>' + t + '<span style="margin-left:auto;font:700 1rem Figtree,system-ui,sans-serif;white-space:nowrap">' + thb(total) + '</span></h3>';
+  const row = c => '<button class="check" role="checkbox" aria-checked="' + state.cash.has(c.id) + '" data-cash="' + c.id + '"><span class="bx">✓</span><span class="t"><b>' + c.l + '</b><span>' + c.d + '</span></span>' + amt(c.a) + '</button>';
+
+  $('#app').innerHTML = '<h2 class="sec">Gastos Tailandia</h2>' +
+    /* ---- Resumen visual ---- */
+    '<div class="box"><div class="pin" style="border:0;padding:16px 14px">' +
+      '<small class="meta" style="display:block">Efectivo que necesitáis llevar</small>' +
+      '<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><span class="big">' + fmtNum(cash) + '</span><b>THB</b><span style="font-size:1.25rem;font-weight:700;color:var(--jade)">' + toE(cash) + '</span></div>' +
+      '<small class="meta" style="display:block;margin-top:2px">= lo que falta pagar de excursiones + lo de estar allí</small>' +
+      '<div style="display:flex;height:16px;border-radius:999px;overflow:hidden;margin:14px 0 6px;background:var(--surface2)" role="img" aria-label="Reparto del gasto total">' +
+        '<i style="width:' + pct(sumPaid) + ';background:' + C.paid + '"></i><i style="width:' + pct(sumTours) + ';background:' + C.tours + '"></i><i style="width:' + pct(sumStay) + ';background:' + C.stay + '"></i></div>' +
+      '<small class="meta" style="display:block">Gasto total en Tailandia: <b style="color:var(--ink)">' + thb(all) + ' · ' + toE(all) + '</b></small>' +
+      '<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px">' +
+        tile(C.paid, '✅', 'Ya pagado', sumPaid, 'Con tarjeta') +
+        tile(C.tours, '🎟️', 'Falta pagar excursiones', sumTours, 'En efectivo allí') +
+        tile(C.stay, '🍜', 'Para estar allí', sumStay, 'Comida, motos, masajes…') +
+      '</div>' +
+      '<p class="meta" style="margin:12px 0 0">' + (approx ? 'Euros aproximados a 37 THB por 1 € (21 nov). Poned vuestro cambio en el conversor de abajo y se recalcula todo.' : 'Euros calculados con vuestro cambio: ' + esc(String(state.rate)) + ' THB por 1 €.') + '</p>' +
+    '</div></div>' +
+
+    /* ---- 1. Ya pagado ---- */
+    head(C.paid, '✅ Ya pagado', sumPaid) +
+    '<p class="lead" style="margin-top:0">Reservas pagadas o con cargo automático en tarjeta. No hace falta llevar efectivo para esto.</p>' +
+    PAID.map(c => line(c, paidTHB(c), c.eur != null ? fmtNum(c.eur) + ' € (pagado en euros)' : null)).join('') +
+    '<p class="meta">' + PAID_NOAMT + '</p>' +
+
+    /* ---- 2. Falta por pagar ---- */
+    head(C.tours, '🎟️ Falta por pagar: excursiones y reservas', sumTours) +
+    '<p class="lead" style="margin-top:0">Se paga allí, en efectivo. Marcad cada cosa cuando tengáis el dinero apartado.' + (pendTours < sumTours ? ' Os quedan por apartar <b>' + thb(pendTours) + '</b>.' : '') + '</p>' +
+    CASH.map(row).join('') +
+    '<p class="meta">Las entradas de los templos son precios orientativos. El depósito del hotel os lo devuelven al salir.</p>' +
+
+    /* ---- 3. Para estar allí ---- */
+    head(C.stay, '🍜 Para estar allí', sumStay) +
+    '<p class="lead" style="margin-top:0">Estimación para los dos: comida, masajes, motos, transporte, regalos y gastos varios. En zonas turísticas puede costar algo más.</p>' +
+    DAILY.map(c => line(c, c.a)).join('') +
+    '<div class="check" style="cursor:default"><span class="t"><b>Margen de imprevistos</b><span>10 % de lo anterior</span></span>' + amt(marg) + '</div>' +
+    '<div class="warn">🛵 Algunas tiendas de motos piden un depósito en efectivo o el pasaporte. Mejor dejar efectivo que el pasaporte, y sacad fotos de la moto antes de salir.</div>' +
+
+    /* ---- Cambiar dinero ---- */
+    '<h3 class="sec" style="font-size:1.35rem;margin-top:24px">💱 Cambiar dinero</h3>' +
+    '<h3 class="sec" style="font-size:1.2rem;margin-top:14px">Superrich frente a CN Money</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0"><b>CN Money</b> existe: lo habéis comprobado vosotros. Está en el aeropuerto, un poco más adelante que Superrich. No tengo sus tipos de cambio, así que comparadlos en los mostradores con la calculadora de abajo. Lo que he encontrado:</p><table class="cmp"><tr><th></th><th>Superrich</th><th>CN Money</th></tr><tr><td>Existe</td><td>Sí. Mostrador naranja en la planta B del aeropuerto y otras sucursales (también en Krabi)</td><td>Sí. En el aeropuerto, un poco más adelante que Superrich (confirmado por vosotros)</td></tr><tr><td>Tipo de cambio</td><td>Cambia a diario: se mira en su web o en el mostrador</td><td>Se mira en el mostrador</td></tr></table><p class="meta" style="margin:8px 0 0">Otras casas que he visto nombradas: Siam Exchange, Vasu, X-One, YES Exchange y Value Plus en Ao Nang. No he comprobado sus tipos.</p><p style="margin:12px 0 4px"><b>Comparad vosotros con cifras reales</b> (poned los THB que os da cada casa por 1 €, para el mismo billete):</p><div class="field"><label for="xa">Superrich (THB por 1 €)</label><input id="xa" inputmode="decimal" placeholder="37,5"></div><div class="field"><label for="xb">CN Money u otra casa (THB por 1 €)</label><input id="xb" inputmode="decimal" placeholder="37,2"></div><div class="field"><label for="xe">Euros a cambiar</label><input id="xe" inputmode="decimal" placeholder="300"></div><b id="xo"></b></div></div>' +
+    '<h3 class="sec" style="font-size:1.2rem;margin-top:14px">Conversor</h3><div class="box"><div class="pin" style="border:0;padding-top:12px"><p style="margin:0">Escribe el tipo de cambio que te dé Superrich (baht por 1 €) y verás los importes en euros.</p><div class="field"><label for="rate">THB por 1 €</label><input id="rate" inputmode="decimal" placeholder="Por ejemplo, 37,5" value="' + (state.rate || '') + '"></div><div class="field"><label for="thb">Importe en THB</label><input id="thb" inputmode="numeric" placeholder="1000"><b id="thbOut"></b></div><p class="meta" style="margin:8px 0 0">Mientras no pongáis vuestro cambio, los euros de esta pestaña se calculan a unos 37 THB por 1 € (referencia del 21 nov).</p></div></div>' +
     '<div class="warn">🍜 Ojo con lo que los tours <b>no</b> incluyen: el almuerzo del tour de Ayutthaya (28 nov) y los gastos personales en Khao Sok (3 y 4 dic). En los tours de Thalassa la comida va incluida.</div>' +
     '<div class="warn">💡 Cada retirada en cajero cuesta unos 220 THB fijos en Tailandia, más lo que cobre vuestro banco. Conviene sacar el máximo permitido de una vez y rechazar la conversión a euros.</div>';
 }
@@ -1730,6 +1781,7 @@ function render(){
   const conv = () => { const r = parseFloat(String($('#rate') && $('#rate').value).replace(',', '.')), t = parseFloat(String($('#thb') && $('#thb').value).replace(',', '.')); const o = $('#thbOut'); if (o) o.textContent = (r > 0 && t >= 0) ? '= ' + (t / r).toLocaleString('es-ES', {maximumFractionDigits:2}) + ' €' : ''; };
   const rEl = $('#rate'), tEl = $('#thb');
   if (rEl) rEl.addEventListener('input', () => { setRate(rEl.value); conv(); });
+  if (rEl) rEl.addEventListener('change', () => { const y = window.scrollY; render(); window.scrollTo(0, y); });
   if (tEl) tEl.addEventListener('input', conv);
   if (rEl) rEl.addEventListener('change', () => renderCash());
   conv();
