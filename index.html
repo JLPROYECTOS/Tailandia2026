@@ -1357,7 +1357,7 @@ async function dsync(){
   }
 }
 function initDrive(){
-  DRIVE.url = store.get('drive.url', ''); DRIVE.docs = store.get('drive.docs', {}) || {}; DRIVE.pending = store.get('drive.pending', {}) || {}; DRIVE.last = store.get('drive.last', 0) || 0;
+  DRIVE.url = store.get('drive.url', '') || 'https://script.google.com/macros/s/AKfycbzNNtzg6ovCwd55pl_y5SM8CXL5tuZDZQ0lrPAaPxNq8AahzLyJUD6SRwzVXlo-WvMJ/exec'; DRIVE.docs = store.get('drive.docs', {}) || {}; DRIVE.pending = store.get('drive.pending', {}) || {}; DRIVE.last = store.get('drive.last', 0) || 0;
   SYNC.db = ddb;
   state.done = new Set(); state.prep = new Set(); state.cash = new Set(); state.plists = []; state.pitems = []; state.rate = ''; state.gastos = []; state.cashStart = '';
   setSync(DRIVE.url ? 'connecting' : 'local');
