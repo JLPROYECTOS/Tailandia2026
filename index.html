@@ -914,7 +914,7 @@ const state = {
   plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
   readOnly:false, sync:'connecting', pending:false
 };
-const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Gastos Tailandia', 'antes-de-volar':'Antes de volar', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen', sync:'Sincronización'};
+const VIEWS = {plan:'Itinerario', gastos:'Gastos', reservas:'Reservas', efectivo:'Gastos Tailandia', 'antes-de-volar':'Antes de volar', salud:'Salud', 'cosas-que-llevar':'Cosas que llevar', resumen:'Resumen'};
 
 function todayKey(){
   try { return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Bangkok', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); } catch(e){ return ''; }
@@ -1316,9 +1316,9 @@ const SYNC = {db:null, queues:{}, rt:null, timer:null, canWrite:null};
 const SYNC_TXT = {
   connecting:['', 'Conectando con Google Drive…'],
   ok:['ok', 'Sincronizado con Google Drive'],
-  local:['warn', 'Sin sincronizar: toca aquí para configurar Drive'],
+  local:['warn', 'Sin sincronizar con Drive'],
   ro:['warn', 'Solo lectura: no tenéis permiso para editar'],
-  slow:['warn', 'Sin conexión con Drive: los cambios se guardan y se enviarán solos'],
+  slow:['warn', 'Sin conexión: los cambios se guardan y se enviarán solos. Toca para reintentar'],
   off:['off', 'Se ha perdido el acceso a la copia compartida']
 };
 function setSync(k){
@@ -1538,7 +1538,7 @@ function renderSync(){
 }
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-dsave],[data-dnow],#sync'); if (!t) return;
-  if (t.id === 'sync'){ go('sync'); return; }
+  if (t.id === 'sync'){ toast('Sincronizando…'); dsync(); return; }
   if (t.hasAttribute('data-dsave')){
     const v = ($('#durl') || {}).value || ''; DRIVE.url = v.trim(); store.set('drive.url', DRIVE.url);
     if (!DRIVE.url){ setSync('local'); renderSync(); return; }
@@ -1865,7 +1865,7 @@ function render(){
   else if (state.view === 'cosas-que-llevar') renderMaleta();
   else if (state.view === 'gastos') renderGastos();
   else if (state.view === 'resumen') renderResumen();
-  else if (state.view === 'sync') renderSync();
+  else if (state.view === 'sync'){ state.view = 'plan'; return render(); }
   else renderPrep();
   const conv = () => { const r = parseFloat(String($('#rate') && $('#rate').value).replace(',', '.')), t = parseFloat(String($('#thb') && $('#thb').value).replace(',', '.')); const o = $('#thbOut'); if (o) o.textContent = (r > 0 && t >= 0) ? '= ' + (t / r).toLocaleString('es-ES', {maximumFractionDigits:2}) + ' €' : ''; };
   const rEl = $('#rate'), tEl = $('#thb');
