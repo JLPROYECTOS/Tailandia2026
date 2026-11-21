@@ -205,6 +205,12 @@ details.fold>.fbody{padding:0 14px 14px}
 .seg2{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}.seg2 button{flex:1;border:0;padding:10px;background:var(--surface);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
 .seg2 button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .bigadd{width:100%;padding:14px;font-size:1.05rem;margin-top:12px}
+.mtiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mtile{border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:0;background:var(--surface)}
+.mtile small{display:block;color:var(--muted);font-size:.8rem}
+.mtile .mv{display:block;font:600 1.7rem/1.1 "Fraunces",Georgia,serif;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mtile .ms{display:block;color:var(--muted);font-size:.82rem;margin-top:2px;white-space:nowrap}
+
 .grow{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line)}
 .grow .gt{min-width:0;flex:1}.grow .gt small{display:block;color:var(--muted)}
 .qhead{display:flex;gap:8px;margin:0 0 12px}
@@ -316,7 +322,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1121.01</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1121.02</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1880,24 +1886,24 @@ function handleGastos(t){
   if (d.gadd !== undefined){ gastoFrom(+d.gadd, d.gm); return true; }
   if (d.gcur){ setCardCur(d.gcur); renderGastosTotalsOnly(); return true; }
   if (t.hasAttribute('data-gfopen')){ openGForm(null); return true; }
-  if (t.hasAttribute('data-gfcancel')){ state.gform = null; render(); return true; }
+  if (t.hasAttribute('data-gfcancel')){ state.gform = null; keepScroll(render); return true; }
   if (t.hasAttribute('data-gfsave')){ saveGForm(); return true; }
   if (d.gfm){ if (state.gform){ state.gform.m = d.gfm; keepScroll(render); } return true; }
   if (t.hasAttribute('data-quick')){ state.quick = !state.quick; render(); window.scrollTo({top:0}); return true; }
   if (d.gdel){ delGasto(d.gdel); return true; }
-  if (d.gedit){ const g = state.gastos.find(x => x.id === d.gedit); if (g){ openGForm(g); window.scrollTo({top:0}); } return true; }
+  if (d.gedit){ const g = state.gastos.find(x => x.id === d.gedit); if (g) openGForm(g); return true; }
   return false;
 }
 
 
 /* ============ Dinero (gastos del día a día + presupuesto) ============ */
-const D_OPEN = new Set();
-document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.fold){ const k = d.dataset.fold; if (d.open){ D_OPEN.add(k); D_OPEN.delete('!' + k); } else { D_OPEN.delete(k); D_OPEN.add('!' + k); } } }, true);
+const D_OPEN = new Set((function(){ try { const v = store.get('folds', []); return Array.isArray(v) ? v : []; } catch(e){ return []; } })());
+document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.fold){ const k = d.dataset.fold; if (d.open){ D_OPEN.add(k); D_OPEN.delete('!' + k); } else { D_OPEN.delete(k); D_OPEN.add('!' + k); } store.set('folds', Array.from(D_OPEN)); } }, true);
 const fold = (key, title, sub, body, defOpen) => { const open = D_OPEN.has(key) || (defOpen && !D_OPEN.has('!' + key)); return '<details class="fold" data-fold="' + key + '"' + (open ? ' open' : '') + '><summary>' + title + (sub ? ' <small>' + sub + '</small>' : '') + '</summary><div class="fbody">' + body + '</div></details>'; };
 function keepScroll(fn){ const y = window.scrollY; fn(); window.scrollTo(0, y); }
 function defaultDay(){ const tk = todayKey(); if (DAYS.some(d => d.key === tk)) return tk; return Date.now() < Date.parse('2026-11-27T00:00:00+07:00') ? DAYS[1].key : DAYS[DAYS.length - 2].key; }
 const dayShort = k => { const d = DAYS.find(x => x.key === k); return d ? d.short + ' ' + d.num + (k.slice(5, 7) === '11' ? ' nov' : ' dic') : k; };
-function openGForm(g){ state.gform = g ? {id:g.id, text:g.text || '', amt:String(g.amt), day:g.day, m:g.m || 'ef'} : {id:null, text:'', amt:'', day:defaultDay(), m:'ef'}; render(); setTimeout(() => { const a = $('#gfAmt'); if (a) a.focus(); }, 30); }
+function openGForm(g){ state.gform = g ? {id:g.id, text:g.text || '', amt:String(g.amt), day:g.day, m:g.m || 'ef'} : {id:null, text:'', amt:'', day:defaultDay(), m:'ef'}; render(); setTimeout(() => { const a = $('#gfAmt'); if (a){ a.scrollIntoView({block:'center'}); a.focus(); } }, 30); }
 function saveGForm(){
   const f = state.gform; if (!f) return;
   const amt = numOf(f.amt); if (!(amt > 0)){ toast('Escribe un importe mayor que 0.'); const a = $('#gfAmt'); if (a) a.focus(); return; }
@@ -1905,7 +1911,7 @@ function saveGForm(){
     const g = state.gastos.find(x => x.id === f.id);
     if (g && canMutate()){ g.text = String(f.text || '').trim().slice(0, 80); g.amt = amt; g.day = f.day; g.m = f.m; persistLocal(); dset('gastos/' + g.id, {day: g.day, text: g.text, amt: g.amt, m: g.m, order: g.order}); }
   } else addGasto(f.day, f.text, amt, f.m);
-  state.gform = null; toast('Gasto guardado'); render();
+  state.gform = {id:null, text:'', amt:'', day:f.id ? defaultDay() : f.day, m:f.m}; toast('Gasto guardado'); keepScroll(render);
 }
 document.addEventListener('input', e => { const t = e.target; if (!t || !state.gform) return; if (t.id === 'gfText') state.gform.text = t.value; else if (t.id === 'gfAmt') state.gform.amt = t.value; });
 document.addEventListener('change', e => { const t = e.target; if (t && t.id === 'gfDay' && state.gform) state.gform.day = t.value; });
@@ -1920,34 +1926,34 @@ function renderDinero(){
   state.gastos.forEach(g => { total += g.amt; if (g.m === 'tj') card += g.amt; else cash += g.amt; });
   const left = start - cash;
   const configured = start > 0;
-  let cardLine = '';
   const c = numOf(state.card);
-  if (c > 0){
-    if (state.cardCur === 'thb'){ const l = c - card; cardLine = '<div class="row"><span>💳 Saldo en la tarjeta</span><b style="' + (l < 0 ? 'color:#c0392b' : '') + '">' + money(l) + eurS(l) + '</b></div>'; }
-    else if (rate > 0){ const l = c - card / rate; cardLine = '<div class="row"><span>💳 Saldo en la tarjeta</span><b style="' + (l < 0 ? 'color:#c0392b' : '') + '">' + fmtNum(Math.round(l * 100) / 100) + ' €<small class="meta"> (' + money(l * rate) + ')</small></b></div>'; }
-    else cardLine = '<div class="row"><span>💳 Saldo en la tarjeta</span><span class="meta">Falta el cambio</span></div>';
-  }
+  const red = v => v < 0 ? 'color:#c0392b' : '';
+  const cashTile = '<div class="mtile"><small>💵 Efectivo</small>' + (configured
+      ? '<span class="mv" style="' + red(left) + '">' + fmtNum(Math.round(left)) + ' ฿</span><span class="ms">' + (rate > 0 ? '≈ ' + fmtNum(Math.round(left / rate)) + ' €' : '&nbsp;') + '</span>'
+      : '<span class="mv">—</span><span class="ms">Sin rellenar</span>') + '</div>';
+  let cardTile = '<div class="mtile"><small>💳 Tarjeta</small>';
+  if (!(c > 0)) cardTile += '<span class="mv">—</span><span class="ms">Sin rellenar</span>';
+  else if (state.cardCur === 'thb'){ const l = c - card; cardTile += '<span class="mv" style="' + red(l) + '">' + fmtNum(Math.round(l)) + ' ฿</span><span class="ms">' + (rate > 0 ? '≈ ' + fmtNum(Math.round(l / rate)) + ' €' : '&nbsp;') + '</span>'; }
+  else if (rate > 0){ const l = c - card / rate; cardTile += '<span class="mv" style="' + red(l) + '">' + fmtNum(Math.round(l)) + ' €</span><span class="ms">≈ ' + fmtNum(Math.round(l * rate)) + ' ฿</span>'; }
+  else cardTile += '<span class="mv">' + fmtNum(c) + ' €</span><span class="ms">Falta el cambio</span>';
+  cardTile += '</div>';
+  if (!state.gform) state.gform = {id:null, text:'', amt:'', day:defaultDay(), m:'ef'};
+  const f = state.gform;
   let h = '<h2 class="sec">Dinero</h2>';
   if (window.claude && window.claude.use) h += '<div class="warn">📱 Los gastos de esta página no se comparten con la app del móvil. Para apuntarlos usad la app: <a href="https://jlproyectos.github.io/Tailandia2026/" target="_blank" rel="noopener noreferrer">jlproyectos.github.io/Tailandia2026</a></div>';
   /* Resumen arriba */
-  h += '<div class="box"><div class="pin" style="border:0;padding:16px 14px">' +
-    '<small class="meta" style="display:block">💵 Efectivo que os queda</small>' +
-    '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap"><span class="big" style="' + (configured && left < 0 ? 'color:#c0392b' : '') + '">' + (configured ? fmtNum(Math.round(left)) : '—') + '</span><b>฿</b>' + (configured ? eurS(left) : '') + '</div>' +
-    (configured ? '' : '<p class="meta" style="margin:4px 0 0">Poned abajo, en «Dinero con el que contáis», los euros que traéis y el cambio.</p>') +
-    '<div style="margin-top:10px">' + cardLine +
-    '<div class="row"><span>Total gastado</span><b>' + money(total) + eurS(total) + '</b></div>' +
-    '<div class="row"><span class="meta">En efectivo · con tarjeta</span><span class="meta">' + money(cash) + ' · ' + money(card) + '</span></div></div>' +
-    (state.gform ? '' : '<button class="btn pri bigadd" data-gfopen>+ Apuntar un gasto</button>') +
+  h += '<div class="box"><div class="pin" style="border:0;padding:14px">' +
+    '<div class="mtiles">' + cashTile + cardTile + '</div>' +
+    (configured ? '' : '<p class="meta" style="margin:8px 0 0">Rellenad abajo «Dinero con el que contáis»: euros que traéis, cambio y tarjeta.</p>') +
+    '<div class="row" style="margin-top:10px"><span>Total gastado</span><b>' + money(total) + eurS(total) + '</b></div>' +
+    '<div class="row"><span class="meta">En efectivo · con tarjeta</span><span class="meta">' + money(cash) + ' · ' + money(card) + '</span></div>' +
     '</div></div>';
-  /* Formulario */
-  if (state.gform){
-    const f = state.gform;
-    h += '<div class="gform"><b>' + (f.id ? 'Editar gasto' : 'Nuevo gasto') + '</b>' +
-      '<div class="g2"><input id="gfAmt" inputmode="decimal" placeholder="Importe ฿" value="' + esc(f.amt) + '" aria-label="Importe en baht"><select id="gfDay" aria-label="Día">' + DAYS.map(d => '<option value="' + d.key + '"' + (d.key === f.day ? ' selected' : '') + '>' + dayShort(d.key) + '</option>').join('') + '</select></div>' +
-      '<input id="gfText" style="margin-top:8px" placeholder="Concepto (opcional)" maxlength="80" value="' + esc(f.text) + '" aria-label="Concepto">' +
-      '<div class="seg2" style="margin-top:8px"><button data-gfm="ef" aria-pressed="' + (f.m !== 'tj') + '">💵 Efectivo</button><button data-gfm="tj" aria-pressed="' + (f.m === 'tj') + '">💳 Tarjeta</button></div>' +
-      '<div class="g2"><button class="btn" data-gfcancel>Cancelar</button><button class="btn pri" data-gfsave>Guardar</button></div></div>';
-  }
+  /* Formulario siempre visible */
+  h += '<div class="gform"><b>' + (f.id ? '✎ Editar gasto' : '➕ Apuntar un gasto') + '</b>' +
+    '<div class="g2"><input id="gfAmt" inputmode="decimal" placeholder="Importe ฿" value="' + esc(f.amt) + '" aria-label="Importe en baht"><select id="gfDay" aria-label="Día">' + DAYS.map(d => '<option value="' + d.key + '"' + (d.key === f.day ? ' selected' : '') + '>' + dayShort(d.key) + '</option>').join('') + '</select></div>' +
+    '<input id="gfText" style="margin-top:8px" placeholder="Concepto (opcional)" maxlength="80" value="' + esc(f.text) + '" aria-label="Concepto">' +
+    '<div class="seg2" style="margin-top:8px"><button data-gfm="ef" aria-pressed="' + (f.m !== 'tj') + '">💵 Efectivo</button><button data-gfm="tj" aria-pressed="' + (f.m === 'tj') + '">💳 Tarjeta</button></div>' +
+    '<div class="g2">' + (f.id ? '<button class="btn" data-gfcancel>Cancelar</button><button class="btn pri" data-gfsave>Guardar cambios</button></div>' : '</div><button class="btn pri bigadd" style="margin-top:8px" data-gfsave>Guardar gasto</button>') + '</div>';
   /* Lista por días */
   const days = DAYS.filter(d => state.gastos.some(g => g.day === d.key)).reverse();
   if (!days.length) h += '<div class="empty">Todavía no habéis apuntado ningún gasto.</div>';
