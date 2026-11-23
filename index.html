@@ -240,6 +240,7 @@ details.fold>.fbody{padding:0 14px 14px}
 .sosgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .sosgrid a{display:block;text-decoration:none;background:var(--surface);border-radius:12px;padding:8px 10px;font-size:.82rem;line-height:1.25}
 .sosgrid b{display:block;font:400 1.5rem/1.1 "Fraunces",Georgia,serif;color:var(--lotus)}
+.segc a{background:var(--bg);border:1px solid var(--line)}.segc b{font-size:1.25rem}
 .num{width:30px;height:30px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:.82rem;flex:none;margin-top:1px}
 .ilx{padding:0 14px 12px 54px;font-size:.9rem}
 .tx{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
@@ -322,7 +323,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1121.03</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1123.01</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -788,6 +789,7 @@ const PAID = [
  {l:'Vuelo Madrid → Bangkok', d:'Iberojet E9845, 2 personas (Booking.com)', eur:680.48},
  {l:'Vuelos Bangkok ⇄ Krabi', d:'Thai VietJet VZ344 y VZ341, ida y vuelta, 2 personas', eur:175.73},
  {l:'Vuelta Bangkok → Roma → Madrid', d:'ITA Airways AZ759 y AZ64, 2 personas', eur:1048.06},
+ {l:'Seguro de viaje IATI Mochilero', d:'2 personas, 26 nov a 8 dic. Pagado el 23 nov', eur:142.23},
  {l:'Victora Hostel, Bangkok', d:'2 noches (3.216,67 THB). Cargado el 11 nov', eur:86.84},
  {l:'Amara Bangkok Hotel', d:'1 noche (4.163,68 THB). Cargado el 21 nov', eur:112.48},
  {l:'Krabi Tipa Resort, Ao Nang', d:'7 noches (20.954,93 THB). Cargado el 13 nov', eur:564.44},
@@ -1698,7 +1700,24 @@ function renderSalud(){
     '<div class="sos"><b>🚑 Emergencias en Tailandia</b><div class="sosgrid">' +
     '<a href="tel:1669"><b>1669</b>Ambulancia y urgencias médicas</a><a href="tel:191"><b>191</b>Policía y emergencias generales</a>' +
     '<a href="tel:1155"><b>1155</b>Policía turística, atienden en inglés</a><a href="tel:199"><b>199</b>Bomberos</a></div>' +
-    '<p class="meta" style="margin:10px 0 0">El 1155 no envía ambulancias. El 112 puede no funcionar allí. Si tenéis seguro de viaje, guardad en el móvil la póliza y el teléfono de asistencia.</p></div>' +
+    '<p class="meta" style="margin:10px 0 0">El 1155 no envía ambulancias. El 112 puede no funcionar allí.</p></div>' +
+    '<div class="box" style="border:2px solid var(--jade)"><div class="pin" style="border:0;padding:14px">' +
+      '<b style="font-size:1.1rem">🛡️ Seguro de viaje: IATI Mochilero (ARAG)</b>' +
+      '<p class="meta" style="margin:4px 0 10px">Para los dos, del 26 nov al 8 dic, cobertura Mundo. Si hay un problema médico, <b>llamad a la central antes de ir al hospital</b> (salvo urgencia vital: primero el 1669). Os pedirán el nombre, el nº de póliza y el nº de viaje.</p>' +
+      '<div class="row"><span>Nº de póliza</span><b>471463780</b></div>' +
+      '<div class="row"><span>Nº de viaje</span><b>001778946</b></div>' +
+      '<div class="sosgrid segc" style="margin-top:10px;grid-template-columns:1fr">' +
+        '<a href="tel:+34934857735"><b>+34 93 485 77 35</b>Asistencia 24 h (llamada reembolsable)</a>' +
+        '<a href="https://wa.me/34673885576" target="_blank" rel="noopener noreferrer"><b>WhatsApp</b>+34 673 885 576, si no podéis llamar</a>' +
+        '<a href="mailto:iatimedicos@arag.es"><b>Correo 24 h</b>iatimedicos@arag.es</a>' +
+      '</div>' +
+      '<p class="meta" style="margin:10px 0 0">📱 La app <b>IATI</b> tiene chat médico 24 h, la póliza y un botón de asistencia. Reembolsos a la vuelta: iati@arag.es. Guardad facturas e informes médicos.</p>' +
+      '<details style="margin-top:8px"><summary style="cursor:pointer;font-weight:600">Qué cubre (resumen)</summary><ul style="margin:8px 0 0;padding-left:18px">' +
+        '<li>Asistencia médica: hasta 1.500.000 €</li><li>Gastos del dentista: 350 €</li><li>Repatriación o transporte sanitario: 100 %</li><li>Convalecencia en el hotel: 1.800 €</li>' +
+        '<li>Robo y daños al equipaje: 3.000 € · Hurto: 200 €</li><li>Robo de dispositivos electrónicos: 1.800 €</li><li>Retraso del equipaje facturado: 300 €</li><li>Retraso en la salida del transporte: 360 €</li>' +
+        '<li>Deportes de aventura: incluidos · Búsqueda y salvamento: 15.000 €</li><li>Adelanto de dinero si os roban: 3.000 € · Intérprete: 300 €</li>' +
+      '</ul><p class="meta" style="margin:6px 0 0">Límites, franquicias y exclusiones: condiciones generales de la póliza (correo de IATI del 23 nov).</p></details>' +
+    '</div></div>' +
     '<h3 class="sec" id="dolencias">Principales problemas de salud en Tailandia</h3>' +
     '<p class="lead">Toca cada dolencia para ver cuándo ir al médico. Los medicamentos con la etiqueta “Receta” la requieren en España: llevadlos de casa, con la receta y en su caja original.</p>' +
     '<input class="srch" id="illq" type="search" placeholder="Buscar una dolencia, un síntoma o un medicamento" value="' + esc(state.ill.q) + '" aria-label="Buscar en las dolencias">' +
