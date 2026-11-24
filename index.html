@@ -323,7 +323,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1123.01</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1124.01</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1110,7 +1110,15 @@ function renderPlan(){
 
 /* ============ Reservas ============ */
 function renderRes(){
-  let h = '<h2 class="sec">Reservas</h2><p class="lead">Toca una reserva para ver los detalles. Toca el código para copiarlo.</p>';
+  let h = '<h2 class="sec">Reservas</h2><p class="lead">Toca una reserva para ver los detalles. Toca el código para copiarlo.</p>' +
+    '<div class="box" style="border:2px solid var(--jade)"><div class="pin" style="border:0;padding:14px">' +
+      '<b style="font-size:1.1rem">🛂 TDAC (tarjeta de llegada a Tailandia)</b>' +
+      '<p class="meta" style="margin:4px 0 10px">Hecha el 24 nov para la llegada del 27 nov (vuelo E9845). Enséñala en inmigración si te la piden; cada viajero tiene la suya.</p>' +
+      '<div class="row"><span>Nuria</span><button class="btn" data-copy="454560D" style="font-weight:700">454560D</button></div>' +
+      '<div class="row" style="margin-top:6px"><span>Jose Luis</span><span class="meta">En su correo</span></div>' +
+      '<div style="margin-top:10px"><a class="route place" target="_blank" rel="noopener noreferrer" href="https://drive.google.com/file/d/1h2eERAu-YVNYEUpn3hSs7ZEelHcPOFu_/view"><em>📄</em>Abrir la TDAC de Nuria (PDF en Drive)</a></div>' +
+      '<p class="meta" style="margin:8px 0 0">Está en la carpeta «Tailandia 2026» del Drive de Nuria. Guardad también una captura del QR en el móvil por si no hay internet al llegar.</p>' +
+    '</div></div>';
   RES.forEach(g => {
     h += '<h3 class="sec" style="font-size:1.35rem;margin-top:18px">' + g.g + '</h3>';
     g.items.forEach((r, i) => {
