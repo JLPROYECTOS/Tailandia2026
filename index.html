@@ -330,7 +330,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1125.03</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1125.04</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1524,8 +1524,8 @@ function listen(db){
 
 /* ============ Sincronización con Google Drive (versión app) ============ */
 const DRIVE = {KEY: 'rAC1p-yudDmxn8xUlOBoi0dT', url: '', docs: {}, pending: {}, subs: {coll: {}, doc: {}}, ok: false, last: 0, busy: false, t: null, err: ''};
-const DPFX = {plists: 'list:', pitems: 'item:', gastos: 'gasto:', settings: 'setting:', checks: 'check:'};
-const DRPFX = {'list:': 'plists', 'item:': 'pitems', 'gasto:': 'gastos', 'setting:': 'settings', 'check:': 'checks'};
+const DPFX = {plists: 'list:', pitems: 'item:', gastos: 'gasto:', settings: 'setting:', checks: 'check:', outfits: 'outfit:'};
+const DRPFX = {'list:': 'plists', 'item:': 'pitems', 'gasto:': 'gastos', 'setting:': 'settings', 'check:': 'checks', 'outfit:': 'outfits'};
 const dkey = (c, id) => DPFX[c] + id;
 function dsplit(k){ const i = k.indexOf(':'); return [DRPFX[k.slice(0, i + 1)], k.slice(i + 1)]; }
 function dstrip(e){ const o = Object.assign({}, e); delete o.t; delete o.deleted; return o; }
@@ -1588,6 +1588,12 @@ async function dsync(){
     if (state.view === 'sync' && !isTyping()) renderSync();
   }
 }
+async function dcall(action, payload){
+  const r = await fetch(DRIVE.url, {method: 'POST', body: JSON.stringify(Object.assign({key: DRIVE.KEY, action: action}, payload))});
+  const j = await r.json();
+  if (!j || !j.ok || j.photo !== true) throw new Error((j && j.error) || 'El script de Drive no admite fotos todavía');
+  return j;
+}
 function initDrive(){
   DRIVE.url = store.get('drive.url', '') || 'https://script.google.com/macros/s/AKfycbzNNtzg6ovCwd55pl_y5SM8CXL5tuZDZQ0lrPAaPxNq8AahzLyJUD6SRwzVXlo-WvMJ/exec'; DRIVE.docs = store.get('drive.docs', {}) || {}; DRIVE.pending = store.get('drive.pending', {}) || {}; DRIVE.last = store.get('drive.last', 0) || 0;
   SYNC.db = ddb;
@@ -1595,9 +1601,18 @@ function initDrive(){
   setSync(DRIVE.url ? 'connecting' : 'local');
   listen(ddb); render();
   if (DRIVE.url){ SYNC.timer = setTimeout(() => { if (state.sync !== 'ok') setSync('slow'); }, 12000); dsync(); }
-  setInterval(() => { if (!document.hidden) dsync(); }, 20000);
+  OUT.remote = {
+    ok: () => DRIVE.ok,
+    has: id => { const e = DRIVE.docs['outfit:' + id]; return !!(e && !e.deleted); },
+    meta: p => ddb.collection('outfits').doc(p.id).set({day: p.day, at: p.t}),
+    put: (id, data) => dcall('putPhoto', {id: id, data: data}),
+    get: async id => (await dcall('getPhoto', {id: id})).data,
+    del: id => { ddb.collection('outfits').doc(id).delete(); dcall('delPhoto', {id: id}).catch(() => {}); }
+  };
+  ddb.collection('outfits').onSnapshot(outMeta);
+  setInterval(() => { if (!document.hidden){ dsync(); outFlush(); } }, 20000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) dsync(); });
-  window.addEventListener('online', () => dsync());
+  window.addEventListener('online', () => { dsync(); outFlush(); });
 }
 function renderSync(){
   const n = Object.keys(DRIVE.pending).length;
@@ -2036,13 +2051,55 @@ function renderGastosTotalsOnly(){ const f = captureFocus(); const y = window.sc
 
 
 /* ============ Outfits: fotos de cada día, guardadas en este móvil ============ */
-const OUT = {db:null, photos:[], urls:{}, err:'', busy:false, lb:null, delAsk:null};
+const OUT = {db:null, photos:[], urls:{}, err:'', busy:false, lb:null, delAsk:null, remote:null, snap:null};
 function outOpen(){ return new Promise((res, rej) => { try { const r = indexedDB.open('th26-outfits', 1); r.onupgradeneeded = () => { r.result.createObjectStore('photos', {keyPath:'id'}); }; r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch(e){ rej(e); } }); }
 function outTx(mode, fn){ return new Promise((res, rej) => { const tx = OUT.db.transaction('photos', mode); const q = fn(tx.objectStore('photos')); tx.oncomplete = () => res(q && q.result); tx.onerror = () => rej(tx.error); tx.onabort = () => rej(tx.error); }); }
 async function outLoad(){
-  try { OUT.db = await outOpen(); OUT.photos = (await outTx('readonly', st => st.getAll())) || []; }
+  try { OUT.db = await outOpen(); const loaded = (await outTx('readonly', st => st.getAll())) || []; OUT.photos = loaded.concat(OUT.photos.filter(p => !loaded.some(q => q.id === p.id))); }
   catch(e){ OUT.db = null; OUT.err = 'Este navegador no permite guardar las fotos: se verán hasta que cerréis la app.'; }
-  if (state.view === 'outfits' && !isTyping()) render();
+  if (OUT.snap) outMeta(OUT.snap); else if (state.view === 'outfits' && !isTyping()) render();
+  outFlush();
+}
+async function outSave(p){ if (OUT.db){ try { await outTx('readwrite', st => st.put(p)); } catch(e){} } }
+function outB64(blob){ return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); }); }
+function outBlob(b64){ const bin = atob(b64), a = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return new Blob([a], {type:'image/jpeg'}); }
+let outFlushing = false;
+/* Sube las fotos que faltan y baja las que ha subido el otro móvil (solo en la app con Drive) */
+async function outFlush(){
+  if (!OUT.remote || outFlushing) return;
+  outFlushing = true; let changed = false;
+  try {
+    for (const p of OUT.photos.slice()){
+      if (p.blob){
+        if (p.up === true) continue;
+        p.up = false;
+        try { if (!OUT.remote.has(p.id)) OUT.remote.meta(p); await OUT.remote.put(p.id, await outB64(p.blob)); p.up = true; await outSave(p); } catch(e){ break; }
+      } else {
+        try { p.blob = outBlob(await OUT.remote.get(p.id)); p.up = true; await outSave(p); changed = true; } catch(e){ p.blob = null; }
+      }
+    }
+  } finally { outFlushing = false; }
+  if (changed && state.view === 'outfits' && !isTyping()) render();
+}
+/* Metadatos de las fotos que llegan de Drive */
+function outMeta(snap){
+  OUT.snap = snap; if (!OUT.remote) return;
+  const docs = {}; snap.docs.forEach(d => { docs[d.id] = d.data(); });
+  let ch = false;
+  Object.keys(docs).forEach(id => { if (!OUT.photos.some(p => p.id === id)){ OUT.photos.push({id:id, day:docs[id].day, t:docs[id].at || 0, blob:null, up:true}); ch = true; } });
+  if (OUT.remote.ok()){
+    OUT.photos = OUT.photos.filter(p => {
+      if (p.up === true && !docs[p.id]){
+        ch = true; try { if (OUT.db) outTx('readwrite', st => st.delete(p.id)); } catch(e){}
+        if (OUT.urls[p.id]){ try { URL.revokeObjectURL(OUT.urls[p.id]); } catch(e){} delete OUT.urls[p.id]; }
+        if (OUT.lb === p.id){ OUT.lb = null; outLightbox(); }
+        return false;
+      }
+      return true;
+    });
+  }
+  if (ch && state.view === 'outfits' && !isTyping()) render();
+  outFlush();
 }
 function outUrl(p){ if (!OUT.urls[p.id]) OUT.urls[p.id] = URL.createObjectURL(p.blob); return OUT.urls[p.id]; }
 async function outShrink(file){
@@ -2060,15 +2117,18 @@ async function outAdd(day, files){
     if (!/^image\//.test(f.type) && !/\.(jpe?g|png|webp|heic|heif)$/i.test(f.name || '')){ continue; }
     try {
       const blob = await outShrink(f);
-      const p = {id:'o' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), day:day, t:Date.now(), blob:blob};
-      if (OUT.db) await outTx('readwrite', st => st.put(p));
+      const p = {id:'o' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), day:day, t:Date.now(), blob:blob, up:!OUT.remote};
+      await outSave(p);
       OUT.photos.push(p); n++;
+      if (OUT.remote) OUT.remote.meta(p);
     } catch(e){ toast('No se pudo cargar una foto'); }
   }
   OUT.busy = false; render(); if (n) toast(n === 1 ? 'Foto guardada' : n + ' fotos guardadas');
+  outFlush();
 }
 async function outRemove(id){
   try { if (OUT.db) await outTx('readwrite', st => st.delete(id)); } catch(e){}
+  if (OUT.remote) { try { OUT.remote.del(id); } catch(e){} }
   OUT.photos = OUT.photos.filter(p => p.id !== id);
   if (OUT.urls[id]){ try { URL.revokeObjectURL(OUT.urls[id]); } catch(e){} delete OUT.urls[id]; }
 }
@@ -2080,7 +2140,7 @@ function outLightbox(){
 }
 function renderOutfits(){
   const today = todayKey();
-  let h = '<h2 class="sec">Outfits</h2><p class="lead">Sube una o varias fotos de cada día y se ven aquí dentro. Se guardan en <b>este móvil</b>: no se comparten con el móvil de Nuria ni se guardan en Drive.</p>';
+  let h = '<h2 class="sec">Outfits</h2><p class="lead">Sube una o varias fotos de cada día y se ven aquí dentro. Se guardan en <b>este móvil</b>' + (OUT.remote ? ' y se suben a la carpeta «Outfits» de Drive, así que las ven los dos móviles.' : ': no se comparten con el otro móvil ni se guardan en Drive.') + '</p>';
   if (OUT.err) h += '<div class="warn" style="margin-bottom:12px">' + esc(OUT.err) + '</div>';
   if (OUT.busy) h += '<p class="meta">Guardando foto…</p>';
   DAYS.forEach(d => {
@@ -2088,7 +2148,7 @@ function renderOutfits(){
     h += '<div class="box"><div class="pin" style="border:0;padding:14px">' +
       '<div class="row"><b>' + esc(d.short + ' ' + d.num + (d.key.slice(5, 7) === '11' ? ' nov' : ' dic')) + (d.key === today ? ' · hoy' : '') + '</b><span class="meta">' + (ph.length ? ph.length + (ph.length === 1 ? ' foto' : ' fotos') : 'Sin fotos') + '</span></div>' +
       '<div class="meta" style="margin:2px 0 0">' + esc(d.title) + '</div>' +
-      (ph.length ? '<div class="ogrid">' + ph.map(p => '<img class="oth" loading="lazy" alt="Outfit del ' + esc(d.date) + '" src="' + outUrl(p) + '" data-outbig="' + p.id + '">').join('') + '</div>' : '') +
+      (ph.length ? '<div class="ogrid">' + ph.map(p => p.blob ? '<img class="oth" loading="lazy" alt="Outfit del ' + esc(d.date) + '" src="' + outUrl(p) + '" data-outbig="' + p.id + '">' : '<div class="oth" style="display:grid;place-items:center;color:var(--muted);font-size:.8rem;cursor:default">Cargando…</div>').join('') + '</div>' : '') +
       '<div style="margin-top:10px"><label class="btn ofile"><span>📷 Añadir foto</span><input type="file" accept="image/*" multiple data-outfile="' + d.key + '" aria-label="Añadir foto del ' + esc(d.date) + '"></label></div>' +
       '</div></div>';
   });
