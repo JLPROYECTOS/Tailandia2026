@@ -323,7 +323,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1124.05</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1124.06</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -421,7 +421,7 @@ const DAYS = [
      det:['<ul><li>Rellenar la <b>TDAC</b> (tarjeta digital de llegada): se abre 3 días antes, es gratuita y hay una por persona.</li><li>Rellenar el <b>formulario de seguro</b> del tour de Ayutthaya (obligatorio).</li><li>Llevar <b>euros en efectivo</b> para cambiar en Superrich.</li><li>Comprobar el límite diario de las tarjetas para el cajero.</li></ul>'],
      link:{label:'Ver lista completa', view:'antes-de-volar'}},
     {t:'21:45', icon:'✈️', cat:'vuelo', title:'Vuelo Iberojet E9845, Madrid a Bangkok', sum:'Directo, 11 h 45 min. Llegada el vie 27 a las 15:30 (hora de Tailandia).',
-     det:['<ul><li>Equipaje: 1 accesorio personal y 1 bulto de mano (25 × 45 × 56 cm, máx. 8 kg). <b>No incluye maleta facturada.</b></li><li>Asiento: se asigna en el check-in.</li><li>Hay 6 horas de diferencia con Madrid (Tailandia va por delante).</li></ul>'],
+     det:['<ul><li>Equipaje: 1 accesorio personal y 1 bulto de mano (25 × 45 × 56 cm, máx. 8 kg). <b>No incluye maleta facturada.</b></li><li>Asientos: Nuria <b>29G</b> y Jose Luis <b>29D</b>. El cambio de asiento de Jose Luis costó 34 € (pagado el 25 nov).</li><li>El recibo de Iberojet menciona «first extra bag 23 kg». Está sin confirmar si hay maleta facturada; la reserva original dice que no.</li><li>Hay 6 horas de diferencia con Madrid (Tailandia va por delante).</li></ul>'],
      maps:[G('Ver Madrid-Barajas','Aeropuerto Adolfo Suárez Madrid-Barajas')],
      refs:[['Reserva','1FN52O'],['Billete Nuria','7835462120437'],['Billete Jose Luis','7835462120438']]}
    ]},
@@ -749,7 +749,7 @@ const CATS = [['todo','Todo'],['vuelo','✈️ Vuelos'],['trayecto','🚕 Trayec
 /* Reservas */
 const RES = [
  {g:'Vuelos', items:[
-  {ic:'✈️', t:'E9845 Madrid a Bangkok', m:'Jue 26 nov, 21:45 a vie 27 nov, 15:30', refs:[['Reserva','1FN52O']], det:['Iberojet. Directo, turista. Equipaje de mano de 8 kg, sin maleta facturada.','Billetes: Nuria 7835462120437, Jose Luis 7835462120438.']},
+  {ic:'✈️', t:'E9845 Madrid a Bangkok', m:'Jue 26 nov, 21:45 a vie 27 nov, 15:30', refs:[['Reserva','1FN52O']], det:['Iberojet. Directo, turista. Equipaje de mano de 8 kg, sin maleta facturada (el recibo menciona «first extra bag 23 kg»: sin confirmar).','Asientos: Nuria 29G, Jose Luis 29D. Cambio de asiento de Jose Luis: 34 €, pagado el 25 nov.','Billetes: Nuria 7835462120437, Jose Luis 7835462120438.']},
   {ic:'✈️', t:'VZ344 Bangkok a Krabi', m:'Lun 30 nov, 18:40 a 20:10', refs:[['Reserva','EFW5T2']], det:['Thai VietJet. Bulto de mano de 5 kg (23 × 36 × 56 cm). Sin maleta facturada.']},
   {ic:'✈️', t:'VZ341 Krabi a Bangkok', m:'Lun 7 dic, 09:00 a 10:25', refs:[['Reserva','EFW5T2']], det:['Thai VietJet. Bulto de mano de 5 kg. Sin maleta facturada.']},
   {ic:'✈️', t:'AZ759 Bangkok a Roma', m:'Lun 7 dic, 12:15 a 18:55', refs:[['Reserva','YK7MO8'],['Localizador','JJWPEH']], det:['ITA Airways. Bulto de mano de 8 kg (23 × 40 × 55 cm).','Billetes: Nuria 0559262047605, Jose Luis 0559262047606.','Hay solo 1 h 50 min entre la llegada del VZ341 y este vuelo, en reservas separadas.']},
@@ -789,6 +789,7 @@ const PAID = [
  {l:'Vuelo Madrid → Bangkok', d:'Iberojet E9845, 2 personas (Booking.com)', eur:680.48},
  {l:'Vuelos Bangkok ⇄ Krabi', d:'Thai VietJet VZ344 y VZ341, ida y vuelta, 2 personas', eur:175.73},
  {l:'Vuelta Bangkok → Roma → Madrid', d:'ITA Airways AZ759 y AZ64, 2 personas', eur:1048.06},
+ {l:'Cambio de asiento, vuelo E9845', d:'Jose Luis, asiento 29D. Pagado el 25 nov', eur:34},
  {l:'Seguro de viaje IATI Mochilero', d:'2 personas, 26 nov a 8 dic. Pagado el 23 nov', eur:142.23},
  {l:'Victora Hostel, Bangkok', d:'2 noches (3.216,67 THB). Cargado el 11 nov', eur:86.84},
  {l:'Amara Bangkok Hotel', d:'1 noche (4.163,68 THB). Cargado el 21 nov', eur:112.48},
