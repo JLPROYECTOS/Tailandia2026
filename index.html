@@ -205,6 +205,13 @@ details.fold>.fbody{padding:0 14px 14px}
 .seg2{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}.seg2 button{flex:1;border:0;padding:10px;background:var(--surface);color:var(--ink);font:inherit;font-weight:600;cursor:pointer}
 .seg2 button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .bigadd{width:100%;padding:14px;font-size:1.05rem;margin-top:12px}
+.ogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.oth{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:pointer;background:var(--surface2)}
+.ofile{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.ofile input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.lb{position:fixed;inset:0;background:rgba(5,8,18,.94);z-index:80;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:12px}
+.lb img{max-width:100%;max-height:78vh;border-radius:12px;object-fit:contain}
+.lb .lbb{display:flex;gap:10px}
 .mtiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mtile{border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:0;background:var(--surface)}
 .mtile small{display:block;color:var(--muted);font-size:.8rem}
@@ -323,7 +330,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1125.02</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1125.03</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -945,7 +952,7 @@ const state = {
   plists:[], pitems:[], editing:null, delConfirm:null, collapsed:new Set(), ill:{q:'', cat:'todo'},
   readOnly:false, sync:'connecting', pending:false
 };
-const VIEWS = {plan:'Itinerario', dinero:'Dinero', reservas:'Reservas', salud:'Salud', prep:'Preparación'};
+const VIEWS = {plan:'Itinerario', dinero:'Dinero', reservas:'Reservas', salud:'Salud', prep:'Preparación', outfits:'Outfits'};
 
 function todayKey(){
   try { return new Intl.DateTimeFormat('en-CA', {timeZone:'Asia/Bangkok', year:'numeric', month:'2-digit', day:'2-digit'}).format(new Date()); } catch(e){ return ''; }
@@ -2027,6 +2034,82 @@ function renderDinero(){
 }
 function renderGastosTotalsOnly(){ const f = captureFocus(); const y = window.scrollY; render(); restoreFocus(f); window.scrollTo(0, y); }
 
+
+/* ============ Outfits: fotos de cada día, guardadas en este móvil ============ */
+const OUT = {db:null, photos:[], urls:{}, err:'', busy:false, lb:null, delAsk:null};
+function outOpen(){ return new Promise((res, rej) => { try { const r = indexedDB.open('th26-outfits', 1); r.onupgradeneeded = () => { r.result.createObjectStore('photos', {keyPath:'id'}); }; r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch(e){ rej(e); } }); }
+function outTx(mode, fn){ return new Promise((res, rej) => { const tx = OUT.db.transaction('photos', mode); const q = fn(tx.objectStore('photos')); tx.oncomplete = () => res(q && q.result); tx.onerror = () => rej(tx.error); tx.onabort = () => rej(tx.error); }); }
+async function outLoad(){
+  try { OUT.db = await outOpen(); OUT.photos = (await outTx('readonly', st => st.getAll())) || []; }
+  catch(e){ OUT.db = null; OUT.err = 'Este navegador no permite guardar las fotos: se verán hasta que cerréis la app.'; }
+  if (state.view === 'outfits' && !isTyping()) render();
+}
+function outUrl(p){ if (!OUT.urls[p.id]) OUT.urls[p.id] = URL.createObjectURL(p.blob); return OUT.urls[p.id]; }
+async function outShrink(file){
+  let bmp = null;
+  try { bmp = await createImageBitmap(file, {imageOrientation:'from-image'}); } catch(e){}
+  if (!bmp){ bmp = await new Promise((res, rej) => { const im = new Image(); const u = URL.createObjectURL(file); im.onload = () => { URL.revokeObjectURL(u); res(im); }; im.onerror = rej; im.src = u; }); }
+  const w = bmp.width || bmp.naturalWidth, h = bmp.height || bmp.naturalHeight, k = Math.min(1, 1280 / Math.max(w, h));
+  const c = document.createElement('canvas'); c.width = Math.round(w * k); c.height = Math.round(h * k);
+  c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+  return await new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error('No se pudo reducir la foto')), 'image/jpeg', 0.82));
+}
+async function outAdd(day, files){
+  OUT.busy = true; render(); let n = 0;
+  for (const f of Array.from(files)){
+    if (!/^image\//.test(f.type) && !/\.(jpe?g|png|webp|heic|heif)$/i.test(f.name || '')){ continue; }
+    try {
+      const blob = await outShrink(f);
+      const p = {id:'o' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), day:day, t:Date.now(), blob:blob};
+      if (OUT.db) await outTx('readwrite', st => st.put(p));
+      OUT.photos.push(p); n++;
+    } catch(e){ toast('No se pudo cargar una foto'); }
+  }
+  OUT.busy = false; render(); if (n) toast(n === 1 ? 'Foto guardada' : n + ' fotos guardadas');
+}
+async function outRemove(id){
+  try { if (OUT.db) await outTx('readwrite', st => st.delete(id)); } catch(e){}
+  OUT.photos = OUT.photos.filter(p => p.id !== id);
+  if (OUT.urls[id]){ try { URL.revokeObjectURL(OUT.urls[id]); } catch(e){} delete OUT.urls[id]; }
+}
+function outLightbox(){
+  let el = document.getElementById('lb'); const p = OUT.lb && OUT.photos.find(x => x.id === OUT.lb);
+  if (!p){ if (el) el.remove(); OUT.lb = null; return; }
+  if (!el){ el = document.createElement('div'); el.id = 'lb'; el.className = 'lb'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Foto del outfit'); document.body.appendChild(el); }
+  el.innerHTML = '<img alt="Outfit" src="' + outUrl(p) + '"><div class="lbb"><button class="btn pri" data-outclose>Cerrar</button><button class="btn" data-outdel="' + p.id + '">' + (OUT.delAsk === p.id ? '¿Seguro? Toca otra vez' : '🗑️ Borrar') + '</button></div>';
+}
+function renderOutfits(){
+  const today = todayKey();
+  let h = '<h2 class="sec">Outfits</h2><p class="lead">Sube una o varias fotos de cada día y se ven aquí dentro. Se guardan en <b>este móvil</b>: no se comparten con el móvil de Nuria ni se guardan en Drive.</p>';
+  if (OUT.err) h += '<div class="warn" style="margin-bottom:12px">' + esc(OUT.err) + '</div>';
+  if (OUT.busy) h += '<p class="meta">Guardando foto…</p>';
+  DAYS.forEach(d => {
+    const ph = OUT.photos.filter(p => p.day === d.key).sort((a, b) => a.t - b.t);
+    h += '<div class="box"><div class="pin" style="border:0;padding:14px">' +
+      '<div class="row"><b>' + esc(d.short + ' ' + d.num + (d.key.slice(5, 7) === '11' ? ' nov' : ' dic')) + (d.key === today ? ' · hoy' : '') + '</b><span class="meta">' + (ph.length ? ph.length + (ph.length === 1 ? ' foto' : ' fotos') : 'Sin fotos') + '</span></div>' +
+      '<div class="meta" style="margin:2px 0 0">' + esc(d.title) + '</div>' +
+      (ph.length ? '<div class="ogrid">' + ph.map(p => '<img class="oth" loading="lazy" alt="Outfit del ' + esc(d.date) + '" src="' + outUrl(p) + '" data-outbig="' + p.id + '">').join('') + '</div>' : '') +
+      '<div style="margin-top:10px"><label class="btn ofile"><span>📷 Añadir foto</span><input type="file" accept="image/*" multiple data-outfile="' + d.key + '" aria-label="Añadir foto del ' + esc(d.date) + '"></label></div>' +
+      '</div></div>';
+  });
+  $('#app').innerHTML = h;
+}
+document.addEventListener('change', e => {
+  const i = e.target.closest && e.target.closest('[data-outfile]'); if (!i || !i.files || !i.files.length) return;
+  const day = i.getAttribute('data-outfile'), files = Array.from(i.files); i.value = '';
+  outAdd(day, files);
+});
+document.addEventListener('click', e => {
+  const t = e.target.closest && e.target.closest('[data-outbig],[data-outclose],[data-outdel]'); if (!t) return;
+  if (t.hasAttribute('data-outbig')){ OUT.lb = t.getAttribute('data-outbig'); OUT.delAsk = null; outLightbox(); return; }
+  if (t.hasAttribute('data-outclose')){ OUT.lb = null; OUT.delAsk = null; outLightbox(); return; }
+  const id = t.getAttribute('data-outdel');
+  if (OUT.delAsk !== id){ OUT.delAsk = id; outLightbox(); return; }
+  OUT.delAsk = null; OUT.lb = null; outRemove(id).then(() => { outLightbox(); if (state.view === 'outfits') render(); toast('Foto borrada'); });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && OUT.lb){ OUT.lb = null; OUT.delAsk = null; outLightbox(); } });
+outLoad();
+
 /* ============ Render principal ============ */
 function render(){
   renderSeg();
@@ -2037,6 +2120,7 @@ function render(){
   else if (state.view === 'reservas') renderRes();
   else if (state.view === 'dinero') renderDinero();
   else if (state.view === 'salud') renderSalud();
+  else if (state.view === 'outfits') renderOutfits();
   else renderPrepAll();
   const conv = () => { const r = $('#rate') ? parseFloat(String($('#rate').value).replace(',', '.')) : numOf(state.rate), t = parseFloat(String($('#thb') && $('#thb').value).replace(',', '.')); const o = $('#thbOut'); if (o) o.textContent = (r > 0 && t >= 0) ? '= ' + (t / r).toLocaleString('es-ES', {maximumFractionDigits:2}) + ' €' : ''; };
   const rEl = $('#rate'), tEl = $('#thb');
