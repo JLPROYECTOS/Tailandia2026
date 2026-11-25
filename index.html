@@ -323,7 +323,7 @@ if ('serviceWorker' in navigator) {
   </div>
 </div>
 <main class="wrap" id="app"></main>
-<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1125.01</span></footer>
+<footer class="wrap">Los horarios con “~” son aproximados. Confirmad siempre las recogidas con cada proveedor.<span class="ver">Versión 1125.02</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1982,7 +1982,7 @@ function renderDinero(){
   let cardTile = '<div class="mtile"><small>💳 Tarjeta</small>';
   if (!(c > 0)) cardTile += '<span class="mv">—</span><span class="ms">Sin rellenar</span>';
   else if (state.cardCur === 'thb'){ const l = c - card; cardTile += '<span class="mv" style="' + red(l) + '">' + fmtNum(Math.round(l)) + ' ฿</span><span class="ms">' + (rate > 0 ? '≈ ' + fmtNum(Math.round(l / rate)) + ' €' : '&nbsp;') + '</span>'; }
-  else if (rate > 0){ const l = c - card / rate; cardTile += '<span class="mv" style="' + red(l) + '">' + fmtNum(Math.round(l)) + ' €</span><span class="ms">≈ ' + fmtNum(Math.round(l * rate)) + ' ฿</span>'; }
+  else if (rate > 0){ const l = c - card / rate; cardTile += '<span class="mv" style="' + red(l) + '">' + fmtNum(Math.round(l * rate)) + ' ฿</span><span class="ms">≈ ' + fmtNum(Math.round(l)) + ' €</span>'; }
   else cardTile += '<span class="mv">' + fmtNum(c) + ' €</span><span class="ms">Falta el cambio</span>';
   cardTile += '</div>';
   if (!state.gform) state.gform = {id:null, text:'', amt:'', day:defaultDay(), m:'ef'};
