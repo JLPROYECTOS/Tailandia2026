@@ -1,5 +1,5 @@
 // Service worker: la página se pide primero a la red (para recibir cambios) y, sin conexión, se usa la copia guardada.
-const VERSION = 'th26-202611252246';
+const VERSION = 'th26-202611261952';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
